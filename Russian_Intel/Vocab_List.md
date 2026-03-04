@@ -7,3 +7,8 @@
 | **Уязвимость** | Uyazvimost' | Vulnerability |
 | **Взлом** | Vzlom | Hacking / Breach |
 | **Шифрование** | Shifrovanie | Encryption |
+--------------------------------------------------------
+| **Браузер** | [BRAU-zer] | Browser | Masculine |
+| **Клавиатура** | [kla-vee-a-TOO-rah] | Keyboard | Feminine |
+| **Интернет** | [in-ter-NET] | Internet | Masculine |
+| **Сайт** | [sah-EET] | Website | Masculine |
