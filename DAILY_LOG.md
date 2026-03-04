@@ -21,12 +21,19 @@
 ### 3. Objects & Cases (Accusative Focus)
 | Subject (Nominative) | English | Object Form (Accusative) |
 | :--- | :--- | :--- |
-| **Книга** | Book | **Книгу** |
-| **Комната** | Room | **Комнату** |
-| **Ручка** | Pen | **Ручку** |
+| **Книга** | Book | **Книгу** | Feminine |
+| **Комната** | Room | **Комнату** | Feminine |
+| **Ручка** | Pen | **Ручку** | Feminine |
 | **Стол** | Table | **Стол** (No change) |
-| **Принтер** | Printer | **Принтер** (No change) |
-| **Солнце** | Sun | **Солнце** (No change) |
+| **Принтер** | Printer | **Принтер** | (No change) |
+| **Солнце** | Sun | **Солнце** | (No change) |
+| **Стена** | Wall | **Стену** | Feminine |
+| **Кофе** | Coffee | **Кофе** | Masculine |
+| **Менеджер** | Manager | **Менеджер** | Masculine |
+| **Картина** | | Painting | **Картину** | Feminine |
+| **Браузер** | Browser | **Браузер** | No change | Masculine |
+| **Клавиатура** | Keyboard | **Клавиатуру** | Feminine |
+| **Сайт** | Website | **Сайт** | No change | Masculine |
 
 ---
 ### 🛠️ Grammar Note: 
