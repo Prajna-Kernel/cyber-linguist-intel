@@ -22,3 +22,24 @@
 
 **7️⃣. Talking about multiple likes**  
 Мне нравятся река и лес. | I like the river and the forest.
+
+**8️⃣. Expressing “does not work”**
+Интернет не работает. | The internet does not work.
+
+**9️⃣. Asking if something works**
+Телефон работает? | Does the phone work?
+
+**🔟. Answering that something works**
+Да, телефон работает. | Yes, the phone works.
+
+**1️⃣1️⃣. Answering that something does not work**
+Нет, он не работает. | No, it does not work.
+
+**1️⃣2️⃣. Offering choices (“or”)**
+Чай или вода? | Tea or water?
+
+**1️⃣3️⃣. Asking “or not?”**
+Интернет или нет? | Internet or not?
+
+**1️⃣4️⃣. Saying something is not something**
+Это не компьютер. | This is not a computer.
