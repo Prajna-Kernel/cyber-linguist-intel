@@ -1,23 +1,34 @@
-# 🇷🇺 Russian Cybersecurity Vocabulary
+# 🇷🇺 Russian Intelligence & Cyber Lexicon
 
-| Russian Term | Phonetic | English Translation |
-| :--- | :--- | :--- |
-| **Пароль** | Parol' | Password |
-| **Сеть** | Set' | Network |
-| **Уязвимость** | Uyazvimost' | Vulnerability |
-| **Взлом** | Vzlom | Hacking / Breach |
-| **Шифрование** | Shifrovanie | Encryption |
-| **Браузер** | BRAU-zer | Browser | Masculine |
-| **Клавиатура** | kla-vee-a-TOO-rah | Keyboard | Feminine |
-| **Интернет** | in-ter-NET | Internet | Masculine |
-| **Сайт** | sah-EET | Website | Masculine |
+## Purpose
+Specialized Russian terminology for cybersecurity, 
+threat intelligence, and operational contexts.
+Not found in standard Russian textbooks.
 
-# 🇷🇺 Russian Cybersecurity Vocabulary
+---
 
-| Russian Term | Phonetic | English Translation |
-| :--- | :--- | :--- |
-| **Компьютер** | kom-PYU-ter | Computer |
-| **Файл** | FAYL | File |
-| **Данные** | DAN-nyye | Data |
-| **Система** | sis-TYE-ma | System |
-| **Экран** | ek-RAN | Screen |
+## 🖥️ Cybersecurity Operations
+| Russian | Pronunciation | English | Context |
+|---------|--------------|---------|---------|
+| взлом | vzlom | hack/breach | "взлом системы" = system breach |
+| уязвимость | uyazvimost | vulnerability | used in Russian security reports |
+| утечка данных | utechka dannykh | data leak | common in Russian cyber news |
+
+---
+
+## 🌐 Threat Intelligence Terms
+| Russian | Pronunciation | English | Context |
+|---------|--------------|---------|---------|
+| разведка | razvedka | intelligence/reconnaissance | root word of GRU |
+| слежка | slezhka | surveillance | used in OSINT contexts |
+| шпионаж | shpionazh | espionage | appears in Russian legal documents |
+
+---
+
+## 📡 Dark Web & Underground Terms
+*To be added as research develops*
+
+---
+
+## 📰 Russian Cyber News Sources
+*To be added — links to Russian cybersecurity publications*
