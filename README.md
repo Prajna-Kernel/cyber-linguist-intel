@@ -64,4 +64,8 @@ I am an 18-year-old Cybersecurity student from India. My goal is to master **Tec
 
 ---
 
+📄 **License:** [CC BY 4.0](./LICENSE) — Free to use with credit to Prajna-Kernel
+
+---
+
 *Building a "Digital Signal" one commit at a time.*
