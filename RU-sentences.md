@@ -77,3 +77,15 @@ eway works, and the user sees the update.
 
 **2️⃣5️⃣. Expressing "sometimes this, but that"**   
 Иногда загрузка не работает, но шлюз работает. | Sometimes the download doesn't work, but the gateway works.
+
+**2️⃣4️⃣. Using "sometimes"**   
+База данных иногда не работает. | The database sometimes does not work.
+
+**2️⃣5️⃣. Using "always"**   
+Ссылка всегда работает. | The link always works.
+
+**2️⃣6️⃣. Expressing "something works and someone sees"**   
+Система работает, и пользователь видит ссылку. | The system works, and the user sees the link.
+
+**2️⃣7️⃣. Expressing "I see multiple things"**   
+Я вижу гору, звезду и облако. | I see a mountain, a star, and a cloud.
