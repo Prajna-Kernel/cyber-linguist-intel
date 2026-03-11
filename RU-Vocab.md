@@ -23,6 +23,9 @@
 |**Загрузка** | [za-GROOS-ka] | Download / Loading | **Загрузку** |
 | **База данных** | [BA-za DAN-nykh] | Database | **Базу данных** |
 | **Ссылка** | [SSYL-ka] | Link | **Ссылку** |
+| **Папка** | [PAP-ka] | Folder | **Папку** |
+| **Ключ** | [KLYUCH] | Key (security) | **Ключ** |
+| **Ключ доступа** | [KLYUCH dos-TU-pa] | Access key | **Ключ доступа** |
 
 ---
 
@@ -59,3 +62,6 @@
 | **Гора** | [ga-RA] | Mountain | **Гору** |
 | **Звезда** | [zvez-DA] | Star |**Звезду** |
 | **Облако** | [OB-la-ko] | Cloud | **Облако** |
+| **Остров** | [OS-trov] | Island | **Остров** |
+| **Трава** | [tra-VA] | Grass | **Траву** |
+| **Песок** | [pye-SOK] | Sand | **Песок** |
