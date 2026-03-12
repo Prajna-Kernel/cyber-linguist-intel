@@ -101,3 +101,11 @@ eway works, and the user sees the update.
 
 **3️⃣1️⃣. Expressing "I see multiple things"**   
 Я вижу остров, траву и песок. | I see an island, grass, and sand.
+
+**3️⃣2️⃣. Архив иногда не работает.** | The archive sometimes does not work.
+
+**3️⃣3️⃣. Пользователь всегда видит ошибку.** | The user always sees the error.
+
+**3️⃣4️⃣. Система работает, и пользователь видит сбой.** | The system works, and the user sees the glitch.
+
+**3️⃣5️⃣. Я вижу долину, туман и пещеру.** | I see a valley, fog, and a cave.
