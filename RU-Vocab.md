@@ -34,6 +34,9 @@
 | **Узел** | [OO-zel] | Node | **Узел** |
 | **Пакет** | [pa-KYET] | Packet | **Пакет** |
 | **Порт** | [PORT] | Port | **Порт** |
+| **Протокол** | [pra-ta-KOL] | Protocol |Протокол** |
+| **Канал** | [ka-NAL] | Channel | **Канал** |
+| **Доступ** | [DOS-tup/DOS-toop] | Access | **Доступ** |
 
 ---
 
@@ -79,3 +82,6 @@
 | **Холм** | [KHOLM] | Hill | **Холм** |
 | **Берег** | [BYE-reg/BYE-ryek] | Shore / Riverbank | **Берег** |
 | **Пыль** | [PYL'] | Dust | **Пыль** |
+| **Скала** | [ska-LA] | Cliff | **Скалу** |
+| **Ручей** | [roo-CHEY] | Stream | **Ручей** |
+| **Песчаник** | [pye-SHCHA-nik] | Sandstone | **Песчаник** |
