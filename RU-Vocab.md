@@ -37,6 +37,9 @@
 | **Протокол** | [pra-ta-KOL] | Protocol |Протокол** |
 | **Канал** | [ka-NAL] | Channel | **Канал** |
 | **Доступ** | [DOS-tup/DOS-toop] | Access | **Доступ** |
+| **Процесс** | [pra-TSESS] | Process | **Процесс** |
+| **Шифрование** | [shif-ra-VA-ni-ye] | Encryption | **Шифрование** |
+| **Уязвимость** | [u-yaz-vi-MOST'] | Vulnerability | **Уязвимость** |
 
 ---
 
@@ -85,3 +88,7 @@
 | **Скала** | [ska-LA] | Cliff | **Скалу** |
 | **Ручей** | [roo-CHEY] | Stream | **Ручей** |
 | **Песчаник** | [pye-SHCHA-nik] | Sandstone | **Песчаник** |
+| **Время** | [VRYE-mya] | Time |Время** |
+| **Человек** | [che-la-VYEK] | Person / Human | **Человека** |
+| **День** | [DYEN'] | Day | **День** |
+| **Вопрос** | [va-PROS] | Question | **Вопрос** |
