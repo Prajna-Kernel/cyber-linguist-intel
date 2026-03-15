@@ -118,3 +118,7 @@ eway works, and the user sees the update.
 
 
 **3️⃣9️⃣. Я вижу скалу и ручей.** | I see a cliff and a stream.
+
+**4️⃣0️⃣. Уязвимость иногда не видит пользователь.** | The user sometimes does not see the vulnerability.
+
+**4️⃣1️⃣. Человек видит шифрование на сайте.** | The person sees the encryption on the website.
