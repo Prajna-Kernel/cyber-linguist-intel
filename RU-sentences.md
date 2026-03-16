@@ -116,9 +116,16 @@ eway works, and the user sees the update.
 
 **3️⃣8️⃣. Протокол иногда не работает на канале.** | The protocol sometimes does not work on the channel.
 
-
 **3️⃣9️⃣. Я вижу скалу и ручей.** | I see a cliff and a stream.
 
 **4️⃣0️⃣. Уязвимость иногда не видит пользователь.** | The user sometimes does not see the vulnerability.
 
 **4️⃣1️⃣. Человек видит шифрование на сайте.** | The person sees the encryption on the website.
+
+**4️⃣2️⃣. Брандмауэр иногда не работает.** | The firewall sometimes does not work.
+
+**4️⃣3️⃣. Пользователь видит вредонос и эксплойт в системе.** | The user sees malware and an exploit in the system.
+
+**4️⃣4️⃣. Я вижу машину на улице.** | I see a car on the street.
+
+**4️⃣5️⃣. Я вижу еду и магазин.** | I see food and a store.
