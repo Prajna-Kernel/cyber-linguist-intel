@@ -129,3 +129,7 @@ eway works, and the user sees the update.
 **4️⃣4️⃣. Я вижу машину на улице.** | I see a car on the street.
 
 **4️⃣5️⃣. Я вижу еду и магазин.** | I see food and a store.
+
+**4️⃣6️⃣. Сначала вход работает, потом выход не работает.** | First the login works, later the logout does not work.
+
+**4️⃣7️⃣. Пользователь уже видит страницу.** | The user already sees the page.
