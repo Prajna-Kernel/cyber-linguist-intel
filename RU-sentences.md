@@ -141,3 +141,11 @@ eway works, and the user sees the update.
 **5️⃣0️⃣. Причина всегда есть.** | There is always a reason.
 
 **5️⃣1️⃣. Я вижу проблему на странице.** | I see a problem on the page.
+
+**5️⃣2️⃣. Аутентификация иногда не работает.** | The authentication sometimes does not work.
+
+**5️⃣3️⃣. Пользователь ждёт разрешение.** | The user waits for permission.
+
+**5️⃣4️⃣. Я думаю, что соединение не работает.** | I think the connection is not working.
+
+**5️⃣5️⃣. Сначала логин, потом учётная запись работает.** | First the login, then the account works.
