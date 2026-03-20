@@ -52,6 +52,9 @@
 | **Учётная запись** | [u-CHYOT-na-ya ZA-pis'] | Account (formal) | **Учётную запись** |
 | **Аутентификация** | [a-u-ten-ti-fi-KA-tsi-ya] | Authentication | **Аутентификацию** |
 | **Разрешение** | [ra-zre-SHE-ni-ye] | Permission | **Разрешение** |
+| **Задержка | [za-DYERZH-ka] | Delay / Latency | **Задержку** |
+| **Отказ** | [at-KAZ] | Failure / Refusal | **Отказ** |
+| **Обработка** |[ab-ra-BOT-ka] | Processing | **Обработку** |
 
 ---
 
@@ -135,3 +138,6 @@
 | **Сказать** | [ska-ZAT'] | To say |
 | **Думать** | [DOO-mat'] | To think |
 | **Ждать** | [ZHDAT'] | To wait |
+| **Решить** | [re-SHEET'] | To decide / To solve |
+| **Помнить** |[POM-nit'] | To remember | 
+| **Начать** | [na-CHAT'] |To start / To begin
