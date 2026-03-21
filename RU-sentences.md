@@ -157,3 +157,11 @@ eway works, and the user sees the update.
 **5️⃣8️⃣. Сначала нужно решить проблему, потом начать обработку.** | First you need to solve the problem, then start processing.
 
 **5️⃣9️⃣. Я вижу задержку и отказ в системе.** | I see a delay and a failure in the system.
+
+**6️⃣0️⃣. Если соединение не работает, нужно проверить систему.** | If the connection is not working, you need to check the system.
+
+**6️⃣1️⃣. Пользователь ищет обновление.** | The user is searching for an update.
+
+**6️⃣2️⃣. Сначала нужно найти сбой системы, потом решить проблему.** | First you need to find the system failure, then solve the problem.
+
+**6️⃣3️⃣. Если есть задержка, нужно проверить доступность.** | If there is a delay, you need to check availability.
