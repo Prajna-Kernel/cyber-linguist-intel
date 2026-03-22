@@ -58,6 +58,9 @@
 | **Доступность** | [da-stup-NOST'] | Availability | **Доступность** |
 | **Сбой системы** | [ZBOY/SBOY sis-TYE-my] | System failure | **Сбой системы** |
 | **Обновление** | [ab-nav-LYE-ni-ye] | Update | **Обновление** |
+| **Трафик** | [TRA-fik] | Network Traffic | **Трафик** |
+| **Резервная копия** | [re-ZYERV-na-ya KO-pi-ya] | Backup | **Резервную копию** |
+| **Журнал** | [zhur-NAL] | System Log | **Журнал** |
 
 ---
 
@@ -134,6 +137,9 @@
 | **Потом** | [pa-TOM] | Later | 
 | **Уже** | [u-ZHE] | Already |
 | **Если** | [YES-li] | If |
+| **Быстро** | [BYSTR-a] | Quickly / Fast |
+| **Медленно** | [MYED-len-na] | Slowly |
+| **Важно** | [VAZH-na] | Important / It is important |
 
 ---
 
