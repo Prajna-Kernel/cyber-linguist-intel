@@ -173,3 +173,9 @@ eway works, and the user sees the update.
 **6️⃣6️⃣. Если есть сбой, нужно быстро найти резервную копию.** | If there is a failure, you need to quickly find the backup.
 
 **6️⃣7️⃣. Журнал всегда важно проверить.** | It is always important to check the log.
+
+**6️⃣8️⃣. Сначала проверить, потом сказать.** | First check, then say.
+
+**6️⃣9️⃣. Важно решить быстро, если ты хочешь найти.** | It is important to decide quickly if you want to find.
+
+**7️⃣0️⃣. Я всегда помню и иногда жду.** | I always remember and sometimes wait.
