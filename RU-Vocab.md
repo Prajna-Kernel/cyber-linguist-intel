@@ -61,6 +61,11 @@
 | **Трафик** | [TRA-fik] | Network Traffic | **Трафик** |
 | **Резервная копия** | [re-ZYERV-na-ya KO-pi-ya] | Backup | **Резервную копию** |
 | **Журнал** | [zhur-NAL] | System Log | **Журнал** |
+| **Связь** | [SVYAZ] | Connection / Link | **Связь** |
+| **Источник** | [ees-TOCH-neek] | Source | **Источник** |
+| **Поток** | [pa-TOK] | Flow / Stream | **Поток** |
+| **Слежка** | [SLEZH-ka] | Surveillance | **Слежку** |
+| **Правда** | [PRAV-da] | Truth | **Правду** |
 
 ---
 
@@ -119,6 +124,10 @@
 | **Проблема** | [prab-LYE-ma] | Problem | **Проблему** |
 |**Решение** | [re-SHE-ni-ye] | Solution | **Решение** |
 | **Причина** | [pri-CHEE-na] | Reason | **Причину** |
+| **Завтрак** | [ZAV-trak] | Breakfast | **Завтрак** |
+| **Билет** | [bee-LYET] | Ticket | **Билет** |
+| **Номер** | [NO-myer] | Number | **Номер** |
+| **Вечер** | [VYE-cher] | Evening | **Вечер** |
 
 
 ---
