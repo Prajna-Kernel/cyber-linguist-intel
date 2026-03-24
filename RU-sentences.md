@@ -179,3 +179,7 @@ eway works, and the user sees the update.
 **6️⃣9️⃣. Важно решить быстро, если ты хочешь найти.** | It is important to decide quickly if you want to find.
 
 **7️⃣0️⃣. Я всегда помню и иногда жду.** | I always remember and sometimes wait.
+
+**7️⃣1️⃣. Сначала нужно проверить код, а потом решить проблему.** | First it is necessary to check the code, and then solve the problem.
+
+**7️⃣2️⃣. Важно начать анализ быстро, если есть ошибка.** | It is important to start the analysis quickly if there is an error.
