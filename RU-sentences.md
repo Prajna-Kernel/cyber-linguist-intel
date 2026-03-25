@@ -183,3 +183,7 @@ eway works, and the user sees the update.
 **7️⃣1️⃣. Сначала нужно проверить код, а потом решить проблему.** | First it is necessary to check the code, and then solve the problem.
 
 **7️⃣2️⃣. Важно начать анализ быстро, если есть ошибка.** | It is important to start the analysis quickly if there is an error.
+
+**7️⃣3️⃣. Сначала нужно проверить скрипт, а потом решить проблему.** | First it is necessary to check the script, and then solve the problem.
+
+**7️⃣4️⃣. Важно помнить свою цель и работу.** | It is important to remember your target and work.
