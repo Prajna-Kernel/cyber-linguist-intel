@@ -187,3 +187,11 @@ eway works, and the user sees the update.
 **7️⃣3️⃣. Сначала нужно проверить скрипт, а потом решить проблему.** | First it is necessary to check the script, and then solve the problem.
 
 **7️⃣4️⃣. Важно помнить свою цель и работу.** | It is important to remember your target and work.
+
+**6️⃣4️⃣. Если есть сбой, нужно проверить безопасность системы.** | If there is a failure, you need to check system security.
+
+**6️⃣5️⃣. Пользователь отправляет сообщение через аккаунт.** | The user sends a message through the account.
+
+**6️⃣6️⃣. Сначала проверка доступа, потом система соединяет.** | First access verification, then the system connects.
+
+**6️⃣7️⃣. Я смотрю на сообщение и вижу ошибку.** | I look at the message and see an error.
