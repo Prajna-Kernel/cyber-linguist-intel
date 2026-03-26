@@ -52,7 +52,7 @@
 | **Учётная запись** | [u-CHYOT-na-ya ZA-pis'] | Account (formal) | **Учётную запись** |
 | **Аутентификация** | [a-u-ten-ti-fi-KA-tsi-ya] | Authentication | **Аутентификацию** |
 | **Разрешение** | [ra-zre-SHE-ni-ye] | Permission | **Разрешение** |
-| **Задержка | [za-DYERZH-ka] | Delay / Latency | **Задержку** |
+| **Задержка** | [za-DYERZH-ka] | Delay / Latency | **Задержку** |
 | **Отказ** | [at-KAZ] | Failure / Refusal | **Отказ** |
 | **Обработка** |[ab-ra-BOT-ka] | Processing | **Обработку** |
 | **Доступность** | [da-stup-NOST'] | Availability | **Доступность** |
@@ -72,7 +72,8 @@
 | **Цель** | [TSEL'] | Target / Goal | **Цель** |
 | **Команда** | [ka-MAN-da] | Command / Team | **Команду** |
 | **Скрипт** | [SKREEMPT] | Script | **Скрипт** |
-
+| **Безопасность** | [be-za-PAS-nost'] | Security | **Безопасность** |
+| **Проверка доступа** | [pra-VYER-ka das-TU-pa] | Access verification | **Проверку доступа** |
 
 
 
@@ -143,6 +144,7 @@
 | **Место** | [MYE-sta] | Place / Location | **Место** |
 | **Группа** | [GROOP-pa] | Group | **Группу** |
 | **Адрес** | [A-dryes] | Address | **Адрес** |
+| **Сообщение** | [sa-ab-SHCHYE-ni-ye] | Message | **Сообщение** |
 
 ---
 
@@ -178,3 +180,6 @@
 | **Искать** | [is-KAT'] | To search / To look for | 
 | **Найти** | [nay-TI] | To find | 
 | **Проверить** | [pra-VYE-rit'] | To check / To verify
+| **Смотреть** |[sma-TRYET'] |To watch / To look at |
+| **Отправлять** |[at-prav-LYAT'] | To send |
+| **Соединять** | [sa-ye-di-NYAT'] | To connect / To link |
