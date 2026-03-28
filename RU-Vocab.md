@@ -77,6 +77,9 @@
 | **ошибка входа** | [a-SHIB-ka VKHOD-a] | login error | **ошибка входа** |
 | **перезагрузка** | [pe-re-ZA-GROOS-ka] | reboot / restart | **перезагрузку** |
 | **состояние системы** | [sa-sta-YA-ni-ye sis-TYE-my] | system status | **состояние системы** |
+| **Доступ запрещён** | [das-TUP za-pre-SHYON] | Access denied | **Доступ запрещён** |
+| **Внутренний сервер** | [vnu-TREN-niy SER-ver] |Internal server | **Внутренний сервер** |
+| **Внешний доступ** | [VNYESH-niy das-TUP] | External access | **Внешний доступ** |
 
 
 ---
@@ -188,3 +191,6 @@
 | **открывать** | [at-kry-VAHT’] | to open |
 | **отвечать** | [at-vi-CHAT’] | to answer / reply |
 | **закрывать** | [za-kry-VAHT’] | to close |
+| **Брать** | [BRAT'] | To take |
+| **Давать** | [da-VAT'] | To give
+| **Получать** | [pa-lu-CHAT'] | To receive / To get
