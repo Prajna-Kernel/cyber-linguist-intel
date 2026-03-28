@@ -203,3 +203,11 @@ eway works, and the user sees the update.
 **8️⃣1️⃣. Я проверяю пароль и вход.** | I check the password and login.
 
 **8️⃣2️⃣. Браузер открывает сайт.** | The browser opens the website.
+
+**8️⃣3️⃣. Если доступ запрещён, пользователь не может получать данные.** | If access is denied, the user cannot receive data.
+
+**8️⃣4️⃣. Внутренний сервер иногда не работает.** | The internal server sometimes does not work.
+
+**8️⃣5️⃣. Пользователь не может брать данные через внешний доступ.** | The user cannot take data through external access.
+
+**8️⃣6️⃣. Сначала нужно проверить внутренний сервер, потом давать доступ.** | First you need to check the internal server, then give access.
