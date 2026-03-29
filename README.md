@@ -26,6 +26,7 @@ I am an 18-year-old Cybersecurity student from India. My goal is to master **Tec
 ---
 
 📓 **[Vocabulary →](./RU-Vocab.md)** | **[Sentences →](./RU-Sentences.md)** | **[Dialogues →](./RU-Dialogues.md)**
+🛡️ **[Threat Intel Log →](./Threat_Intel_Log/)**
 
 ---
 
