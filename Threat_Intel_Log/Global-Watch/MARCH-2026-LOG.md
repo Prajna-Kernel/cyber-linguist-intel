@@ -1,4 +1,12 @@
-**Incident #001 — March 28, 2026**
+# 🛡️ Threat Intelligence Log — March 2026
+
+> Active monitoring of cross-border cyber operations and state-sponsored activity.
+> Focus: Non-regional incidents, wiper attacks, and AI-assisted threat tooling.
+> Language access: English
+
+---
+
+### Incident #001 — March 28, 2026
 
 **Target:** Kash Patel (FBI Director) — Personal Email | Stryker Corporation (Fortune 500, Medical Devices)
 
@@ -17,7 +25,7 @@ Also tracked as: Banished Kitten | Cobalt Mystique | Red Sandstorm | Void Mantic
 
 ---
 
-**Analysis**
+### Analysis
 Handala Hack Team — a MOIS-affiliated group operating under a hacktivist persona — executed two simultaneous operations on March 28, 2026.
 
 **Operation 1 — FBI Director Email Breach:**
@@ -28,7 +36,7 @@ Handala deployed wiper malware against Stryker Corporation, deleting large volum
 
 ---
 
-**Key Technical Indicators:**
+## Key Technical Indicators:
 - **Initial Access:** Phishing / Compromised Microsoft Intune admin credentials (infostealer-sourced)
 
 - **Lateral Movement:** RDP
@@ -43,7 +51,7 @@ Handala deployed wiper malware against Stryker Corporation, deleting large volum
 
 ---
 
-**Strategic Context**
+## Strategic Context
 These attacks were retaliatory — triggered by a U.S. court-authorised seizure of four MOIS-operated domains (handala-hack[.]to, justicehomeland[.]org, karmabelow80[.]org, handala-redwanted[.]to). The U.S. DOJ stated these domains were used for psychological operations, data leaks, and targeting of Iranian dissidents and Israeli government personnel.
 
 The Stryker attack represents a documented shift: Handala is moving from espionage and data theft toward active destruction of Western infrastructure. Flashpoint has flagged this as a dangerous evolution in supply chain threats — disrupting a major medical device supplier creates cascading risk across the entire healthcare ecosystem.
