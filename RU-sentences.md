@@ -211,3 +211,11 @@ eway works, and the user sees the update.
 **8️⃣5️⃣. Пользователь не может брать данные через внешний доступ.** | The user cannot take data through external access.
 
 **8️⃣6️⃣. Сначала нужно проверить внутренний сервер, потом давать доступ.** | First you need to check the internal server, then give access.
+
+**8️⃣7️⃣. Если доступ открыт, пользователь может использовать локальную сеть.** | If access is granted, the user can use the local network.
+
+**8️⃣8️⃣. Нужно создавать новый аккаунт после сброса.** | You need to create a new account after a reset.
+
+**8️⃣9️⃣. Пользователь меняет пароль, потом доступ открыт.** | The user changes the password, then access is granted.
+
+**9️⃣0️⃣. Если сбой системы, нужно сделать сброс.** | If there is a system failure, you need to do a reset.
