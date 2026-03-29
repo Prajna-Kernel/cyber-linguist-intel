@@ -80,6 +80,9 @@
 | **Доступ запрещён** | [das-TUP za-pre-SHYON] | Access denied | **Доступ запрещён** |
 | **Внутренний сервер** | [vnu-TREN-niy SER-ver] |Internal server | **Внутренний сервер** |
 | **Внешний доступ** | [VNYESH-niy das-TUP] | External access | **Внешний доступ** |
+| **Сброс** | [ZBROS] | Reset | **Сброс** |
+| **Доступ открыт** | [das-TUP at-KRYT] | Access granted / Open | **Доступ открыт** |
+| **Локальная сеть** | [la-KAL'-na-ya SYET'] | Local network | **Локальную сеть** |
 
 
 ---
@@ -194,3 +197,6 @@
 | **Брать** | [BRAT'] | To take |
 | **Давать** | [da-VAT'] | To give
 | **Получать** | [pa-lu-CHAT'] | To receive / To get
+| **Создавать** | [sa-zda-VAT'] | To create |
+| **Менять** | [me-NYAT'] | To change |
+| **Использовать** | [is-POL'-za-vat'] | To use |
