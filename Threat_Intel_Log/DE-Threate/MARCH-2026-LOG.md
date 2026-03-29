@@ -1,4 +1,12 @@
-**Incident #001 — March 28, 2026**
+# 🛡️ Threat Intelligence Log — March 2026
+
+> Active monitoring of European cyber infrastructure and vulnerability disclosures.
+> Focus: EU-sector exposures, BSI advisories, and critical software flaws.
+> Language access: German (planned B2) | English
+
+---
+
+### Incident #001 — March 28, 2026
 
 **Target:** Citrix NetScaler ADC and NetScaler Gateway (Global Enterprise Infrastructure)
 
