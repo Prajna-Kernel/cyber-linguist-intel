@@ -56,4 +56,4 @@ The shift from recon to active exploitation is expected imminently. Organisation
 **Target:** Citrix ADC / Gateway environments in Germany.
 **Note:** This critical vulnerability is currently being used to bypass MFA in European industrial sectors.
 
-👉 **[Read Full Technical Briefing in Global-Watch](../Global-Watch/MARCH-2026.md#incident-gw-002)**
+👉 **[Read Full Technical Briefing in Global-Watch](../Global-Watch/MARCH-2026-LOG.md#incident-gw-002)**
