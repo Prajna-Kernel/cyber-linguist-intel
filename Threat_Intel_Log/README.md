@@ -20,9 +20,9 @@ Select a region below to view detailed incident dossiers and linguistic analysis
 ---
 
 ## 🛠️ Monitoring Methodology
-* **Schedule:** Weekly updates (Every Sunday 03:00 IST).
+* **Schedule:** Event-driven (Daily scans). Updates prioritized by incident severity.
 * **Primary Sources:** BleepingComputer, The Hacker News, VCDB, and CISA KEV.
 * **Analysis Goal:** Identifying TTPs (Tactics, Techniques, and Procedures) to support national intelligence readiness.
 
 ---
-**Status:** `OPERATIONAL` | **Last Briefing:** March 30, 2026
+**Status:** `OPERATIONAL` | **Last Briefing:** March 31, 2026
