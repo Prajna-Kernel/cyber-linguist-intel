@@ -219,3 +219,11 @@ eway works, and the user sees the update.
 **8️⃣9️⃣. Пользователь меняет пароль, потом доступ открыт.** | The user changes the password, then access is granted.
 
 **9️⃣0️⃣. Если сбой системы, нужно сделать сброс.** | If there is a system failure, you need to do a reset.
+
+**9️⃣1️⃣. Если сеть недоступна, нужно проверить удалённый доступ.** | If the network is unavailable, you need to check remote access.
+
+**9️⃣2️⃣. Пользователь видит ошибку сервера и выключает систему.** | The user sees a server error and turns off the system.
+
+**9️⃣3️⃣. Сначала нужно включить локальную сеть, потом проверить доступ.** | First you need to turn on the local network, then check access.
+
+**9️⃣4️⃣. Система держит удалённый доступ открытым.** | The system keeps remote access open.
