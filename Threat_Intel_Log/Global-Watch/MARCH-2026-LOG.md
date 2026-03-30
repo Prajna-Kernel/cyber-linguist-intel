@@ -60,7 +60,7 @@ The Stryker attack represents a documented shift: Handala is moving from espiona
 
 ---
 
-### Incident #GW-002 — March 31, 2026 (Global-Watch)
+### Incident #002 — March 31, 2026 (Global-Watch)
 
 **​Target:** Citrix NetScaler ADC & Gateway
 
@@ -83,3 +83,32 @@ The Stryker attack represents a documented shift: Handala is moving from espiona
 **​Mass Exploitation:** BleepingComputer reports that thousands of instances remain unpatched. Since this is an edge-of-network device (the "front door"), a single successful exploit grants total internal access.
 
 **​Urgency:** CISA has added this to the KEV catalog, and Citrix has issued an "Emergency Patch" advisory. Organizations are urged to rotate all session secrets and certificates after patching.
+
+---
+
+### Incident #003 — March 31, 2026 (Global-Watch)
+
+**Target:** QualDerm Partners (Dermatology Management Services)
+
+**Sector:** Healthcare / PHI (Protected Health Information)
+
+**Threat Actor:** Unidentified Third Party (Attribution Pending)
+
+**Origin:** Unknown (Likely Cyber-Criminal/Extortion Group)
+
+**Source:** HHS Breach Portal | VCDB Issue #3104 | SecurityWeek
+
+**Attack Type:** IT Hacking / Data Exfiltration (HHS Category)
+
+**Labels:** Data-Breach | Healthcare-Security | PHI-Exfiltration | 3M-Impact
+
+---
+
+## Analysis
+QualDerm Partners, which manages over 150 practices across 17 US states, officially reported a massive breach affecting 3,117,874 individuals.
+
+**Timeline of Disclosure:** Although the unauthorized access occurred between December 23–24, 2025, the full scale of the 3.1 million victim count was only confirmed and added to the HHS (Department of Health and Human Services) portal in late March 2026. This delay is due to the mandatory 60-day reporting window and the time required for deep forensic verification.
+
+**The "Intrusive" Window:** Attackers had access for only 48 hours but successfully targeted and removed data from a limited number of sensitive internal systems.
+
+**Stolen Data Points:** The exfiltrated information includes patient names, DOB, medical record numbers, diagnoses, treatment plans, health insurance details, and in some cases, Social Security numbers and Driver’s License numbers.
