@@ -48,3 +48,12 @@ As of March 28, 2026, the vulnerability has not yet been actively exploited — 
 Citrix NetScaler is a widely deployed enterprise remote access solution — a high-value target because compromising it provides an authenticated foothold into corporate and government networks. This CVE follows a pattern of NetScaler vulnerabilities being rapidly weaponised after disclosure, including CVE-2023-4966 (Citrix Bleed) and CVE-2025-5777 (Citrix Bleed 2).
 
 The shift from recon to active exploitation is expected imminently. Organisations running affected versions have a rapidly closing window to patch.
+
+---
+
+### ⚠️ Cross-Sector Alert: Citrix NetScaler (CVE-2026-3055)
+**Status:** Aktive Ausnutzung (Active Exploitation)
+**Target:** Citrix ADC / Gateway environments in Germany.
+**Note:** This critical vulnerability is currently being used to bypass MFA in European industrial sectors.
+
+👉 **[Read Full Technical Briefing in Global-Watch](../Global-Watch/MARCH-2026.md#incident-gw-002)**
