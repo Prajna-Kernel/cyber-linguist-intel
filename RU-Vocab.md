@@ -83,7 +83,9 @@
 | **Сброс** | [ZBROS] | Reset | **Сброс** |
 | **Доступ открыт** | [das-TUP at-KRYT] | Access granted / Open | **Доступ открыт** |
 | **Локальная сеть** | [la-KAL'-na-ya SYET'] | Local network | **Локальную сеть** |
-
+| **Ошибка сервера** | [a-SHIB-ka SER-ve-ra] | Server error | **Ошибку сервера** |
+| **Сеть недоступна** | [SYET' ne-das-TUP-na] | Network unavailable | **Сеть недоступна** |
+| **Удалённый доступ** | [u-da-LYON-ny das-TUP] | Remote access | **Удалённый доступ** |
 
 ---
 
@@ -200,3 +202,6 @@
 | **Создавать** | [sa-zda-VAT'] | To create |
 | **Менять** | [me-NYAT'] | To change |
 | **Использовать** | [is-POL'-za-vat'] | To use |
+| **Включать** | [fklu-CHAT'] | To turn on |
+| **Выключать** | [vy-klu-CHAT'] | To turn off |
+| **Держать** | [dyr-ZHAT'] | To hold / To keep |
