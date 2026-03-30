@@ -57,3 +57,29 @@ These attacks were retaliatory — triggered by a U.S. court-authorised seizure 
 The Stryker attack represents a documented shift: Handala is moving from espionage and data theft toward active destruction of Western infrastructure. Flashpoint has flagged this as a dangerous evolution in supply chain threats — disrupting a major medical device supplier creates cascading risk across the entire healthcare ecosystem.
 
 *The U.S. government is offering a $10 million reward for information on Handala members.*
+
+---
+
+### Incident #GW-002 — March 31, 2026 (Global-Watch)
+
+**​Target:** Citrix NetScaler ADC & Gateway
+
+**Sector:** Global Enterprise Infrastructure / Remote Access
+
+​**Threat Actor:** Unidentified (Multiple groups observed)
+
+**​Origin:** Global (Distributed scanning and exploitation)
+
+​**Source:** BleepingComputer | CISA KEV | Citrix Security Bulletin
+
+**​Attack Type:** Memory Overread / Information Disclosure (CVE-2026-3055)
+
+**​Labels:** Active-Exploitation | Critical-Infrastructure | Memory-Bleed | 0-Day
+
+## ​Analysis
+​As of March 30-31, 2026, security researchers have confirmed that CVE-2026-3055 is now under active exploitation. What began as automated reconnaissance has shifted into targeted attacks.
+​The "Bleed" Mechanism: Attackers are using a specific buffer overread to "bleed" the system's memory. This allows for the theft of session cookies, which lets hackers bypass Multi-Factor Authentication (MFA) and enter corporate networks as legitimate users.
+
+**​Mass Exploitation:** BleepingComputer reports that thousands of instances remain unpatched. Since this is an edge-of-network device (the "front door"), a single successful exploit grants total internal access.
+
+**​Urgency:** CISA has added this to the KEV catalog, and Citrix has issued an "Emergency Patch" advisory. Organizations are urged to rotate all session secrets and certificates after patching.
