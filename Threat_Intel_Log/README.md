@@ -11,7 +11,7 @@ Select a region below to view detailed incident dossiers and linguistic analysis
 ### 🇷🇺 [Russian-Nexus Threats](./RU-Threats/MARCH-2026-LOG.md)
 *Focus: Qilin, Interlock, and Cyrillic-based RaaS operations.*
 
-### 🇩🇪 [German-Sector Threats](./DE-Threate/MARCH-2026-LOG.md)
+### 🇩🇪 [German-Sector Threats](./DE-Threats/MARCH-2026-LOG.md)
 *Focus: EU Industrial security, BSI warnings, and critical software flaws affecting European infrastructure.*
 
 ### 🌐 [Global-Watch](./Global-Watch/MARCH-2026-LOG.md)
