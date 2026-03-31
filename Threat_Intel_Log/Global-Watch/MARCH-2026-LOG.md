@@ -112,3 +112,31 @@ QualDerm Partners, which manages over 150 practices across 17 US states, officia
 **The "Intrusive" Window:** Attackers had access for only 48 hours but successfully targeted and removed data from a limited number of sensitive internal systems.
 
 **Stolen Data Points:** The exfiltrated information includes patient names, DOB, medical record numbers, diagnoses, treatment plans, health insurance details, and in some cases, Social Security numbers and Driver’s License numbers.
+
+---
+
+### Incident #004 — March 31, 2026 (Global-Watch)
+
+**Target:** Axios NPM Package (Supply Chain)
+
+**Sector:** Software Development / Global JS Ecosystem
+
+**Threat Actor:** Unidentified (Malicious maintainer injection)
+
+**Source:** BleepingComputer | The Hacker News | Snyk Security
+
+**Attack Type:** Supply Chain Hijack / Remote Access Trojan (RAT)
+
+**Labels:** Critical-Severity | Supply-Chain | Active-Exploitation | RAT-Dropper
+
+---
+
+## Technical Analysis:
+A high-criticality supply chain compromise affected the official Axios package. Version 1.14.1 and 0.30.4 were injected with a "phantom dependency" (plain-crypto-js@4.2.1). Upon installation, this dependency executes a post-install script that detects the host OS (Windows/Mac/Linux) and drops a tailored Remote Access Trojan (RAT).
+
+**TTPs:** The RAT performs automated reconnaissance, specifically targeting .env files, browser cookies, and local ~/.ssh directories to facilitate cloud account takeovers.
+
+**Mitigation:** Immediate audit of package-lock.json. Force-downgrade to verified version 1.7.x or upgrade to the emergency patch 1.14.2.
+
+---
+
