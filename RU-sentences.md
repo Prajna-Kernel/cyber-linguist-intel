@@ -227,3 +227,11 @@ eway works, and the user sees the update.
 **9️⃣3️⃣. Сначала нужно включить локальную сеть, потом проверить доступ.** | First you need to turn on the local network, then check access.
 
 **9️⃣4️⃣. Система держит удалённый доступ открытым.** | The system keeps remote access open.
+
+**9️⃣5️⃣. Пользователь видит ошибку соединения и начинает восстановление.** | The user sees a connection error and starts recovery.
+
+**9️⃣6️⃣. Нужно проверить журнал системы, если есть сбой.** | You need to check the system log if there is a failure.
+
+**9️⃣7️⃣. Если ошибка есть, нужно исправлять систему.** | If there is an error, you need to fix the system.
+
+**9️⃣8️⃣. Пользователь отправляет запрос и получает ответ.** | The user sends a request and receives an answer.
