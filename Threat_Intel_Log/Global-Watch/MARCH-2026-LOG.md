@@ -165,3 +165,23 @@ Analysis of CVE-2026-2473, a flaw in Google Vertex AI's bucket-naming logic. By 
 
 ---
 
+### Incident #006 — March 31, 2026 (Global-Watch)
+
+**Target:** Town of Apex, North Carolina (Local Government)
+
+**Sector:** Public Administration / NAICS 92
+
+**Source:** WRAL News | VCDB Issue #3107
+
+**Attack Type:** Ransomware Recovery (July 2024 Attack / March 2026 Closure)
+
+**Labels:** Municipal-Security | Legal-Precedent | Data-Recovery | FBI-Involved
+
+---
+
+## Technical Analysis:
+Conclusion of the Town of Apex recovery operation (originally attacked July 2024). This case provides a landmark legal template for local governments. By securing a Temporary Restraining Order (TRO) against a US-based cloud provider (Bublup, Inc.), the town **successfully recovered** exfiltrated data without paying a ransom.
+
+**Key Finding:** The 18-month gap between data recovery and victim notification (March 2026) highlights the extreme resource drain of post-breach forensic auditing for small municipalities.
+
+**Strategic Precedent:** Proves that legal intervention can effectively reclaim stolen assets if the "data drop" occurs within US-governed cloud infrastructure.
