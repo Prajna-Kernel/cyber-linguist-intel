@@ -140,3 +140,28 @@ A high-criticality supply chain compromise affected the official Axios package. 
 
 ---
 
+### Incident #005 — March 31, 2026 (Global-Watch)
+
+**Target:** Google Vertex AI (Cloud Platform)
+
+**Sector:** Cloud Infrastructure / Artificial Intelligence (AI)
+
+**Threat Actor:** Security Researchers (Vulnerability Disclosure)
+
+**Source:** The Hacker News | Orca Security
+
+**Attack Type:** Cloud-to-Cloud Vulnerability / Privilege Escalation
+
+**Labels:** Cloud-Security | AI-Infrastructure | Google-Cloud | Vertex-AI
+
+---
+
+## Technical Analysis:
+Analysis of CVE-2026-2473, a flaw in Google Vertex AI's bucket-naming logic. By "squatting" on predictable Cloud Storage bucket names, an attacker could intercept data intended for AI model training or execute cross-tenant privilege escalation.
+
+**Significance:** This represents a new class of "AI-Native" vulnerabilities where the complexity of the ML pipeline creates traditional IAM (Identity and Access Management) blind spots.
+
+**Impact:** Potentially allowed unauthorized access to proprietary machine learning models and sensitive training datasets.
+
+---
+
