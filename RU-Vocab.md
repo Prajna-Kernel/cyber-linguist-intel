@@ -86,6 +86,9 @@
 | **Ошибка сервера** | [a-SHIB-ka SER-ve-ra] | Server error | **Ошибку сервера** |
 | **Сеть недоступна** | [SYET' ne-das-TUP-na] | Network unavailable | **Сеть недоступна** |
 | **Удалённый доступ** | [u-da-LYON-ny das-TUP] | Remote access | **Удалённый доступ** |
+| **Ошибка соединения** | [a-SHIB-ka sa-ye-di-NYE-ni-ya] | Connection error | **Ошибку соединения** |
+| **Журнал системы** | [zhur-NAL sis-TYE-my] | System log (tech) | **Журнал системы** |
+| **Восстановление** | [vas-sta-nav-LYE-ni-ye] | Recovery / Restore | **Восстановление** |
 
 ---
 
@@ -205,3 +208,5 @@
 | **Включать** | [fklu-CHAT'] | To turn on |
 | **Выключать** | [vy-klu-CHAT'] | To turn off |
 | **Держать** | [dyr-ZHAT'] | To hold / To keep |
+| **Получать ответ** | [pa-lu-CHAT' at-VYET] | To receive an answer |
+| **Исправлять** | [is-prav-LYAT'] | To correct / To fix |
