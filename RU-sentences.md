@@ -235,3 +235,11 @@ eway works, and the user sees the update.
 **9️⃣7️⃣. Если ошибка есть, нужно исправлять систему.** | If there is an error, you need to fix the system.
 
 **9️⃣8️⃣. Пользователь отправляет запрос и получает ответ.** | The user sends a request and receives an answer.
+
+**9️⃣9️⃣. Если система зависла, нужно пробовать сброс.** | If the system froze, you need to try a reset.
+
+**1️⃣0️⃣0️⃣. Пользователь забывает пароль и видит ошибку доступа.** | The user forgets the password and sees an access error.
+
+**1️⃣0️⃣1️⃣. Нужно запускать систему, если нет ответа.** | You need to launch the system if there is no response.
+
+**1️⃣0️⃣2️⃣. Я пробую исправлять ошибку, но система зависла.** | I try to fix the error but the system froze.
