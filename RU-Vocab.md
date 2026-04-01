@@ -89,6 +89,10 @@
 | **Ошибка соединения** | [a-SHIB-ka sa-ye-di-NYE-ni-ya] | Connection error | **Ошибку соединения** |
 | **Журнал системы** | [zhur-NAL sis-TYE-my] | System log (tech) | **Журнал системы** |
 | **Восстановление** | [vas-sta-nav-LYE-ni-ye] | Recovery / Restore | **Восстановление** |
+| **Система зависла** | [sis-TYE-ma za-VIS-la] | System froze | **Систему зависла** |
+| **Нет ответа** | [nyet at-VYE-ta] | No response | **Нет ответа** |
+| **Ошибка доступа** | [a-SHIB-ka das-TU-pa] | Access error | **Ошибку доступа** |
+
 
 ---
 
@@ -210,3 +214,6 @@
 | **Держать** | [dyr-ZHAT'] | To hold / To keep |
 | **Получать ответ** | [pa-lu-CHAT' at-VYET] | To receive an answer |
 | **Исправлять** | [is-prav-LYAT'] | To correct / To fix |
+| **Запускать** | [za-pus-KAT'] | To launch / To start | 
+| **Забывать** | [za-by-VAT'] | To forget | 
+| **Пробовать** | [PRO-ba-vat'] | To try |
