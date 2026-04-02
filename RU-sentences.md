@@ -243,3 +243,11 @@ eway works, and the user sees the update.
 **1️⃣0️⃣1️⃣. Нужно запускать систему, если нет ответа.** | You need to launch the system if there is no response.
 
 **1️⃣0️⃣2️⃣. Я пробую исправлять ошибку, но система зависла.** | I try to fix the error but the system froze.
+
+**1️⃣0️⃣3️⃣. Пропускная способность зависит от соединения.** | Bandwidth depends on the connection.
+
+**1️⃣0️⃣4️⃣. Даже если система работает, неисправность есть.** | Even if the system works, there is a malfunction.
+
+**1️⃣0️⃣5️⃣. Система не может обрабатывать данные — нет пропускной способности.** | The system cannot process data — there is no bandwidth.
+
+**1️⃣0️⃣6️⃣. Причина неисправности зависит от сервера.** | The cause of the malfunction depends on the server.
