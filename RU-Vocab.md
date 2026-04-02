@@ -92,6 +92,8 @@
 | **Система зависла** | [sis-TYE-ma za-VIS-la] | System froze | **Систему зависла** |
 | **Нет ответа** | [nyet at-VYE-ta] | No response | **Нет ответа** |
 | **Ошибка доступа** | [a-SHIB-ka das-TU-pa] | Access error | **Ошибку доступа** |
+| **Пропускная способность** | [pra-pus-KNA-ya spa-SOB-nost'] | Bandwidth | **Пропускную способность** |
+| **Неисправность** | [nye-is-prav-NOST'] | Malfunction / Fault | **Неисправность** |
 
 
 ---
@@ -182,6 +184,7 @@
 | **Быстро** | [BYSTR-a] | Quickly / Fast |
 | **Медленно** | [MYED-len-na] | Slowly |
 | **Важно** | [VAZH-na] | Important / It is important |
+| **Даже** | [DA-zhe] | Even |
 
 ---
 
@@ -217,3 +220,5 @@
 | **Запускать** | [za-pus-KAT'] | To launch / To start | 
 | **Забывать** | [za-by-VAT'] | To forget | 
 | **Пробовать** | [PRO-ba-vat'] | To try |
+| **Обрабатывать** | [ab-ra-BA-ty-vat'] | To process |
+| **Зависеть (от)** | [za-vi-SYET' (ot)] | To depend (on) |
