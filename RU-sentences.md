@@ -251,3 +251,11 @@ eway works, and the user sees the update.
 **1️⃣0️⃣5️⃣. Система не может обрабатывать данные — нет пропускной способности.** | The system cannot process data — there is no bandwidth.
 
 **1️⃣0️⃣6️⃣. Причина неисправности зависит от сервера.** | The cause of the malfunction depends on the server.
+
+**1️⃣0️⃣7️⃣. Вдруг система фиксирует перегрузку.** | Suddenly the system records an overload.
+
+**1️⃣0️⃣8️⃣. Сервер перенаправляет передачу данных.** | The server redirects data transmission.
+
+**1️⃣0️⃣9️⃣. Я проверяю условие доступа и сеть.** | I check the access condition and network.
+
+**1️⃣1️⃣0️⃣. Браузер фиксирует ошибку соединения.** | The browser logs a connection error.
