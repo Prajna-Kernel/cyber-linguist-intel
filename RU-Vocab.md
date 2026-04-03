@@ -94,7 +94,8 @@
 | **Ошибка доступа** | [a-SHIB-ka das-TU-pa] | Access error | **Ошибку доступа** |
 | **Пропускная способность** | [pra-pus-KNA-ya spa-SOB-nost'] | Bandwidth | **Пропускную способность** |
 | **Неисправность** | [nye-is-prav-NOST'] | Malfunction / Fault | **Неисправность** |
-
+| **перегрузка** | [pe-re-GROOZ-ka] | overload (system/network spike) | **перегрузку** |
+| **передача** | [pe-re-DA-cha] | transmission / data transfer | **передачу** |
 
 ---
 
@@ -185,6 +186,8 @@
 | **Медленно** | [MYED-len-na] | Slowly |
 | **Важно** | [VAZH-na] | Important / It is important |
 | **Даже** | [DA-zhe] | Even |
+| **вдруг** | [vdroog] | suddenly |
+| **условие** | [oo-SLO-vee-ye] | condition |
 
 ---
 
@@ -222,3 +225,5 @@
 | **Пробовать** | [PRO-ba-vat'] | To try |
 | **Обрабатывать** | [ab-ra-BA-ty-vat'] | To process |
 | **Зависеть (от)** | [za-vi-SYET' (ot)] | To depend (on) |
+| **перенаправлять** | [pe-re-na-pra-VLYATʹ] | to redirect |
+| **фиксировать** | [fi-ksi-RO-vatʹ] | to record / log / fix |
