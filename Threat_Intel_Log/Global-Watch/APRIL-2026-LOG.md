@@ -261,3 +261,108 @@ CVE-2025-55182 at CVSS 10.0 against one of the most widely deployed web framewor
 NEXUS Listener at version 3 with built-in analytics indicates an organized, iterative operation — not opportunistic tooling. The breadth of credential types collected, from cloud IAM to AI platform API keys, is consistent with a multi-use harvesting framework designed for flexible downstream exploitation.
 
 **For cloud-heavy organizations:** IMDS credential harvesting on AWS EC2 without IMDSv2 enforcement remains a persistent gap. Any Next.js deployment exposed to the internet without patching CVE-2025-55182 is an active target.
+
+---
+
+### Incident #006 — April 4, 2026
+
+**Target:** Children's Council of San Francisco
+
+**Sector:** Child Welfare / Social Services / Healthcare (PHI)
+
+**Threat Actor:** SafePay (Ransomware group)
+
+**Origin:** Unattributed
+
+**Source:** Paubox — April 2026
+
+**Attack Type:** Ransomware + Data Exfiltration (Double Extortion) — LockBit malware family
+
+**Labels:** Ransomware | SafePay | LockBit | Double Extortion | PHI | PII | Healthcare | Child Data | Social Services
+
+---
+
+## Analysis
+
+The Children's Council of San Francisco — a nonprofit providing child welfare and social services — was breached by SafePay, a ransomware group operating on a double-extortion model. The breach exposed Protected Health Information (PHI) of over 12,000 individuals. The specific initial access vector was not disclosed in reporting.
+
+SafePay operates using the LockBit malware family — a ransomware strain designed to encrypt victim files and disrupt all network operations until a ransom is paid. The double-extortion model adds a second layer of pressure: beyond encryption, SafePay exfiltrated sensitive data and threatened public release to coerce payment.
+
+The data exposed is particularly sensitive because it belongs to children — names and Social Security Numbers. Unlike adult victims, children rarely monitor their credit or identity, meaning fraudulent use of their SSNs can go undetected for years. This makes child PHI/PII breaches disproportionately damaging relative to their immediate visibility.
+
+The attack method was not detailed in available reporting, leaving the initial access vector unknown as of this entry.
+
+---
+
+## Key Technical Indicators:
+- **Malware family:** LockBit — file encryption + network disruption
+- **Model:** Double extortion — encryption + exfiltration + leak threat
+- **Data exposed:** children's names, Social Security Numbers (PHI/PII)
+- **Individuals affected:** 12,000+
+- **Initial access vector:** undisclosed
+- **Threat actor:** SafePay — origin unattributed
+
+---
+
+## Strategic Context
+
+This is the second healthcare-adjacent target in this log after AMHC (Qilin, March 27). The pattern is consistent — ransomware groups repeatedly target organizations that hold sensitive personal data on vulnerable populations, where operational disruption creates maximum pressure to pay.
+
+Child welfare organizations are a particularly soft target: they typically operate on nonprofit budgets with limited IT security investment, hold highly sensitive data on minors, and face severe regulatory and reputational consequences from any breach. SafePay's use of the LockBit malware family places them within a well-documented ransomware ecosystem — LockBit infrastructure has been the subject of international law enforcement action, yet affiliate groups continue operating variants independently.
+
+The double-extortion model has now appeared across multiple entries in this log — Qilin/AMHC, Qilin/Die Linke, Trio-Tech, and now SafePay/Children's Council. This is no longer an emerging tactic. It is the operational standard for financially motivated ransomware groups in 2026.
+
+---
+
+### Incident #007 — April 4, 2026
+
+**Target:** Rep. Randy Fine (R-FL) — US House of Representatives
+
+**Sector:** Government / Political / Legislative
+
+**Threat Actor:** Iranian Revolutionary Guard Corps (IRGC) — assessed
+
+**Origin:** Iran (state-directed)
+
+**Source:** CBS Austin | Fox News Digital | Washington Examiner — April 1, 2026
+
+**Attack Type:** Spear Phishing — Media Impersonation (Credential Harvesting)
+
+**Labels:** Phishing | Iran | IRGC | Political Targeting | Google Account | Media Impersonation | US-Iran Conflict | Geopolitical
+
+---
+
+## Analysis
+
+Florida Congressman Randy Fine was targeted by an Iranian state actor through a phishing email disguised as a Newsmax interview request, with the goal of gaining access to his personal Google account. His staffer initially interacted with the email before noticing the embedded links were non-functional. Capitol Police contacted Fine's office and attributed the outreach to an Iranian state actor. The FBI opened an investigation and confirmed agents were already familiar with the actors involved.
+
+The timing was not coincidental — the attack began literally the day after the US launched combat operations against Iran. Fine is a vocal pro-Israel, anti-Iran Republican and describes himself as the most visible Jewish Republican politician in America. He was a deliberate, high-value target — not random. This is a "revenge" type operation, Iran retaliating through cyber means against political figures aligned with the US-Israel military campaign.
+
+The goal was access to Fine's personal Google account — which could yield geolocation data, communications, and contacts. Fine noted the worst-case scenario was Iran tracking his physical location, which he said made him fear for his personal safety. The DOJ also seized four Iranian domains around this period — including Handala-linked domains — as part of a broader effort to disrupt Iranian cyber-enabled psychological operations.
+
+---
+
+## Key Technical Indicators:
+- **Attack vector:** spear phishing email impersonating Newsmax — sender domain "news-max.org" instead of legitimate newsmax.com
+- **Target:**.personal Google account — credential harvesting likely via OAuth or fake login redirect
+- **Interaction:** staffer engaged before identifying non-functional links
+- **Attribution:** US Capitol Police + FBI Cyber Task Force — IRGC assessed
+- **FBI investigation:**.opened, status not publicly disclosed
+- **DOJ seized domains:** handala-hack[.]to and handala-redwanted[.]to — linked to same Iranian campaign window
+- *No confirmed data exfiltrated — attack detected before completion*
+
+---
+
+## Strategic Context
+
+This incident sits within a clear escalation pattern — Iran targeting high-profile US political and law enforcement figures through personal account phishing in direct response to US-Iran military conflict. Fine joins FBI Director Kash Patel (Global-Watch MARCH-2026-LOG #001, Handala Hack Team) as a confirmed target in the same campaign window.
+
+**The pattern is consistent:** Iran is not hitting government systems directly — they are going after personal accounts of political figures, where security controls are weaker, geolocation data is accessible, and the psychological impact on the target is higher. Personal account compromise of a sitting Congressman carries intelligence value beyond the data itself — it signals reach, capability, and intent to intimidate.
+
+The use of media impersonation as a delivery mechanism is notable. Interview requests are routine for politicians — the social engineering vector exploits a normal workflow, not a vulnerability. This requires no technical sophistication, only good target research and convincing spoofing. Low cost, high reward if successful.
+
+---
+
+## Regional Context — Iran
+
+**This attack fits the established Iranian cyber-influence playbook:** time operations to geopolitical flashpoints, target individuals rather than systems, use psychological pressure alongside technical access attempts. Handala Hack Team — previously documented in this log — claimed the Stryker wiper attack and Kash Patel breach. The DOJ seizure of Handala-linked domains in the same period confirms active US counter-operations against this cluster.
