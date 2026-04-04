@@ -9,7 +9,7 @@
 
 ### | Representative Russian Sentences |
 
-## sentences 1-50
+## sentences 150
  **1️⃣. Expressing “I want to use…”**   
  Я хочу использовать телефон. | I want to use the phone.
 
@@ -148,7 +148,7 @@ eway works, and the user sees the update.
 
 **5️⃣0️⃣. Причина всегда есть.** | There is always a reason.
 
-## Sentences 51-101
+## Sentences 51100
 
 **5️⃣1️⃣. Я вижу проблему на странице.** | I see a problem on the page.
 
