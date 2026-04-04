@@ -1,7 +1,15 @@
 # 🇷🇺 Russian Language Foundation
 
+## 📌 Index
+- [Sentences 1–50](#sentences-150)
+- [Sentences 51–100](#sentences-51100)
+- [Sentences 101+](#sentences-101)
+
+---
+
 ### | Representative Russian Sentences |
 
+## sentences 1-50
  **1️⃣. Expressing “I want to use…”**   
  Я хочу использовать телефон. | I want to use the phone.
 
@@ -140,6 +148,8 @@ eway works, and the user sees the update.
 
 **5️⃣0️⃣. Причина всегда есть.** | There is always a reason.
 
+## Sentences 51-100
+
 **5️⃣1️⃣. Я вижу проблему на странице.** | I see a problem on the page.
 
 **5️⃣2️⃣. Аутентификация иногда не работает.** | The authentication sometimes does not work.
@@ -240,6 +250,8 @@ eway works, and the user sees the update.
 
 **1️⃣0️⃣0️⃣. Пользователь забывает пароль и видит ошибку доступа.** | The user forgets the password and sees an access error.
 
+## sentences 101+
+
 **1️⃣0️⃣1️⃣. Нужно запускать систему, если нет ответа.** | You need to launch the system if there is no response.
 
 **1️⃣0️⃣2️⃣. Я пробую исправлять ошибку, но система зависла.** | I try to fix the error but the system froze.
@@ -259,3 +271,11 @@ eway works, and the user sees the update.
 **1️⃣0️⃣9️⃣. Я проверяю условие доступа и сеть.** | I check the access condition and network.
 
 **1️⃣1️⃣0️⃣. Браузер фиксирует ошибку соединения.** | The browser logs a connection error.
+
+**1️⃣1️⃣1️⃣. Система обнаруживает утечку данных в кэше.** | The system detects a data leak in the cache.
+
+**1️⃣1️⃣2️⃣. Особенно важно восстанавливать данные после сбоя.** | It is especially important to restore data after a failure.
+
+**1️⃣1️⃣3️⃣. Ограничение доступа помогает предотвратить утечку.** | Access restriction helps prevent a leak.
+
+**1️⃣1️⃣4️⃣. Если кэш не работает, нужно восстанавливать систему.** | If the cache is not working, you need to restore the system.
