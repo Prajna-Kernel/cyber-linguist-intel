@@ -148,7 +148,7 @@ eway works, and the user sees the update.
 
 **5️⃣0️⃣. Причина всегда есть.** | There is always a reason.
 
-## Sentences 51-100
+## Sentences 51-101
 
 **5️⃣1️⃣. Я вижу проблему на странице.** | I see a problem on the page.
 
