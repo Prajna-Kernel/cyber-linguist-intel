@@ -96,6 +96,9 @@
 | **Неисправность** | [nye-is-prav-NOST'] | Malfunction / Fault | **Неисправность** |
 | **перегрузка** | [pe-re-GROOZ-ka] | overload (system/network spike) | **перегрузку** |
 | **передача** | [pe-re-DA-cha] | transmission / data transfer | **передачу** |
+| **Утечка** | [oo-TYET-ka] | Leak / Data leak | **Утечку** |
+| **Кэш** | [KESH] | Cache | **Кэш** |
+| **Ограничение** | [a-gra-ni-CHYE-ni-ye] | Limitation / Restriction | **Ограничение** |
 
 ---
 
@@ -188,6 +191,7 @@
 | **Даже** | [DA-zhe] | Even |
 | **вдруг** | [vdroog] | suddenly |
 | **условие** | [oo-SLO-vee-ye] | condition |
+| **Особенно** | [a-SO-be-na] | Especially |
 
 ---
 
@@ -227,3 +231,5 @@
 | **Зависеть (от)** | [za-vi-SYET' (ot)] | To depend (on) |
 | **перенаправлять** | [pe-re-na-pra-VLYATʹ] | to redirect |
 | **фиксировать** | [fi-ksi-RO-vatʹ] | to record / log / fix |
+| **Обнаруживать** | [ab-na-RU-zhi-vat'] | To detect |
+| **Восстанавливать** | [vas-sta-NAV-li-vat'] | To restore / To recover |
