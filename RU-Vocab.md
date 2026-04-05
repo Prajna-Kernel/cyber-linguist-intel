@@ -99,6 +99,8 @@
 | **Утечка** | [oo-TYET-ka] | Leak / Data leak | **Утечку** |
 | **Кэш** | [KESH] | Cache | **Кэш** |
 | **Ограничение** | [a-gra-ni-CHYE-ni-ye] | Limitation / Restriction | **Ограничение** |
+| **маршрутизация** | [mar-shroo-tee-ZA-tsi-ya] | routing | **маршрутизацию** |
+| **разрыв** | [raz-RYV] | disconnection / break | **разрыв** |
 
 ---
 
@@ -192,6 +194,8 @@
 | **вдруг** | [vdroog] | suddenly |
 | **условие** | [oo-SLO-vee-ye] | condition |
 | **Особенно** | [a-SO-be-na] | Especially |
+| **именно** | [IM-en-na] | exactly / precisely |
+| **состояние** | [sa-sta-YA-nee-ye] | state / condition |
 
 ---
 
@@ -233,3 +237,5 @@
 | **фиксировать** | [fi-ksi-RO-vatʹ] | to record / log / fix |
 | **Обнаруживать** | [ab-na-RU-zhi-vat'] | To detect |
 | **Восстанавливать** | [vas-sta-NAV-li-vat'] | To restore / To recover |
+| **подключаться** | [pat-klyu-CHA-tsa] | to connect (to a system/network) |
+| **прерываться** | [pre-ry-VA-tsa] | to be interrupted / break off |
