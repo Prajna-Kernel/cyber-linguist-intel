@@ -60,4 +60,46 @@ The German political party targeting pattern is now systematic across three elec
 
 ## Russian Language Context
 
-Qilin operates within the Russian-speaking cybercriminal ecosystem. Dark web forum activity, ransom notes, and leak site communications are conducted in Russian. The group's dual motivation — financial and political — is consistent with tolerated or loosely directed RaaS operations within the RU-nexus, where criminal groups pursue targets aligned with state interests without formal coordinati
+Qilin operates within the Russian-speaking cybercriminal ecosystem. Dark web forum activity, ransom notes, and leak site communications are conducted in Russian. The group's dual motivation — financial and political — is consistent with tolerated or loosely directed RaaS operations within the RU-nexus, where criminal groups pursue targets aligned with state interests without formal coordination.
+
+
+---
+
+### Incident #002 — April 6, 2026
+
+**Target:** CERT-UA and Ukrainian government entities
+
+**Sector:** Government / Cybersecurity
+
+**Threat Actor:** UAC-0255 (Russian-nexus)
+
+**Origin:** Russia (high confidence)
+
+**Source:** CERT-UA | Microsoft Threat Intelligence | The Hacker News - April 1, 2026
+
+**Attack Type:** Impersonation + malware delivery
+
+**Labels:** AGEWHEEZE malware | 1 million emails | Spear-phishing | Russian-nexus
+
+---
+
+## Analysis
+Russian-linked group UAC-0255 ran a massive impersonation campaign, sending over 1 million emails pretending to be official CERT-UA cybersecurity alerts. The emails delivered AGEWHEEZE malware for persistent access and data theft.
+
+---
+
+## Key Technical Indicators:
+**Delivery:** Mass spear-phishing emails impersonating CERT-UA
+**Malware:** AGEWHEEZE
+**Goal:** Persistent access and intelligence collection
+**Scale:** Over 1 million emails sent
+
+---
+
+## Strategic Context
+By impersonating CERT-UA itself, the attackers exploited trust in official channels during heightened tensions. This is a classic Russian-nexus operation aimed at long-term access inside Ukrainian government networks.
+
+---
+
+### Russian Language Context
+The phishing emails and AGEWHEEZE malware contained Russian-language strings and command structures typical of Russian-speaking actors. Excellent real-world practice for reading operational Russian used in actual threat communications.
