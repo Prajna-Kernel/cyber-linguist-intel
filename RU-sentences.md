@@ -279,3 +279,11 @@ eway works, and the user sees the update.
 **1️⃣1️⃣3️⃣. Ограничение доступа помогает предотвратить утечку.** | Access restriction helps prevent a leak.
 
 **1️⃣1️⃣4️⃣. Если кэш не работает, нужно восстанавливать систему.** | If the cache is not working, you need to restore the system.
+
+**1️⃣1️⃣5️⃣. Сервер выполняет маршрутизацию пакета.** | The server performs routing of the packet.
+
+**1️⃣1️⃣6️⃣. Соединение прерывается из-за разрыва.** | The connection is interrupted due to a disconnection.
+
+**1️⃣1️⃣7️⃣. Я подключаюсь к системе и проверяю состояние.** | I connect to the system and check the state.
+
+**1️⃣1️⃣8️⃣. Именно сервер фиксирует ошибку соединения.** | Exactly the server logs the connection error.
