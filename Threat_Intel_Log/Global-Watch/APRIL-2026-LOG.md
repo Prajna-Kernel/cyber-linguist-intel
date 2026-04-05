@@ -366,3 +366,42 @@ The use of media impersonation as a delivery mechanism is notable. Interview req
 ## Regional Context — Iran
 
 **This attack fits the established Iranian cyber-influence playbook:** time operations to geopolitical flashpoints, target individuals rather than systems, use psychological pressure alongside technical access attempts. Handala Hack Team — previously documented in this log — claimed the Stryker wiper attack and Kash Patel breach. The DOJ seizure of Handala-linked domains in the same period confirms active US counter-operations against this cluster.
+
+---
+
+### Incident #008 — April 6, 2026
+
+**Target:** Drift Protocol (DeFi lending platform)
+
+**Sector:** Cryptocurrency / DeFi
+
+**Threat Actor:** Lazarus Group (North Korean state-sponsored)
+
+**Origin:** North Korea (high confidence)
+
+**Source:** Chainalysis | PeckShield | The Hacker News - April 5, 2026
+
+**Attack Type:** Admin account compromise + fund drainage
+
+**Labels:** $285M stolen | Crypto Heist | State-sponsored | DeFi exploit
+
+---
+
+## Analysis
+North Korean Lazarus Group seized administrative control of Drift Protocol’s Security Council and drained roughly $285 million in crypto assets. They used compromised admin accounts to rapidly move funds through mixers and bridges. One of the largest DeFi heists of 2026.
+
+---
+
+## Key Technical Indicators:
+
+**Initial Access:** Compromised high-level admin accounts
+**Execution:** Direct wallet drainage and cross-chain transfers
+**Obfuscation:** Mixers and multiple bridges used for laundering
+**Scale:** $285 million drained in a short window
+
+---
+
+## Strategic Context
+State-sponsored actors are increasingly targeting DeFi for quick, high-value cash. Taking over “Security Council” powers shows they had deep internal access. This kind of attack puts more regulatory pressure on the entire crypto space.
+
+*These incidents helps in studying the universal C2 patterns and fund-movement TTPs used across different threat actors.*
