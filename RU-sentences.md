@@ -287,3 +287,11 @@ eway works, and the user sees the update.
 **1️⃣1️⃣7️⃣. Я подключаюсь к системе и проверяю состояние.** | I connect to the system and check the state.
 
 **1️⃣1️⃣8️⃣. Именно сервер фиксирует ошибку соединения.** | Exactly the server logs the connection error.
+
+**1️⃣1️⃣9️⃣. Система замедляется из-за узкого места.** | The system slows down because of a bottleneck.
+
+**1️⃣2️⃣0️⃣. Сервер ускоряет обработку данных.** | The server speeds up data processing.
+
+**1️⃣2️⃣1️⃣. Я проверяю хранилище и результат.** | I check the storage and the result.
+
+**1️⃣2️⃣2️⃣. Хотя сеть работает, соединение замедляется.** | Although the network works, the connection slows down.
