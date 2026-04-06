@@ -6,7 +6,7 @@
 
 ---
 
-### Incident #001 — April 1, 2026
+# Incident #001 — April 1, 2026
 
 **Target:** Government Networks — Southeast Asia (Multiple Entities)  
 
@@ -57,7 +57,7 @@ TrueConf is a Russian-developed secure video conferencing platform. Its update m
 
 ---
 
-### Incident #002 — April 3, 2026
+# Incident #002 — April 3, 2026
 
 **Target:** Trio-Tech International (Singapore subsidiary)
 
@@ -106,7 +106,7 @@ The SEC 8-K disclosure pattern is increasingly a monitoring surface for threat i
 
 ---
 
-### Incident #003 — April 3, 2026
+# Incident #003 — April 3, 2026
 
 **Target:** Cisco UCS C-Series / E-Series Servers, APIC, Catalyst Center, Secure Firewall Management Center Appliances, Secure Network Analytics Appliances, Catalyst 8300 Edge uCPE, 5000 Series ENCS
 
@@ -156,7 +156,7 @@ The timing of this disclosure follows Cisco's March 2026 patch for CVE-2026-2013
 
 ---
 
-### Incident #004 — April 4, 2026
+# Incident #004 — April 4, 2026
 
 **Target:** European Government and Diplomatic Missions (EU, NATO-affiliated) + Middle Eastern Government Entities
 
@@ -211,7 +211,7 @@ The OAuth redirect technique weaponizes legitimate Microsoft infrastructure to b
 
 ---
 
-### Incident #005 — April 4, 2026
+# Incident #005 — April 4, 2026
 
 **Target:**           Next.js / React Server Components deployments — 766 hosts across multiple geographies and cloud providers
 
@@ -264,7 +264,7 @@ NEXUS Listener at version 3 with built-in analytics indicates an organized, iter
 
 ---
 
-### Incident #006 — April 4, 2026
+# Incident #006 — April 4, 2026
 
 **Target:** Children's Council of San Francisco
 
@@ -314,7 +314,7 @@ The double-extortion model has now appeared across multiple entries in this log 
 
 ---
 
-### Incident #007 — April 4, 2026
+# Incident #007 — April 4, 2026
 
 **Target:** Rep. Randy Fine (R-FL) — US House of Representatives
 
@@ -369,7 +369,7 @@ The use of media impersonation as a delivery mechanism is notable. Interview req
 
 ---
 
-### Incident #008 — April 6, 2026
+# Incident #008 — April 6, 2026
 
 **Target:** Drift Protocol (DeFi lending platform)
 
@@ -405,3 +405,84 @@ North Korean Lazarus Group seized administrative control of Drift Protocol’s S
 State-sponsored actors are increasingly targeting DeFi for quick, high-value cash. Taking over “Security Council” powers shows they had deep internal access. This kind of attack puts more regulatory pressure on the entire crypto space.
 
 *These incidents helps in studying the universal C2 patterns and fund-movement TTPs used across different threat actors.*
+
+---
+
+# Incident #009 — April 7, 2026
+
+**Target:** FortiClient EMS Servers (Internet-facing instances)
+
+**Sector:** Enterprise Security Infrastructure
+
+**Threat Actor:** Unknown — active exploitation observed
+
+**Origin:** Unknown
+
+**Source:** The Register — April 6, 2026
+
+**Attack Type:** Authentication Bypass → Remote Code Execution
+
+**Labels:** Fortinet | EMS | Auth Bypass | RCE | Active Exploitation | Enterprise
+
+---
+
+## Analysis
+Fortinet FortiClient EMS is under active exploitation via an authentication bypass flaw in its API layer. The bug allows unauthenticated attackers to issue crafted requests and execute code on the EMS server.
+
+Since EMS acts as a central management point for endpoint security, compromise here is not isolated — it creates a pivot into all managed clients depending on deployment design.
+No user interaction required. Internet-exposed EMS instances are the primary risk surface.
+
+---
+
+## Key Technical Indicators:
+**Vector:** Unauthenticated API access
+**Flaw:** Improper access control (auth bypass)
+**Impact:** Remote code execution on EMS host
+**Access:** No credentials required
+**Exposure:** Internet-facing EMS servers
+**Status:** Exploited in the wild
+**Mitigation:** Patch only
+
+---
+
+## Strategic Context
+Security management infrastructure continues to be a high-value target. EMS sits in a position where compromise scales horizontally across endpoints.
+Rapid exploitation suggests either pre-disclosure access or fast weaponization. Either case → low patching tolerance window.
+
+---
+
+# Incident #010 — April 7, 2026
+
+**Target:** Microsoft 365 Accounts — Israel, UAE, EU/US Spillover
+
+**Sector:** Government / Enterprise / Cloud Identity
+
+**Threat Actor:** Iran-aligned (Unattributed cluster)
+
+**Origin:** Iran (assessed)
+
+**Source:** The Hacker News — April 6, 2026
+
+**Attack Type:** Password Spraying
+
+**Labels:** Iran | Password Spraying | M365 | Identity | Cloud | Credential Access
+
+---
+
+## Analysis
+Iran-linked actors conducted password spraying against Microsoft 365 accounts across multiple regions, with concentration in Israel and the UAE.
+The operation ran in multiple waves through March 2026. Low-frequency login attempts using common passwords allowed the activity to stay under typical detection thresholds.
+Targeting aligns with current regional conflict dynamics, indicating intelligence collection rather than opportunistic access.
+
+## Key Technical Indicators:
+**Technique:** Password spraying
+**Platform:** Microsoft 365
+**Method:** Common passwords across many accounts
+**Pattern:** Multi-wave campaign (March 2026)
+**Target regions:** Israel, UAE, spillover into US/EU
+**Detection:** Low-noise authentication traffic
+**Objective:** Account access → data visibility
+
+## Strategic Context
+Identity-layer attacks remain one of the lowest-cost, highest-success vectors. No exploit required — only weak auth posture.
+Geopolitical alignment + targeting pattern → structured collection effort, not random spraying.
