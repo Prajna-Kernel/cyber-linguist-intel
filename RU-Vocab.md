@@ -101,6 +101,8 @@
 | **Ограничение** | [a-gra-ni-CHYE-ni-ye] | Limitation / Restriction | **Ограничение** |
 | **маршрутизация** | [mar-shroo-tee-ZA-tsi-ya] | routing | **маршрутизацию** |
 | **разрыв** | [raz-RYV] | disconnection / break | **разрыв** |
+| **узкое место** | [OOZ-ka-ye MYES-ta] | bottleneck | **узкое место** |
+| **хранилище** | [khra-NEE-lee-shche] | storage | **хранилище** |
 
 ---
 
@@ -196,6 +198,8 @@
 | **Особенно** | [a-SO-be-na] | Especially |
 | **именно** | [IM-en-na] | exactly / precisely |
 | **состояние** | [sa-sta-YA-nee-ye] | state / condition |
+| **хотя** | [ha-TYA] | although / even though |
+| **результат** | [re-zul-TAT] | result |
 
 ---
 
@@ -239,3 +243,5 @@
 | **Восстанавливать** | [vas-sta-NAV-li-vat'] | To restore / To recover |
 | **подключаться** | [pat-klyu-CHA-tsa] | to connect (to a system/network) |
 | **прерываться** | [pre-ry-VA-tsa] | to be interrupted / break off |
+| **ускорять** | [oo-ska-RYATʹ] | to speed up / accelerate |
+| **замедляться** | [za-med-LYAT-sa] | to slow down |
