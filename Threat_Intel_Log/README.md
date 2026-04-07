@@ -25,4 +25,4 @@ Select a region below to view detailed incident dossiers and linguistic analysis
 * **Analysis Goal:** Identifying TTPs (Tactics, Techniques, and Procedures) to support national intelligence readiness.
 
 ---
-**Status:** `OPERATIONAL` | **Last Briefing:** April 7, 2026
+**Status:** `OPERATIONAL` | **Last Briefing:** April 8, 2026
