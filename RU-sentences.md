@@ -295,3 +295,11 @@ eway works, and the user sees the update.
 **1️⃣2️⃣1️⃣. Я проверяю хранилище и результат.** | I check the storage and the result.
 
 **1️⃣2️⃣2️⃣. Хотя сеть работает, соединение замедляется.** | Although the network works, the connection slows down.
+
+**1️⃣2️⃣3️⃣. Система выполняет запрос через очередь.** | The system executes the request through the queue.
+
+**1️⃣2️⃣4️⃣. Пакет отправляется на сервер сразу.** | The packet is sent to the server immediately.
+
+**1️⃣2️⃣5️⃣. Я проверяю отклик системы.** | I check the system response.
+
+**1️⃣2️⃣6️⃣. Нагрузка на сервер замедляет процесс.** | Load on the server slows down the process.
