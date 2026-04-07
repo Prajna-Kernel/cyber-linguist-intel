@@ -103,6 +103,8 @@
 | **разрыв** | [raz-RYV] | disconnection / break | **разрыв** |
 | **узкое место** | [OOZ-ka-ye MYES-ta] | bottleneck | **узкое место** |
 | **хранилище** | [khra-NEE-lee-shche] | storage | **хранилище** |
+| **очередь** | [O-che-redʹ] | queue (task queue) | **очередь** |
+| **отклик** | [at-KLEEK] | response (system response) | **отклик** |
 
 ---
 
@@ -200,6 +202,8 @@
 | **состояние** | [sa-sta-YA-nee-ye] | state / condition |
 | **хотя** | [ha-TYA] | although / even though |
 | **результат** | [re-zul-TAT] | result |
+| **сразу** | [SRA-zoo] | immediately |
+| **нагрузка** | [nah-GROOZ-ka] | load |
 
 ---
 
@@ -245,3 +249,5 @@
 | **прерываться** | [pre-ry-VA-tsa] | to be interrupted / break off |
 | **ускорять** | [oo-ska-RYATʹ] | to speed up / accelerate |
 | **замедляться** | [za-med-LYAT-sa] | to slow down |
+| **выполнять** | [vy-pol-NYATʹ] | to execute / perform |
+| **отправляться** | [at-prav-LYAT-sa] | to be sent |
