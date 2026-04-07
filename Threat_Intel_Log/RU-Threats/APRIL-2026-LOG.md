@@ -1,4 +1,4 @@
- 🛡️ Threat Intelligence Log — March 2026
+# 🛡️ Threat Intelligence Log — March 2026
 
 > Active monitoring of global cyber incidents.
 > Focus: Russian-language threat actors and European infrastructure.
@@ -6,7 +6,7 @@
 
 ---
 
-### Incident #001 — April 4, 2026
+# Incident #001 — April 4, 2026
 
 **Target:** Die Linke (The Left Party) — German Federal Parliament / State Governments
 
@@ -65,7 +65,7 @@ Qilin operates within the Russian-speaking cybercriminal ecosystem. Dark web for
 
 ---
 
-### Incident #002 — April 6, 2026
+# Incident #002 — April 6, 2026
 
 **Target:** CERT-UA and Ukrainian government entities
 
@@ -103,3 +103,12 @@ By impersonating CERT-UA itself, the attackers exploited trust in official chann
 
 ### Russian Language Context
 The phishing emails and AGEWHEEZE malware contained Russian-language strings and command structures typical of Russian-speaking actors. Excellent real-world practice for reading operational Russian used in actual threat communications.
+
+---
+
+# ⚠️ Cross-Sector Alert: REvil / GandCrab — Germany Attribution  
+**Status:** Attribution Confirmed — BKA Identification (April 6, 2026)  
+**Target:** German organizations (130+ historical ransomware cases)  
+**Note:** German authorities identified Russian nationals behind REvil and GandCrab operations.  
+
+👉 **[Read Full Technical Briefing in DE-Threats](../DE-Threats/APRIL-2026-LOG.md#incident-001)**
