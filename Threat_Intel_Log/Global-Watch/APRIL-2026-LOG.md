@@ -213,17 +213,17 @@ The OAuth redirect technique weaponizes legitimate Microsoft infrastructure to b
 
 # Incident #005 — April 4, 2026
 
-**Target:**           Next.js / React Server Components deployments — 766 hosts across multiple geographies and cloud providers
+**Target:** Next.js / React Server Components deployments — 766 hosts across multiple geographies and cloud providers
 
-**Sector:**           Web Application Infrastructure / Cloud / DevOps
+**Sector:** Web Application Infrastructure / Cloud / DevOps
 
-**Threat Actor:**     UAT-10608 (Unattributed — financially motivated, automated operations)
+**Threat Actor:** UAT-10608 (Unattributed — financially motivated, automated operations)
 
-**Origin:**           Unknown
+**Origin:** Unknown
 
-**Source:**           The Hacker News — April 2, 2026 | Cisco Talos (Malhotra & White)
+**Source:** The Hacker News — April 2, 2026 | Cisco Talos (Malhotra & White)
 
-**Attack Type:**      Vulnerability Exploitation (CVE-2025-55182) + Automated Credential Harvesting
+**Attack Type:** Vulnerability Exploitation (CVE-2025-55182) + Automated Credential Harvesting
 
 **Labels:** CVE-2025-55182 | CVSS 10.0 | Next.js | React2Shell | Credential Harvesting | Cloud | UAT-10608 | NEXUS Listener
 
@@ -393,11 +393,10 @@ North Korean Lazarus Group seized administrative control of Drift Protocol’s S
 ---
 
 ## Key Technical Indicators:
-
-**Initial Access:** Compromised high-level admin accounts
-**Execution:** Direct wallet drainage and cross-chain transfers
-**Obfuscation:** Mixers and multiple bridges used for laundering
-**Scale:** $285 million drained in a short window
+- **Initial Access:** Compromised high-level admin accounts
+- **Execution:** Direct wallet drainage and cross-chain transfers
+- **Obfuscation:** Mixers and multiple bridges used for laundering
+- **Scale:** $285 million drained in a short window
 
 ---
 
@@ -435,13 +434,13 @@ No user interaction required. Internet-exposed EMS instances are the primary ris
 ---
 
 ## Key Technical Indicators:
-**Vector:** Unauthenticated API access
-**Flaw:** Improper access control (auth bypass)
-**Impact:** Remote code execution on EMS host
-**Access:** No credentials required
-**Exposure:** Internet-facing EMS servers
-**Status:** Exploited in the wild
-**Mitigation:** Patch only
+- **Vector:** Unauthenticated API access
+- **Flaw:** Improper access control (auth bypass)
+- **Impact:** Remote code execution on EMS host
+- **Access:** No credentials required
+- **Exposure:** Internet-facing EMS servers
+- **Status:** Exploited in the wild
+- **Mitigation:** Patch only
 
 ---
 
@@ -475,14 +474,93 @@ The operation ran in multiple waves through March 2026. Low-frequency login atte
 Targeting aligns with current regional conflict dynamics, indicating intelligence collection rather than opportunistic access.
 
 ## Key Technical Indicators:
-**Technique:** Password spraying
-**Platform:** Microsoft 365
-**Method:** Common passwords across many accounts
-**Pattern:** Multi-wave campaign (March 2026)
-**Target regions:** Israel, UAE, spillover into US/EU
-**Detection:** Low-noise authentication traffic
-**Objective:** Account access → data visibility
+- **Technique:** Password spraying
+- **Platform:** Microsoft 365
+- **Method:** Common passwords across many accounts
+- **Pattern:** Multi-wave campaign (March 2026)
+- **Target regions:** Israel, UAE, spillover into US/EU
+- **Detection:** Low-noise authentication traffic
+- **Objective:** Account access → data visibility
 
 ## Strategic Context
 Identity-layer attacks remain one of the lowest-cost, highest-success vectors. No exploit required — only weak auth posture.
 Geopolitical alignment + targeting pattern → structured collection effort, not random spraying.
+
+---
+
+# Incident #011 — April 8, 2026
+
+**Target:** U.S. Critical Infrastructure — Water, Energy, Government Systems
+
+**Sector:** Industrial Control Systems / Critical Infrastructure
+
+**Threat Actor:** Iran-affiliated (Unspecified cluster)
+
+**Origin:** Iran (assessed)
+**Source:** BleepingComputer — April 7, 2026
+
+**Attack Type:** ICS Targeting — PLC Interaction / Disruption
+
+**Labels:** Iran | ICS | PLC | SCADA | Critical Infrastructure | OT
+
+---
+
+## Analysis
+U.S. agencies warned of Iranian-linked activity targeting internet-exposed PLCs in critical infrastructure environments.
+Attackers interacted directly with control systems, including modifying display data and accessing engineering files. Activity has been ongoing since March 2026 with confirmed operational impact.
+Focus remains on exposed industrial devices rather than traditional IT entry points.
+
+---
+
+## Key Technical Indicators:
+- **Target systems:** Internet-exposed PLCs (Rockwell / Allen-Bradley)
+- **Access:** Direct exposure (no internal foothold required)
+- **Actions:** HMI/SCADA display manipulation, Access to project/engineering files
+- **Sectors:** Water, Energy, Government
+- **Objective:** Disruption + reconnaissance
+
+---
+
+## Strategic Context
+Clear movement into OT-layer operations.
+Direct PLC interaction increases risk of physical impact. Exposure of industrial systems to the internet remains the primary failure point.
+
+---
+
+# Incident #012 — April 8, 2026
+**Target:** Snowflake Customer Environments (Multiple Organizations)
+
+**Sector:** Cloud / SaaS / Data Platforms
+
+**Threat Actor:** Unknown (likely financially motivated)
+
+**Origin:** Unknown
+
+**Source:** BleepingComputer — April 7, 2026
+
+**Attack Type:** Supply Chain — Credential-Based Data Theft
+
+**Labels:** Snowflake | SaaS | Data Theft | Credentials | Supply Chain | Cloud
+
+---
+
+## Analysis
+Multiple Snowflake customers were impacted following a breach of a SaaS integrator with access to customer environments.
+No vulnerability in Snowflake itself was reported. Access was gained through third-party credentials, allowing attackers to reach downstream environments.
+Pattern aligns with earlier Snowflake-related incidents centered on weak authentication and over-trusted integrations.
+
+---
+
+## Key Technical Indicators:
+- **Initial access:** Compromised SaaS integrator
+- **Attack path:** Third-party access → customer environments
+- **Method:** Credential-based access
+- **Impact:** Data exfiltration across multiple orgs
+- **Weak point:** Lack of strict access controls / MFA
+- **Pattern:** Repeated across Snowflake ecosystem
+
+---
+
+## Strategic Context
+This is a SaaS-layer supply chain issue.
+No exploit required — access is inherited through trusted integrations. Identity and access control remain the weakest link in cloud environments.
