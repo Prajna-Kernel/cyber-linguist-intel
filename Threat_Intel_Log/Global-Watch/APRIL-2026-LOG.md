@@ -564,3 +564,117 @@ Pattern aligns with earlier Snowflake-related incidents centered on weak authent
 ## Strategic Context
 This is a SaaS-layer supply chain issue.
 No exploit required — access is inherited through trusted integrations. Identity and access control remain the weakest link in cloud environments.
+
+---
+
+# Incident #013 — April 8, 2026
+
+**Target:** Apache ActiveMQ Classic — enterprise deployments across financial services, healthcare, government, e-commerce
+**Sector:** Enterprise Middleware / Critical Infrastructure
+**Threat Actor:** N/A — Vulnerability Disclosure
+**Origin:** N/A
+**Source:** BleepingComputer — April 8, 2026 | Horizon3.ai Advisory | Infosecurity Magazine
+**Vulnerability Class:** Remote Code Execution via Code Injection (Jolokia JMX-HTTP Bridge) — no confirmed active exploitation as of disclosure
+**Labels:** CVE-2026-34197 | RCE | Apache ActiveMQ | Jolokia | Code Injection | Default Credentials | Unauthenticated RCE | AI-Discovered | Patch Required
+
+---
+
+## Analysis
+
+A 13-year-old remote code execution vulnerability in Apache ActiveMQ Classic was discovered by Horizon3.ai researcher Naveen Sunkavally — not through manual code review, but through Anthropic's Claude AI model using nothing more than a few basic prompts. The model identified the vulnerability in under 10 minutes, a task that would typically take human researchers weeks. Sunkavally described the discovery as "80% Claude, 20% gift-wrapping by a human."
+
+The flaw, tracked as CVE-2026-34197, sits in the Jolokia JMX-HTTP bridge exposed via ActiveMQ's web console at /api/jolokia/ on port 8161. An attacker can invoke the addNetworkConnector() management operation with a crafted vm:// URI pointing to an attacker-controlled Spring XML configuration file. When processed, ActiveMQ fetches and executes that file — granting the attacker full OS-level command execution on the broker's JVM.
+
+Under normal conditions, exploitation requires credentials. But default credentials (admin:admin) are widespread across enterprise deployments, making the barrier effectively low. More critically, on versions 6.0.0 through 6.1.1, a separate flaw (CVE-2024-32114) accidentally stripped authentication from the /api/* path entirely — making CVE-2026-34197 a fully unauthenticated RCE on those builds.
+
+The bug is 13 years old. That means it has existed across every major enterprise deployment of ActiveMQ Classic since the software's early versions. Whether it was silently exploited before this disclosure is unknown — and that uncertainty is the most significant aspect of this finding.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-34197 — improper input validation + code injection in Jolokia JMX-HTTP bridge
+- **Endpoint:** /api/jolokia/ on port 8161 (web console)
+- **Exploit path:** POST to Jolokia → addNetworkConnector() with crafted vm:// URI → brokerConfig=xbean:http:// → remote Spring XML fetch → arbitrary OS command execution
+- **Authentication:** required in most builds — bypassed via default credentials (admin:admin)
+- **Unauthenticated RCE path:** versions 6.0.0–6.1.1 via CVE-2024-32114 (auth stripped from /api/* path)
+- **Affected versions:** ActiveMQ Classic before 5.19.4 and 6.0.0–6.2.2
+- **Patched versions:** 5.19.4 and 6.2.3
+- **Public PoC:** 1 available on GitHub as of disclosure
+- **Discovery method:** Anthropic Claude AI — AI-assisted source code review
+- **
+- Detection indicators:** vm:// URIs with brokerConfig=xbean:http in broker logs, unexpected POST to /api/jolokia/ with addNetworkConnector, unusual outbound HTTP from ActiveMQ process
+
+---
+
+> **Entry Type:** Vulnerability Disclosure — no confirmed threat actor, no confirmed active exploitation. MITRE ATT&CK tags not applicable.
+
+---
+## Strategic Context
+
+The most important question this incident raises is not technical — it's temporal. A 13-year-old flaw in widely deployed enterprise middleware means this vulnerability has existed through countless unmonitored deployments, ransomware waves, and nation-state campaigns. ActiveMQ has a documented exploitation history — CVE-2016-3088 and CVE-2023-46604 are both on CISA's KEV catalog. The possibility that threat actors discovered and quietly used CVE-2026-34197 before this public disclosure cannot be ruled out.
+
+The discovery method is also significant. Claude AI identified a complex vulnerability chain — the interaction between Jolokia, JMX MBeans, and the VM transport layer — in 10 minutes. This is not a simple bug. It required understanding how multiple legitimate features interact to create an unintended exploit path. The fact that AI can now identify this class of vulnerability at speed means both defenders and attackers have access to a capability that fundamentally changes the economics of vulnerability research.
+
+For organizations running ActiveMQ: patch to 5.19.4 or 6.2.3 immediately, audit all deployments for default credential usage, and restrict external access to the web console and Jolokia endpoint.
+
+---
+
+# Incident #014 — April 8, 2026
+
+**Target:** WordPress sites running Ninja Forms File Uploads extension — ~50,000 active installations
+
+**Sector:** Web Application Infrastructure / CMS
+
+**Threat Actor:** Unattributed — opportunistic automated exploitation
+
+**Origin:** Unknown
+
+**Source:** BleepingComputer — April 8, 2026 | Wordfence (Defiant) | Sélim Lanouar (whattheslime)
+
+**Attack Type:** Unauthenticated Arbitrary File Upload → Remote Code Execution (Path Traversal + PHP Webshell)
+
+**Labels:** CVE-2026-0740 | CVSS 9.8 | WordPress | Ninja Forms | File Upload | RCE | Webshell | Path Traversal | Unauthenticated | Active Exploitation
+
+---
+
+## Analysis
+
+A critical unauthenticated file upload vulnerability in the Ninja Forms File Uploads premium WordPress extension was discovered by researcher Sélim Lanouar and submitted to Wordfence's bug bounty program on January 8, 2026. The flaw, CVE-2026-0740 (CVSS 9.8), is now actively exploited — Wordfence's firewall blocked over 3,600 exploitation attempts in a single 24-hour period as of reporting.
+
+The vulnerability exists because the plugin validates the file type of the source filename during upload, but fails to validate the extension of the destination filename during the move operation. An unauthenticated attacker can manipulate the destination path via path traversal, bypassing the extension allowlist entirely and writing a malicious PHP file — a webshell — directly to the server's web root. Once the webshell is accessible, the attacker has full remote code execution on the underlying web server.
+
+From that position, the attacker can execute terminal commands, steal database contents, inject malware into site pages, redirect visitors to malicious sites, or use the compromised server to pivot and launch further attacks. No login, no credentials, no prior access required — just a crafted upload request.
+
+A partial fix was released in version 3.3.25 on February 10, 2026. The full patch arrived in version 3.3.27 on March 19, 2026. Any installation running up to 3.3.26 remains vulnerable.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-0740 — CVSS 9.8, unauthenticated arbitrary file upload
+- **Vulnerable function:** NF_FU_AJAX_Controllers_Uploads::handle_upload()
+- **Root cause:** file type validated on source filename only — destination filename extension not validated during move_uploaded_file()
+- **Attack method:** path traversal on destination filename → .php extension bypass → webshell written to web root
+- **Authentication required:** none — exploitable via unauthenticated AJAX request
+- **Active exploitation:** 3,600+ blocked attempts in 24 hours (Wordfence)
+- **Affected versions:** Ninja Forms File Uploads up to and including 3.3.26
+- **Patched version:** 3.3.27 (March 19, 2026)
+- **Plugin scope:** ~50,000 active WordPress installations, ~90,000 customers
+- **Discovery:** Sélim Lanouar via Wordfence Bug Bounty Program — $2,145 bounty awarded
+
+---
+
+## MITRE ATT&CK tactics
+
+- **TA0001 — Initial Access** — unauthenticated file upload attempted via path traversal + PHP webshell; 3,600+ attempts blocked by Wordfence firewall; no confirmed successful compromise
+
+---
+
+## Strategic Context
+
+Ninja Forms has 600,000+ downloads and its File Upload extension serves 90,000 customers. A single malicious PHP file uploaded to any one of those sites becomes a persistent foothold — and because this is a premium extension distributed outside the standard WordPress.org update pipeline, patch adoption is likely slower than free plugins. Many administrators may not know the update is available.
+
+The exploitation pattern mirrors Global-Watch April #005 — UAT-10608's automated scanning of Next.js deployments via CVE-2025-55182. Both involve unauthenticated attackers targeting public-facing web infrastructure at scale using automated tooling. The difference is target surface: Next.js hits cloud-hosted applications; Ninja Forms hits the WordPress ecosystem, which powers a significant portion of the global web. The damage potential from a single uploaded webshell — data theft, malware injection, server pivoting — is disproportionate to the simplicity of the attack.
+
+For WordPress administrators: update to Ninja Forms File Uploads 3.3.27 immediately and verify the version directly in the dashboard. Do not assume auto-update has applied.
+
+---
