@@ -303,3 +303,11 @@ eway works, and the user sees the update.
 **1️⃣2️⃣5️⃣. Я проверяю отклик системы.** | I check the system response.
 
 **1️⃣2️⃣6️⃣. Нагрузка на сервер замедляет процесс.** | Load on the server slows down the process.
+
+**1️⃣2️⃣7️⃣. Система распределяет трафик через узел связи.** | The system distributes traffic through the communication node.
+
+**1️⃣2️⃣8️⃣. Сервер перегружает процесс и возникает ошибка.** | The server overloads the process and an error occurs.
+
+**1️⃣2️⃣9️⃣. Я проверяю источник и соединение.** | I check the source and the connection.
+
+**1️⃣3️⃣0️⃣. Сеть медленная, зато система работает.** | The network is slow, but the system works.
