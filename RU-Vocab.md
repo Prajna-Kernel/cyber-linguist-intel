@@ -105,6 +105,8 @@
 | **хранилище** | [khra-NEE-lee-shche] | storage | **хранилище** |
 | **очередь** | [O-che-redʹ] | queue (task queue) | **очередь** |
 | **отклик** | [at-KLEEK] | response (system response) | **отклик** |
+| **отказоустойчивость** | [at-kaz-oo-STOY-chee-vastʹ] | fault tolerance | **отказоустойчивость** |
+| **узел связи** | [oo-ZYOL SVA-zi] | communication node | **узел связи** |
 
 ---
 
@@ -251,3 +253,5 @@
 | **замедляться** | [za-med-LYAT-sa] | to slow down |
 | **выполнять** | [vy-pol-NYATʹ] | to execute / perform |
 | **отправляться** | [at-prav-LYAT-sa] | to be sent |
+| **распределять** | [ras-pre-de-LYATʹ] | to distribute |
+| **перегружать** | [pe-re-groo-ZHATʹ] | to overload |
