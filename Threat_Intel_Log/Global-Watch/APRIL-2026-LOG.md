@@ -678,3 +678,72 @@ The exploitation pattern mirrors Global-Watch April #005 — UAT-10608's automat
 For WordPress administrators: update to Ninja Forms File Uploads 3.3.27 immediately and verify the version directly in the dashboard. Do not assume auto-update has applied.
 
 ---
+
+# Incident #015 — April 9, 2026
+
+**Target:** Bitcoin Depot Inc. — corporate digital asset settlement accounts (~50.9 BTC stolen)
+
+**Sector:** Cryptocurrency / Financial Technology
+
+**Threat Actor:** Unknown — unattributed, financially motivated
+
+**Origin:** Unknown
+
+**Source:** BleepingComputer — April 9, 2026 | SEC Form 8-K Filing | The Record | ZachXBT (on-chain analysis)
+
+**Attack Type:** Credential Compromise — Digital Asset Settlement Account Takeover
+
+**Labels:** Cryptocurrency | Credential Theft | Bitcoin | SEC Disclosure | Settlement Account | Financial | ATM Infrastructure | 8-K
+
+---
+
+## Analysis
+
+Bitcoin Depot, operator of over 25,000 Bitcoin ATMs and BDCheckout locations worldwide, disclosed on April 8 that attackers breached its corporate IT systems on March 23, 2026 and stole approximately 50.903 BTC (valued at ~$3.665 million) from company-controlled settlement wallets. The breach was disclosed via SEC Form 8-K filing after the company determined the incident was material on April 6.
+
+Attackers gained access to credentials associated with Bitcoin Depot's digital asset settlement accounts — the internal wallets used for settling ATM transactions across its network. Using those credentials, they transferred Bitcoin out of company wallets before their access was blocked. On-chain researcher ZachXBT traced the suspicious outflows to March 20 — three days before Bitcoin Depot detected the breach — with stolen funds transferred to KuCoin deposit addresses.
+
+The breach was contained to the corporate environment. Customer-facing platforms, ATM infrastructure, user data, and customer funds were confirmed unaffected. No customer PII was accessed. The attack vector and initial access method remain undisclosed.
+
+This is at least the second known security incident at Bitcoin Depot. In 2023, hackers accessed personal data of approximately 58,000 customers in a separate breach.
+
+---
+
+## Key Technical Indicators:
+- **Breach date:** March 20, 2026 (on-chain) — detected March 23
+- **Disclosed:** April 8, 2026 via SEC Form 8-K
+- **Stolen:** 50.903 BTC (~$3.665 million at time of disclosure)
+- **Method:** credential compromise of digital asset settlement accounts
+- **Funds destination:** KuCoin deposit addresses (ZachXBT on-chain tracing)
+- **Customer platforms:** unaffected — breach limited to corporate environment
+- **Customer data:** no evidence of PII access or exfiltration
+- **Initial access vector:** undisclosed — investigation ongoing
+- *Law enforcement notified*
+- *Cyber insurance: active — coverage may not fully compensate losses*
+- **Prior incident:** 2023 breach exposed data of 58,000 customers
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — corporate IT systems breached; initial access vector undisclosed
+- **TA0006 — Credential Access** — settlement account credentials obtained; method undisclosed
+- **TA0040 — Impact** — 50.903 BTC transferred to attacker-controlled KuCoin deposit addresses
+
+---
+
+## Strategic Context
+
+The stolen amount — $3.665 million — is small relative to recent crypto thefts (Drift Protocol lost $285 million in April 2026; $3.4 billion was stolen from crypto companies across all of 2025). But the target is significant: Bitcoin Depot operates the largest Bitcoin ATM network in the US, processes $615 million in annual revenue, and sits at the intersection of physical cash infrastructure and cryptocurrency settlement. Compromise of settlement credentials is a direct path to fund theft with low technical complexity — no smart contract exploit, no blockchain attack, just credential access to internal wallets.
+
+The three-day gap between actual theft (March 20) and detection (March 23) indicates limited real-time monitoring of settlement wallet activity — a gap that is common in organizations that treat crypto wallets as operational infrastructure rather than high-security financial accounts requiring continuous anomaly detection.
+
+The SEC 8-K disclosure pattern mirrors Trio-Tech (Global-Watch APRIL-2026-LOG #002) — both companies initially assessed the incident, then filed materiality determinations days later. The disclosure pipeline is increasingly a real-time intelligence surface for tracking breach developments.
+
+---
+
+# ⚠️ Cross-Sector Alert: ChipSoft Ransomware — Dutch National Healthcare EHR Supply Chain
+- **Status:** Confirmed Attack — Z-CERT Advisory Active (April 7, 2026)
+- **Target:** ChipSoft — EHR provider to 70-80% of Dutch hospitals; 11 hospitals disconnected patient portals
+- **Note:** Unattributed ransomware hit the dominant Dutch healthcare IT vendor, triggering national-level VPN disconnect advisory. Patient data exfiltration not ruled out. Single-vendor dependency exposed as critical infrastructure risk.
+
+👉 **[Read Full Technical Briefing in DE-Threats](../DE-Threats/APRIL-2026-LOG.md#incident-002)**
