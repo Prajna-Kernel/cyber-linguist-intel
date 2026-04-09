@@ -107,6 +107,9 @@
 | **отклик** | [at-KLEEK] | response (system response) | **отклик** |
 | **отказоустойчивость** | [at-kaz-oo-STOY-chee-vastʹ] | fault tolerance | **отказоустойчивость** |
 | **узел связи** | [oo-ZYOL SVA-zi] | communication node | **узел связи** |
+| **пропуск** | [pra-POOSK] | omission / skipped element | **пропуск** |
+| **объём** | [ab-YOM] | volume (data size) | **объём** |
+
 
 ---
 
@@ -206,6 +209,8 @@
 | **результат** | [re-zul-TAT] | result |
 | **сразу** | [SRA-zoo] | immediately |
 | **нагрузка** | [nah-GROOZ-ka] | load |
+| **лишь** | [leesh] | only / merely | 
+| **фактор** | [FAK-tar] | factor
 
 ---
 
@@ -255,3 +260,5 @@
 | **отправляться** | [at-prav-LYAT-sa] | to be sent |
 | **распределять** | [ras-pre-de-LYATʹ] | to distribute |
 | **перегружать** | [pe-re-groo-ZHATʹ] | to overload |
+| **сжимать** | [szhy-MATʹ] | to compress |
+| **расширять** | [ras-she-RYATʹ] | to expand |
