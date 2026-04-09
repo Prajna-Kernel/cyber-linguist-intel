@@ -1,4 +1,4 @@
-# 🛡️ Threat Intelligence Log — March 2026
+# 🛡️ Threat Intelligence Log — April 2026
 
 > Active monitoring of global cyber incidents.
 > Focus: Russian-language threat actors and European infrastructure.
@@ -112,3 +112,75 @@ The phishing emails and AGEWHEEZE malware contained Russian-language strings and
 **Note:** German authorities identified Russian nationals behind REvil and GandCrab operations.  
 
 👉 **[Read Full Technical Briefing in DE-Threats](../DE-Threats/APRIL-2026-LOG.md#incident-001)**
+
+---
+
+# Incident #003 — April 9, 2026
+
+**Target:** Adobe Reader users — targeted via malicious PDF documents (Russian oil & gas sector lures)
+
+**Sector:** End-User Software / Cross-Sector (any Adobe Reader user)
+
+**Threat Actor:** Unknown — unattributed, assessed as targeted operation based on Russian-language lures
+
+**Origin:** Unattributed — Russian nexus assessed (lure content references Russian oil & gas current events)
+
+**Source:** BleepingComputer — April 9, 2026 | EXPMON (Haifei Li) | The Register | The Hacker News
+
+**Attack Type:** Zero-Day Exploitation — Fingerprinting-style PDF exploit, data exfiltration + potential RCE/SBX
+
+**Labels:**  Zero-Day | Adobe Reader | PDF | Unpatched | JavaScript | API Abuse | Fingerprinting | RCE | SBX | Russian Lure | Oil & Gas | No Patch Available
+
+---
+
+## Analysis
+
+A zero-day vulnerability in Adobe Reader has been actively exploited since at least December 2025 — over four months before public disclosure. The flaw was discovered by Haifei Li, founder of sandbox-based exploit detection platform EXPMON, who described it as a highly sophisticated fingerprinting-style exploit. The first malicious sample, named "Invoice540.pdf," appeared on VirusTotal on November 28, 2025. A second sample was uploaded March 23, 2026.
+
+The exploit triggers automatically upon opening the PDF — no additional user interaction required. It runs heavily obfuscated JavaScript that abuses two privileged Acrobat APIs: util.readFileIntoStream (file access) and RSS.addFeed (web feed handling). These are used to harvest local system data — OS information, language settings, file paths — and exfiltrate it to an attacker-controlled server (169.40.2[.]68:45191). The first stage is reconnaissance: profiling the victim before deciding whether to deploy follow-on payloads including RCE and sandbox escape (SBX) exploits.
+
+The exploit works on the latest version of Adobe Reader. No patch is available as of reporting — Adobe was notified on April 7, 2026.
+
+Researcher Gi7w0rm identified that the lure documents contain Russian-language content referencing current events in Russia's oil and gas sector — strongly suggesting targeted operation against individuals in or connected to that industry. This is not confirmed attribution but points to deliberate target selection.
+
+---
+
+## Key Technical Indicators:
+- **Vulnerability:** unpatched zero-day in Adobe Reader — confirmed working on latest version
+- **Trigger:** automatic on PDF open — zero additional user interaction
+- **APIs abused:** util.readFileIntoStream, RSS.addFeed (privileged Acrobat APIs)
+- **Stage 1:** data exfiltration — OS info, language settings, file paths → C2 server 169.40.2[.]68:45191
+- **Stage 2 (potential):** RCE and sandbox escape exploits delivered via follow-on JavaScript
+- **Lure filenames:** Invoice540.pdf (social engineering via fake invoice)
+- **Lure content:** Russian-language, referencing Russian oil & gas current events
+- **First VirusTotal sample:** November 28, 2025
+- **Second sample:** March 23, 2026
+- **Adobe notified:** April 7, 2026
+- *No patch available as of disclosure*
+- **Network detection:** block HTTP/HTTPS traffic containing "Adobe Synchronizer" in User-Agent header
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — zero-day exploit delivered via malicious PDF (Invoice540.pdf); triggers automatically on open; no user interaction required beyond opening the file
+- **TA0002 — Execution** — obfuscated JavaScript executes automatically within Adobe Reader upon PDF open; abuses util.readFileIntoStream and RSS.addFeed APIs
+- **TA0007 — Discovery** — Stage 1 harvests local system data: OS information, language settings, file paths; victim profiled before follow-on payload decision
+- **TA0011 — Command & Control** — exfiltrated data transmitted to attacker-controlled server 169.40.2[.]68:45191
+- **TA0010 — Exfiltration** — OS info, language settings, and file paths exfiltrated to C2 server as part of fingerprinting stage
+- **TA0002 — Execution (Stage 2, potential)** — RCE and sandbox escape payloads assessed as follow-on capability; not confirmed delivered — included due to documented design intent
+
+---
+
+## Strategic Context
+
+This exploit sat undetected for at least four months while actively harvesting data from victims. The fingerprinting-style approach — recon first, payload later — is characteristic of targeted intelligence collection operations rather than mass opportunistic attacks. The attacker is profiling victims before committing to full compromise, which conserves the zero-day and reduces detection risk.
+
+Russian-language lures tied to oil and gas sector events narrow the likely target set considerably — energy sector professionals, executives, or analysts consuming Russia-related industry documents. This is a high-value target profile consistent with state-directed or state-adjacent intelligence collection.
+
+The absence of a patch at time of disclosure makes this immediately actionable for defenders: do not open PDFs from untrusted sources, and block the "Adobe Synchronizer" User-Agent string at the network layer until Adobe releases a fix.
+
+---
+
+## Russian Language Context
+
+The lure documents are crafted in Russian and reference ongoing events in Russia's oil and gas industry — a deliberate targeting signal. The use of Russian-language social engineering to deliver a zero-day exploit is consistent with operations targeting energy sector intelligence in the Russian-speaking ecosystem, whether by state actors, contractors, or criminal groups with state-adjacent tasking.
