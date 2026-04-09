@@ -311,3 +311,11 @@ eway works, and the user sees the update.
 **1️⃣2️⃣9️⃣. Я проверяю источник и соединение.** | I check the source and the connection.
 
 **1️⃣3️⃣0️⃣. Сеть медленная, зато система работает.** | The network is slow, but the system works.
+
+**1️⃣3️⃣1️⃣. Система сжимает объём данных.** | The system compresses the data volume.
+
+**1️⃣3️⃣2️⃣. Сервер расширяет канал и поток.** | The server expands the channel and stream.
+
+**1️⃣3️⃣3️⃣. Я проверяю пропуск в процессе.** | I check an omission in the process.
+
+**1️⃣3️⃣4️⃣. Лишь фактор нагрузки влияет на систему.** | Only the load factor affects the system.
