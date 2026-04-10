@@ -319,3 +319,11 @@ eway works, and the user sees the update.
 **1️⃣3️⃣3️⃣. Я проверяю пропуск в процессе.** | I check an omission in the process.
 
 **1️⃣3️⃣4️⃣. Лишь фактор нагрузки влияет на систему.** | Only the load factor affects the system.
+
+**1️⃣3️⃣5️⃣. Система накапливает пропуск пакетов и почти не работает.** | The system accumulates packet loss and almost stops working.
+
+**1️⃣3️⃣6️⃣. Пропускная задержка зависит от давления на сервер.** | Latency delay depends on the pressure on the server.
+
+**1️⃣3️⃣7️⃣. Если система передаёт данные медленно, нужно проверить пропуск пакетов.** | If the system transmits data slowly, you need to check packet loss.
+
+**1️⃣3️⃣8️⃣. Почти всегда пропускная задержка есть в удалённом доступе.** | There is almost always latency delay in remote access.
