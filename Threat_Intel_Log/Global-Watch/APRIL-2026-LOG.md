@@ -747,3 +747,131 @@ The SEC 8-K disclosure pattern mirrors Trio-Tech (Global-Watch APRIL-2026-LOG #0
 - **Note:** Unattributed ransomware hit the dominant Dutch healthcare IT vendor, triggering national-level VPN disconnect advisory. Patient data exfiltration not ruled out. Single-vendor dependency exposed as critical infrastructure risk.
 
 👉 **[Read Full Technical Briefing in DE-Threats](../DE-Threats/APRIL-2026-LOG.md#incident-002)**
+
+---
+
+# Incident #016 — April 11, 2026
+
+**Target:** US Critical Infrastructure — Water & Wastewater Systems (WWS), Energy Sector, Government Services & Facilities (including local municipalities)
+
+**Sector:** Operational Technology / Industrial Control Systems / Critical Infrastructure
+
+***Threat Actor:** Iranian-affiliated APT group — assessed IRGC-linked (CyberAv3ngers overlap pattern)
+
+**Origin:** Iran (state-directed — IRGC Cyber Electronic Command assessed)
+
+**Source** BleepingComputer — April 7, 2026 | CISA Joint Advisory AA26-097A | FBI | NSA | EPA | DOE | US Cyber Command | CNN | The Register
+
+**Attack Type:** OT/ICS Exploitation — Internet-Exposed PLC Manipulation via Legitimate Configuration Software
+
+**Labels:** Iran | IRGC | PLC | ICS | OT | SCADA | HMI | Rockwell Automation | Allen-Bradley | Critical Infrastructure | CISA Advisory | WWS | Energy | Geopolitical | Wiper Attempt
+
+---
+
+## Analysis
+
+Since at least March 2026, Iranian-affiliated APT actors have been systematically targeting internet-exposed Programmable Logic Controllers (PLCs) manufactured by Rockwell Automation/Allen-Bradley across US critical infrastructure — water and wastewater systems, energy facilities, and government services. The campaign was confirmed in a joint advisory issued April 7 by the FBI, CISA, NSA, EPA, DOE, and US Cyber Command — one of the most senior multi-agency responses seen for an OT-focused threat.
+
+The attack method is deliberately low-sophistication. Actors used leased overseas infrastructure and legitimate Rockwell Automation configuration software — Studio 5000 Logix Designer — to connect directly to PLCs that were left internet-exposed, often with default or weak credentials. Once connected, they extracted project files, manipulated SCADA and HMI display data, and installed remote access software for persistent foothold. Some victims experienced operational disruption and financial losses. Actors also attempted to deploy wiper malware in some cases, though success is unconfirmed.
+
+According to Censys, approximately 3,900 of over 5,000 globally exposed Allen-Bradley devices are in the US — consistent with Rockwell's dominant North American market position. These devices have been sitting internet-accessible for years. The Iranian actors did not need sophisticated tools — they needed a target list and an internet connection.
+
+This is not a new Iranian capability. It follows the 2023 CyberAv3ngers campaign that compromised at least 75 Unitronics PLC devices across US water facilities using the same opportunistic model. The current campaign is the same playbook, accelerated — broader scope, faster pace, more sectors.
+
+---
+
+## Key Technical Indicators:
+- **Target devices:** Rockwell Automation CompactLogix and Micro850 PLCs — internet-exposed on public internet
+- **Access method:** leased overseas C2 infrastructure + legitimate Studio 5000 Logix Designer configuration software
+- **Exploitation:** default/weak credentials on internet-facing management interfaces
+- **Actions on target:** project file extraction, SCADA/HMI display manipulation, remote access software installation
+- **Wiper malware:** attempted in some cases — success unconfirmed
+- **Confirmed impact:** operational disruption and financial losses at multiple victim sites
+- *#Exposed devices:** ~3,900 US-based Allen-Bradley devices internet-accessible (Censys)
+- **IOCs:** IP addresses published in CISA advisory AA26-097A Table 1
+- **Advisory:** CISA AA26-097A — April 7, 2026
+
+---
+
+**MITRE ATT&CK Tactics:**
+- **TA0001 — Initial Access** — internet-exposed PLCs accessed via legitimate Studio 5000 Logix Designer configuration software; default/weak credentials exploited
+- **TA0006 — Credential Access** — default and weak credentials on internet-facing PLC management interfaces leveraged for access
+- **TA0009 — Collection** — PLC project files extracted from compromised devices
+- **TA0005 — Defense Evasion** — legitimate vendor software (Studio 5000) used to blend malicious activity with normal administrative traffic
+- **TA0003 — Persistence** — remote access software installed on compromised PLCs for sustained foothold
+- **TA0011 — Command & Control** — leased overseas infrastructure used to route actor communications and maintain access
+- **TA0040 — Impact** — SCADA/HMI display data manipulated; wiper malware attempted (success unconfirmed); operational disruption and financial losses confirmed at multiple sites
+
+---
+
+## Strategic Context
+
+This is a politically motivated, geopolitically timed campaign — not financially driven. The escalation directly follows US and Israeli military strikes against Iranian nuclear and government facilities beginning February 28, 2026. Iranian actors are using cyber operations as asymmetric retaliation against US homeland infrastructure because conventional military reach into the US is not available to them.
+
+The choice of OT targets is deliberate. Disrupting water treatment, energy distribution, and municipal services causes direct, visible impact on civilian life — exactly the psychological and operational pressure Iran wants to apply. As Check Point Research noted, Iranian threat actors are "moving faster and broader, targeting both IT and OT infrastructure" simultaneously.
+
+This is the third documented Iranian operation in this log: Handala/Stryker wiper + Kash Patel breach (Global-Watch MARCH-2026-LOG #001), IRGC phishing of Rep. Randy Fine (Global-Watch APRIL-2026-LOG #008), and now PLC attacks across US critical infrastructure. The escalation trajectory is clear — each operation is broader in scope and closer to physical infrastructure than the last.
+
+The fundamental vulnerability here is not technical — it is architectural. Thousands of industrial devices are directly internet-accessible. As one security expert noted: "If an OT environment is reachable from the internet, that is an inherent design flaw — not a nation-state problem."
+
+---
+
+# Incident #017 — April 11, 2026
+
+**Target:** Marimo — open-source Python notebook platform (data science / analysis)
+
+**Sector:** Developer Tools / Data Science Infrastructure / Open Source
+
+**Threat Actor:** Unknown — unattributed, assessed as human operator (manual reconnaissance pattern)
+
+**Origin:**  Unknown
+
+**Source:** The Hacker News — April 10, 2026 | Sysdig
+
+**Attack Type:**  Unauthenticated RCE via Exposed WebSocket Terminal Endpoint
+
+**Labels:** CVE-2026-39987 | CVSS 9.3 | RCE | WebSocket | Unauthenticated | Python | Open Source | Credential Theft | Data Science | Rapid Exploitation
+
+---
+
+## Analysis
+
+A critical unauthenticated remote code execution vulnerability in Marimo, an open-source Python notebook used for data science and analysis, was exploited within 9 hours and 41 minutes of public disclosure — with no proof-of-concept code available at the time. The flaw was discovered and tracked by Sysdig on a honeypot system.
+
+The vulnerability, CVE-2026-39987 (CVSS 9.3), exists because the /terminal/ws WebSocket endpoint skips authentication entirely. While other Marimo WebSocket endpoints correctly call validate_auth() before accepting connections, the terminal endpoint only checks running mode and platform support — then grants a full interactive PTY shell to anyone who connects. No credentials, no prior access, no exploit code needed — just a WebSocket connection to an exposed instance.
+
+The attacker connected to the honeypot, explored the file system manually, then systematically harvested credentials from the .env file and searched for SSH keys. They returned an hour later to confirm findings and check whether other attackers had accessed the system during the window. No additional payloads — no cryptominers, no backdoors — were installed, suggesting the operator was in a reconnaissance and credential collection phase, not full compromise.
+
+The attacker built a working exploit directly from the advisory description. The entire operation was conducted manually — consistent with a human operator working through a target list rather than automated scanning.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-39987 — CVSS 9.3, unauthenticated RCE
+- **Vulnerable endpoint:** /terminal/ws — WebSocket terminal endpoint, authentication check completely absent
+- **Impact:** full interactive PTY shell on any exposed Marimo instance — zero credentials required
+- **Affected versions:** all Marimo versions up to and including 0.20.4
+- **Patched version:** 0.23.0
+- **Time to first exploitation:** 9 hours 41 minutes after public disclosure — no PoC available at time
+- **Attacker actions:** file system reconnaissance → .env credential harvesting → SSH key search → return visit to confirm
+- *No secondary payload deployed — credential collection phase only
+- **Exploitation method:** manual — human operator, not automated scanner
+
+---
+
+**MITRE ATT&CK Tactics:**
+- **TA0001 — Initial Access** — unauthenticated WebSocket connection to exposed /terminal/ws endpoint; CVE-2026-39987; no credentials required
+- **TA0002 — Execution** — full interactive PTY shell obtained via WebSocket terminal endpoint; attacker executed commands manually
+- **TA0007 — Discovery** — manual file system exploration conducted after shell access obtained
+- **TA0006 — Credential Access** — .env file harvested for credentials; SSH keys searched and collected
+- **TA0009 — Collection** — credentials and SSH keys staged from compromised Marimo instance
+
+---
+
+## Strategic Context
+
+The 10-hour exploitation window illustrates a pattern now documented multiple times in this log: threat actors monitor vulnerability disclosures in real time and weaponize them before most organizations have patched. CVE-2025-55182 (Next.js, UAT-10608, Global-Watch APRIL #005) followed the same behavioral model — automated mass scanning in that case, manual targeted operation here.
+
+Marimo is used across data science and research environments — universities, financial institutions, AI/ML teams, and independent researchers. These environments frequently contain high-value credentials: cloud API keys, database connection strings, SSH keys, and service tokens. A single .env file on a compromised Marimo instance can yield access to entire cloud infrastructure stacks. The attacker's specific focus on .env and SSH keys confirms they understand this.
+
+The assumption that low-profile or niche open-source tools are not targeted is incorrect. As Sysdig noted: "Any internet-facing application with a critical advisory is a target, regardless of its popularity." Exposure is the only qualifier that matters.
