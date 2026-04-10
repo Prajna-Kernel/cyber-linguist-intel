@@ -109,6 +109,9 @@
 | **узел связи** | [oo-ZYOL SVA-zi] | communication node | **узел связи** |
 | **пропуск** | [pra-POOSK] | omission / skipped element | **пропуск** |
 | **объём** | [ab-YOM] | volume (data size) | **объём** |
+| **Пропуск пакетов** | [PRO-pusk pa-KYE-tov] | Packet loss | **Пропуск пакетов** |
+| **Пропускная задержка**| [pra-pus-KNA-ya za-DYERZH-ka] | Latency delay | **Пропускную задержку** |
+| **Давление** | [dav-LYE-ni-ye] | Pressure | **Давление** |
 
 
 ---
@@ -210,7 +213,9 @@
 | **сразу** | [SRA-zoo] | immediately |
 | **нагрузка** | [nah-GROOZ-ka] | load |
 | **лишь** | [leesh] | only / merely | 
-| **фактор** | [FAK-tar] | factor
+| **фактор** | [FAK-tar] | factor |
+| **Почти** | [pach-TI] | Almost |
+
 
 ---
 
@@ -262,3 +267,5 @@
 | **перегружать** | [pe-re-groo-ZHATʹ] | to overload |
 | **сжимать** | [szhy-MATʹ] | to compress |
 | **расширять** | [ras-she-RYATʹ] | to expand |
+| **Передавать** | [pe-re-da-VAT'] | To transmit |
+| **Накапливать** | [na-KAP-li-vat'] | To accumulate |
