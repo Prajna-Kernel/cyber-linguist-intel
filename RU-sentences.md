@@ -327,3 +327,12 @@ eway works, and the user sees the update.
 **1️⃣3️⃣7️⃣. Если система передаёт данные медленно, нужно проверить пропуск пакетов.** | If the system transmits data slowly, you need to check packet loss.
 
 **1️⃣3️⃣8️⃣. Почти всегда пропускная задержка есть в удалённом доступе.** | There is almost always latency delay in remote access.
+
+**1️⃣3️⃣9️⃣. Отладка особо важна, если система зависит от внешнего сервера.** | Debugging is particularly important if the system depends on an external server.
+
+**1️⃣4️⃣0️⃣. Синхронизация данных иногда накапливает задержку.** | Data synchronization sometimes accumulates delay.
+
+**1️⃣4️⃣1️⃣. Нужно отлаживать систему, если есть зависимость от кэша.** | You need to debug the system if there is a dependency on the cache.
+
+**1️⃣4️⃣2️⃣. Система не может синхронизировать данные — есть ошибка соединения.** | The system cannot synchronize data — there is a connection error.
+
