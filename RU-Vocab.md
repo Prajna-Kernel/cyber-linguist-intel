@@ -112,7 +112,9 @@
 | **Пропуск пакетов** | [PRO-pusk pa-KYE-tov] | Packet loss | **Пропуск пакетов** |
 | **Пропускная задержка**| [pra-pus-KNA-ya za-DYERZH-ka] | Latency delay | **Пропускную задержку** |
 | **Давление** | [dav-LYE-ni-ye] | Pressure | **Давление** |
-
+| **Отладка** | [at-LAT-ka] | Debugging | **Отладку** |
+| **Синхронизация** | [sin-khra-ni-ZA-tsi-ya] | Synchronization | **Синхронизацию** |
+| **Зависимость** | [za-VI-si-mast'] | Dependency | **Зависимость** |
 
 ---
 
@@ -215,7 +217,7 @@
 | **лишь** | [leesh] | only / merely | 
 | **фактор** | [FAK-tar] | factor |
 | **Почти** | [pach-TI] | Almost |
-
+| **Особо** (formal) | [a-SO-ba] | Especially / Particularly |
 
 ---
 
@@ -269,3 +271,5 @@
 | **расширять** | [ras-she-RYATʹ] | to expand |
 | **Передавать** | [pe-re-da-VAT'] | To transmit |
 | **Накапливать** | [na-KAP-li-vat'] | To accumulate |
+| **Отлаживать** | [at-LA-zhi-vat'] | To debug |
+| **Синхронизировать** | [sin-khra-ni-ZI-ra-vat'] | To synchronize
