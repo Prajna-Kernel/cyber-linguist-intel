@@ -875,3 +875,148 @@ The 10-hour exploitation window illustrates a pattern now documented multiple ti
 Marimo is used across data science and research environments — universities, financial institutions, AI/ML teams, and independent researchers. These environments frequently contain high-value credentials: cloud API keys, database connection strings, SSH keys, and service tokens. A single .env file on a compromised Marimo instance can yield access to entire cloud infrastructure stacks. The attacker's specific focus on .env and SSH keys confirms they understand this.
 
 The assumption that low-profile or niche open-source tools are not targeted is incorrect. As Sysdig noted: "Any internet-facing application with a critical advisory is a target, regardless of its popularity." Exposure is the only qualifier that matters.
+
+---
+
+# Incident #018 — April 12, 2026
+
+**Target:** Smart Slider 3 Pro — WordPress and Joomla plugin (800,000+ active installations)
+
+**Sector:** Web Application Infrastructure / CMS / Plugin Ecosystem
+
+**Threat Actor:** Unknown — unattributed, sophisticated (multi-layered persistence toolkit)
+
+**Origin:** Unknown
+
+**Source:** BleepingComputer — April 10, 2026 | The Hacker News | Patchstack | Nextend Advisory | TechRadar
+
+**Attack Type:** Software Supply Chain Compromise — Backdoored Plugin Update via Compromised Vendor Infrastructure
+
+**Labels:** Supply Chain | WordPress | Joomla | Backdoor | RCE | Admin Account Creation | Credential Theft | C2 | Nextend | Patchstack | Auto-Update Abuse
+
+---
+
+## Analysis
+
+On April 7, 2026, an unauthorized party breached Nextend's update infrastructure and replaced Smart Slider 3 Pro version 3.5.1.35 with a fully backdoored build — distributed through the plugin's official update channel to over 800,000 WordPress and Joomla sites. The compromised version remained accessible for approximately six hours before detection. Any site that auto-updated during that window received a fully weaponized remote access toolkit.
+
+This was not a plugin vulnerability. The attacker did not exploit a flaw in the code — they compromised the vendor's update distribution system and shipped their own malicious build through a trusted channel. As Patchstack stated: "The plugin is the malware." Every conventional defense — firewalls, nonce verification, role-based access controls — was bypassed by definition, because the malicious code ran inside the trusted plugin code path with full PHP privileges.
+
+The backdoor is multi-layered and sophisticated. It operates in stages on every page load, establishes multiple independent persistence mechanisms, creates hidden administrator accounts, and exfiltrates full site credentials — site URL, admin username and password in plaintext, database name, PHP version, WordPress version, and a list of all installed persistence methods — to the C2 domain wpjs1[.]com. Removing the compromised plugin alone does not clean an infected site, because the backdoor installs copies of itself in three additional locations: a must-use plugin (object-cache-helper.php), the active theme's functions.php, and WordPress core's wp-includes directory.
+
+The attacker then has persistent, redundant, authenticated RCE on any site that updated during the six-hour window — with fallback re-entry if any single persistence layer is removed.
+
+---
+
+## Key Technical Indicators:
+- **Compromised version:** Smart Slider 3 Pro 3.5.1.35 — WordPress and Joomla editions
+- **Distribution window:** April 7, 2026 — approximately 6 hours before detection and removal
+- **Clean version:** 3.5.1.36 (recommended rollback: backup from before April 5)
+- **Attack vector:** compromised vendor update infrastructure — official channel weaponized
+- **Backdoor capabilities:** unauthenticated RCE via HTTP headers, authenticated RCE with PHP eval + OS command execution, hidden admin account creation, credential exfiltration
+- Persistence locations: must-use plugin (object-cache-helper.php), active theme functions.php, wp-includes/class-wp-locale-helper.php
+- **Malicious DB options:** _wpc_ak, _wpc_uid, _wpc_uinfo, _perf_toolkit_source
+- **C2 domain:*" wpjs1[.]com
+- **Exfiltrated data:** site URL, backdoor key, hostname, plugin/WP/PHP versions, admin email, DB name, plaintext admin credentials, persistence method list
+- *Only Pro version affected — free version (WordPress.org repository) not compromised*
+- **Threat actor:** unknown — no group claimed responsibility
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — Nextend update infrastructure breached; malicious build distributed via official plugin update channel to 800,000+ sites
+- **TA0005 — Defense Evasion** — malicious code delivered through trusted vendor update channel; bypassed firewalls, nonce verification, and role-based access controls by operating inside legitimate plugin code path
+- **TA0002 — Execution** — backdoored plugin executed on every page load via PHP; unauthenticated RCE via HTTP headers; authenticated RCE via PHP eval and OS command execution
+- **TA0003 — Persistence** — backdoor installed in four independent locations: compromised plugin, must-use plugin (object-cache-helper.php), active theme functions.php, wp-includes/class-wp-locale-helper.php; hidden administrator accounts created
+- **TA0006 — Credential Access** — plaintext admin credentials, database name, admin email harvested from compromised sites
+- **TA0009 — Collection** — site URL, hostname, plugin/WP/PHP versions, persistence method list, and full credential set staged for exfiltration
+- **TA0011 — Command & Control** — exfiltrated data transmitted to C2 domain wpjs1[.]com
+- **TA0010 — Exfiltration** — full credential and site metadata package exfiltrated to attacker-controlled C2
+
+---
+
+## Strategic Context
+
+This is the second supply chain attack targeting web infrastructure documented in this log in April alone — the first being the TeamPCP/Trivy compromise of the European Commission AWS environment (Global-Watch APRIL #006). Both exploited trusted update mechanisms. Both bypassed conventional security controls by delivering malicious code through a channel defenders implicitly trust.
+
+The Smart Slider case is more operationally dangerous in one respect: the six-hour distribution window hit auto-updating WordPress sites silently and at scale. The attacker did not need to scan for targets — the plugin's own update system delivered the backdoor to every site that had auto-updates enabled. Sites running Smart Slider 3 Pro on shared hosting face additional risk, as the backdoor potentially provides lateral access to other sites on the same server.
+
+This also follows Smart Slider's own CVE-2026-3098 (arbitrary file read, March 2026) just weeks prior — the same plugin hit twice in one month, first with a vulnerability, then with a supply chain compromise. The pattern suggests either targeted interest in this plugin's ecosystem or coincidental timing highlighting a consistently weak security posture at Nextend.
+
+The fundamental lesson from Patchstack applies broadly: any security model that assumes the official update channel is trustworthy is broken by definition when supply chain compromise is the attack vector.
+
+---
+
+# Incident #019 — April 12, 2026
+
+**Target:** CPUID — CPU-Z, HWMonitor, HWMonitor Pro, PerfMonitor 2, powerMAX users (tens of millions globally)
+
+**Sector:** Developer Tools / System Administration / Hardware Monitoring Software
+
+**Threat Actor:** Unknown — unattributed (infrastructure overlap with FileZilla March 2026 campaign; handle @d_coroner 
+identified in payload headers)
+
+**Origin:** Unknown
+
+**Source:** BleepingComputer — April 10, 2026 | vx-underground | Kaspersky | Howler Cell (CYDERES) | The Register | Cybernews
+
+**Attack Type:** Supply Chain Compromise — Side API Hijack → Malicious Download Redirect → STX RAT Delivery
+
+**Labels:** Supply Chain | CPUID | CPU-Z | HWMonitor | STX RAT | DLL Sideloading | In-Memory Execution | Credential Theft | C2 | FileZilla | Cloudflare R2
+
+---
+
+## Analysis
+
+Between April 9 (15:00 UTC) and April 10 (10:00 UTC) 2026 — approximately six hours — CPUID's official download infrastructure was compromised via a side API breach. The attacker redirected official download links for CPU-Z, HWMonitor, HWMonitor Pro, PerfMonitor 2, and powerMAX to malicious installers hosted on attacker-controlled Cloudflare R2 storage. CPUID's signed original binaries were not modified — the attack targeted the download link distribution mechanism, not the files themselves.
+
+Users downloading what they believed were legitimate CPUID tools instead received a trojanized installer. The malicious package included a fake CRYPTBASE.dll placed alongside the legitimate application executable. When HWMonitor_x64.exe launched, it sideloaded the rogue DLL via Windows DLL search order hijacking — a technique that requires no privilege escalation and bypasses most perimeter controls because a legitimate, signed application initiates the load.
+
+The DLL triggered a five-stage in-memory unpacking chain using reflective PE loading, XOR decryption, and layered bitwise transformations. No intermediate payloads were written to disk. The final payload — STX RAT — connected to the C2 domain welcome[.]supp0v3[.]com and transmitted host metadata for victim profiling. The malware's primary objective was browser credential theft, specifically targeting Google Chrome's IElevation COM interface to dump and decrypt stored passwords. The malware was also confirmed to use PowerShell for payload fetching and MSBuild for persistence.
+
+The malicious installer launched with a Russian-language Inno Setup wrapper — an immediate red flag for users who noticed it. The attack was discovered by Reddit users, confirmed by vx-underground, and remediated by CPUID within hours of discovery.
+
+The same infrastructure (supp0v3[.]com) was used in a FileZilla malware campaign in March 2026, linking this to the same threat actor or group.
+
+---
+
+## Key Technical Indicators:
+- **Compromise window:** April 9 15:00 UTC — April 10 10:00 UTC (~6 hours)
+- **Attack vector:** side API compromise → official CPUID download links redirected to Cloudflare R2 malicious storage
+- **Affected products:** CPU-Z 2.19, HWMonitor 1.63, HWMonitor Pro, PerfMonitor 2, powerMAX
+- **Malicious payload:** fake CRYPTBASE.dll — DLL sideloading via Windows search order hijacking
+- **Execution:** five-stage in-memory chain — reflective PE loading, XOR decryption, bitwise transforms — no disk writes
+- **Final payload:** STX RAT — Remote Access Trojan
+- **C2:** welcome[.]supp0v3[.]com — JSON victim metadata exfiltration
+- **Malicious installer filename:** HWiNFO_Monitor_Setup.exe (masquerading as HWiNFO)
+- **Installer:** Russian-language Inno Setup wrapper
+- **Hosting:** attacker-controlled Cloudflare R2 bucket
+- **Primary objective:** Chrome credential theft via IElevation COM interface
+- **Persistence:** MSBuild-based
+- **Infrastructure overlap:** supp0v3[.]com — same as FileZilla March 2026 campaign
+- **Threat actor handle:** @d_coroner (found in VBS payload headers)
+- **VirusTotal detections:** flagged by 32+ security vendors
+- **CPUID originals:** signed, unmodified — download links were the attack surface
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — CPUID download infrastructure breached via side API compromise; official download links redirected to attacker-controlled Cloudflare R2 storage
+- **TA0005 — Defense Evasion** — legitimate signed CPUID binaries used as carriers; DLL sideloading via Windows search order hijacking; five-stage in-memory execution chain with no disk writes; masqueraded installer filename (HWiNFO_Monitor_Setup.exe)
+- **TA0002 — Execution** — fake CRYPTBASE.dll sideloaded by legitimate HWMonitor_x64.exe; five-stage in-memory unpacking chain (reflective PE loading, XOR decryption, bitwise transforms); PowerShell used for payload fetching
+- **TA0003 — Persistence** — MSBuild-based persistence mechanism installed on compromised systems
+- **TA0006 — Credential Access** — Chrome credentials targeted via IElevation COM interface; stored passwords dumped and decrypted
+- **TA0011 — Command & Control** — STX RAT connected to welcome[.]supp0v3[.]com; host metadata transmitted via JSON for victim profiling
+- **TA0010 — Exfiltration** — browser credentials and host metadata exfiltrated to C2 infrastructure
+
+---
+
+## Strategic Context
+
+CPU-Z and HWMonitor are standard tools across IT, system administration, hardware engineering, data center operations, and enthusiast computing. CPU-Z alone has tens of millions of users globally. A six-hour window on software of this reach represents an extraordinary infection surface — any user who downloaded or auto-updated during that window may have received STX RAT.
+
+This is the **fourth** supply chain incident documented in this log in April 2026 alone — TeamPCP/Trivy/European Commission (Global-Watch APRIL #006), Axios npm, Smart Slider 3 Pro (#014), and now CPUID. The frequency is not coincidental. Supply chain attacks are increasing because they bypass the target entirely — instead of attacking the user, attackers compromise the distribution channel the user implicitly trusts.
+
+The Russian-language installer is a notable indicator — not conclusive attribution, but consistent with the broader pattern of Russian-ecosystem threat actors operating infrastructure that surfaces across multiple campaigns. The FileZilla infrastructure overlap reinforces that this actor is active, resourced, and reusing proven delivery pipelines across targets.
+
+**The fundamental defense gap here is the same as Smart Slider and Trivy:** users trust official update channels by design. Hash verification before installation, delayed updates (48-72 hours after release), and monitoring for unexpected installer filenames or hosting endpoints are the only mitigations that apply when the distribution chain itself is the attack vector.
