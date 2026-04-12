@@ -115,6 +115,8 @@
 | **Отладка** | [at-LAT-ka] | Debugging | **Отладку** |
 | **Синхронизация** | [sin-khra-ni-ZA-tsi-ya] | Synchronization | **Синхронизацию** |
 | **Зависимость** | [za-VI-si-mast'] | Dependency | **Зависимость** |
+| **задержка отклика** | [za-DYERZH-ka at-KLEE-ka] | response latency | **задержку отклика** |
+| **очистка кэша** | [a-CHIST-ka KESHa] | cache clearing | **очистку кэша** |
 
 ---
 
@@ -218,6 +220,8 @@
 | **фактор** | [FAK-tar] | factor |
 | **Почти** | [pach-TI] | Almost |
 | **Особо** (formal) | [a-SO-ba] | Especially / Particularly |
+| **вместо** | [VMES-ta] | instead of |
+| **сбойность** | [SBOY-nastʹ] | instability / faultiness |
 
 ---
 
@@ -273,3 +277,5 @@
 | **Накапливать** | [na-KAP-li-vat'] | To accumulate |
 | **Отлаживать** | [at-LA-zhi-vat'] | To debug |
 | **Синхронизировать** | [sin-khra-ni-ZI-ra-vat'] | To synchronize
+| **очищать** | [a-chi-SHCHATʹ] | to clear (cache/data) |
+| **откликаться** | [at-klee-KAT-sa] | to respond |
