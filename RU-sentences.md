@@ -336,3 +336,10 @@ eway works, and the user sees the update.
 
 **1️⃣4️⃣2️⃣. Система не может синхронизировать данные — есть ошибка соединения.** | The system cannot synchronize data — there is a connection error.
 
+**1️⃣4️⃣3️⃣. Система очищает кэш и ускоряет процесс.** | The system clears the cache and speeds up the process.
+
+**1️⃣4️⃣4️⃣. Сервер откликается с задержкой отклика.** | The server responds with response latency.
+
+**1️⃣4️⃣5️⃣. Я проверяю сбойность системы.** | I check the instability of the system.
+
+**1️⃣4️⃣6️⃣. Вместо обработки данных система ждёт.** | Instead of processing data, the system waits.
