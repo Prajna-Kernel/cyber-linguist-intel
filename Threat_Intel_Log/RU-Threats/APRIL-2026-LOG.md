@@ -184,3 +184,85 @@ The absence of a patch at time of disclosure makes this immediately actionable f
 ## Russian Language Context
 
 The lure documents are crafted in Russian and reference ongoing events in Russia's oil and gas industry — a deliberate targeting signal. The use of Russian-language social engineering to deliver a zero-day exploit is consistent with operations targeting energy sector intelligence in the Russian-speaking ecosystem, whether by state actors, contractors, or criminal groups with state-adjacent tasking.
+
+---
+
+# Incident #004 — April 13, 2026
+
+**Target:** Ukraine government and NATO allies — central executive bodies, defense, hydrometeorology, emergency services (Ukraine); rail logistics (Poland); maritime and transportation (Romania, Slovenia, Turkey); ammunition logistics partners (Slovakia, Czech Republic); military and NATO partners
+
+**Sector:** Government / Defense / Critical Infrastructure / NATO Logistics
+
+**Threat Actor:** APT28 (aka Pawn Storm, Fancy Bear, Forest Blizzard, UAC-0001) — Russian GRU-linked advanced persistent threat
+
+**Origin:** Russia (GRU — assessed high confidence, Trend Micro attribution)
+
+**Source:** The Hacker News — April 8, 2026 | Trend Micro Research (Hacquebord + Kakara) | Security Affairs | SC Media | CERT-UA
+
+**Attack Type:** Spear-Phishing → Zero-Day Exploitation → PRISMEX Malware Suite Deployment (Espionage + Sabotage)
+
+**Labels:** APT28 | Pawn Storm | PRISMEX | Spear-Phishing | Steganography | COM Hijacking | Zero-Day | CVE-2026-21509 | CVE-2026-21513 | Ukraine | NATO | Cloud C2 | Wiper | Espionage | Defense Supply Chain
+
+---
+
+## Analysis
+
+Since at least September 2025, APT28 has been running a sustained spear-phishing campaign against Ukraine and its NATO allies, deploying a previously undocumented modular malware suite codenamed PRISMEX. The campaign was publicly disclosed April 8, 2026 via a Trend Micro technical report by researchers Feike Hacquebord and Hiroyuki Kakara. Targets span Ukraine's central government, defense sector, and emergency services — extending into NATO ally logistics chains across Poland, Romania, Slovakia, Czech Republic, Slovenia, and Turkey. The operational focus is the defense supply chain supporting Ukraine: rail logistics, ammunition initiatives, maritime transport, and military aid infrastructure.
+
+The initial access vector is spear-phishing — emails themed around military training or aid deliver malicious RTF and Excel files. These exploit CVE-2026-21509, a security feature bypass in Microsoft Office's OLE mechanism, which forces the victim's system to retrieve a malicious .LNK file. That file then chains with CVE-2026-21513, a protection mechanism failure in the MSHTML Framework, to bypass security warnings and execute payloads without user interaction. CVE-2026-21513 was confirmed as a zero-day — an LNK exploit sample appeared on VirusTotal on January 30, 2026, eleven days before Microsoft's patch on February 10, 2026. Infrastructure preparation for CVE-2026-21509 began two weeks before its public disclosure, indicating APT28 had advance knowledge of the vulnerability.
+
+## PRISMEX is a collection of interconnected components named for its steganographic technique of distributing payloads across image files:
+
+- **PrismexSheet** — malicious Excel dropper with VBA macros; extracts payloads embedded via steganography; establishes persistence via COM DLL hijacking; displays realistic decoy content (Ukrainian drone inventories, supplier price lists, military logistics) after macros are enabled
+- **PrismexDrop** — native dropper; prepares environment for follow-on exploitation; persistence via scheduled tasks and COM DLL hijacking
+- **PrismexLoader** — bridges dropper and implant stages
+- **PrismexStager** — COVENANT Grunt implant; abuses Filen.io cloud storage for encrypted C2 communications; assessed as an expansion of MiniDoor and NotDoor (aka GONEPOSTAL), APT28's Outlook backdoor deployed in late 2025
+
+In at least one October 2025 incident, the COVENANT Grunt payload executed a destructive wiper command erasing all files under %USERPROFILE% — confirming dual espionage and sabotage capability. Alternate infection paths deploy MiniDoor, an Outlook email stealer, instead of the full PRISMEX suite.
+
+---
+
+## Key Technical Indicators:
+- **Campaign active:** September 2025 — ongoing; publicly disclosed April 8, 2026
+- **Initial vector:** spear-phishing — military/aid-themed RTF and Excel lures
+- **CVE-2026-21509:** Microsoft Office OLE security feature bypass — exploited to retrieve malicious .LNK file
+- **CVE-2026-21513:** MSHTML Framework protection mechanism failure — confirmed zero-day; 11-day window before patch (Jan 30 – Feb 10, 2026)
+- **Infrastructure prep:** two weeks before CVE-2026-21509 disclosure — advance vulnerability knowledge confirmed
+- **Malware suite:** PRISMEX — PrismexSheet, PrismexDrop, PrismexLoader, PrismexStager
+- **Steganography:** payloads distributed across image files
+- **Persistence:** COM DLL hijacking (HKCU InProcServer32), scheduled tasks
+- **C2:** Filen.io cloud storage (PrismexStager / COVENANT Grunt) — legitimate service abused to blend with normal traffic
+- **Alternate payload:** MiniDoor — Outlook email stealer
+- **Wiper capability:** confirmed in October 2025 incident — erases %USERPROFILE% directory
+- Shared infrastructure
+- **indicator:** domain wellnesscaremed[.]com — links CVE-2026-21509 and CVE-2026-21513 exploitation
+- **Attribution:** Trend Micro high confidence — tool lineage, infrastructure reuse, COM hijacking pattern, MiniDoor/NotDoor lineage, COVENANT framework continuity
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — spear-phishing emails with military/aid-themed RTF and Excel lures; CVE-2026-21509 exploited to retrieve malicious .LNK file; CVE-2026-21513 zero-day chained to bypass security warnings and execute without user interaction
+- **TA0002 — Execution** — VBA macros in PrismexSheet execute steganographically embedded payloads; COVENANT Grunt implant executes via PrismexStager; wiper command executed in at least one confirmed incident
+- **TA0003 — Persistence** — COM DLL hijacking via HKCU InProcServer32 modifications; scheduled tasks installed by PrismexDrop; MiniDoor/NotDoor Outlook backdoor deployed as alternate persistence
+- **TA0005 — Defense Evasion** — steganography conceals payloads within image files; legitimate cloud service (Filen.io) abused for C2 to blend with normal traffic; decoy documents displayed post-execution to avoid victim suspicion; fileless execution techniques
+- **TA0007 — Discovery** — victim environment profiled before follow-on payload decision; target selection based on role in Ukrainian defense supply chain
+- **TA0009 — Collection** — MiniDoor targets Outlook email data; PrismexStager facilitates information gathering from compromised systems
+- **TA0011 — Command & Control** — COVENANT Grunt communicates via Filen.io cloud storage using encrypted channels; legitimate service abuse makes C2 traffic difficult to distinguish from normal activity
+- **TA0040 — Impact** — wiper command confirmed in October 2025 incident (erases %USERPROFILE%); dual espionage and sabotage capability documented; defense supply chain disruption as strategic objective
+
+---
+
+## Strategic Context
+This campaign represents APT28 operating at full capability — zero-day exploitation, modular malware, steganographic delivery, cloud-based C2, and confirmed destructive capability running simultaneously against a strategically critical target set. The focus on Ukraine's defense supply chain — ammunition logistics, rail transport, military aid partners — is not espionage for its own sake. It is mapping and potentially pre-positioning to disrupt the operational backbone supporting Ukraine's war effort.
+
+The advance knowledge of CVE-2026-21509 two weeks before disclosure and the confirmed zero-day exploitation of CVE-2026-21513 indicate APT28 operates with either insider access to vulnerability research pipelines or independent discovery capability at a level that compresses the defender's patch window to near zero.
+
+This is the most technically sophisticated Russian operation documented in this log. Previous RU-Threats entries — Qilin ransomware against Die Linke (RU-Threats APRIL #001), Handala/MOIS operations (Global-Watch MARCH #001) — demonstrated Russian-nexus reach and political targeting. PRISMEX demonstrates something different: a mature, modular, persistent capability designed for long-term access and reversible-to-destructive operations against NATO military infrastructure.
+
+The use of Filen.io for C2 is a detection evasion technique with direct implications for network defenders — blocking cloud storage services at the perimeter is not feasible, making behavioral anomaly detection the only reliable mitigation.
+
+---
+
+## Russian Language Context
+
+APT28 operates under GRU Unit 26165 and is one of Russia's most documented state cyber actors. The PRISMEX campaign's targeting of Ukraine's defense supply chain and NATO logistics partners is consistent with GRU tasking during active conflict — disrupting Western military aid infrastructure serves direct battlefield objectives. The COVENANT framework's prior documentation by CERT-UA (June 2025) and the continuity of tool lineage from NotDoor through MiniDoor to PrismexStager confirms this is a sustained, resourced operation with institutional continuity, not an opportunistic campaign.
