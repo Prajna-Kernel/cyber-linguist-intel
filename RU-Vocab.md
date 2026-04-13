@@ -117,6 +117,10 @@
 | **Зависимость** | [za-VI-si-mast'] | Dependency | **Зависимость** |
 | **задержка отклика** | [za-DYERZH-ka at-KLEE-ka] | response latency | **задержку отклика** |
 | **очистка кэша** | [a-CHIST-ka KESHa] | cache clearing | **очистку кэша** |
+| **Пропускная задержка** | [pra-pus-KNA-ya za-DYERZH-ka] | Transmission latency | **Пропускную задержку** |
+| **Нестабильность** | [nye-sta-BIL'-nast'] | Instability | **Нестабильность** |
+| **Потеря пакетов (more natural phrase)** |[pa-TYE-rya pa-KYE-tov] | Packet loss | **Потерю пакетов** |
+
 
 ---
 
@@ -222,6 +226,7 @@
 | **Особо** (formal) | [a-SO-ba] | Especially / Particularly |
 | **вместо** | [VMES-ta] | instead of |
 | **сбойность** | [SBOY-nastʹ] | instability / faultiness |
+| **Вдобавок** | [vda-DA-vak] | Additionally |
 
 ---
 
@@ -279,3 +284,5 @@
 | **Синхронизировать** | [sin-khra-ni-ZI-ra-vat'] | To synchronize
 | **очищать** | [a-chi-SHCHATʹ] | to clear (cache/data) |
 | **откликаться** | [at-klee-KAT-sa] | to respond |
+| **Теряться** | [tye-RYAT-sa] | To be lost / To get lost |
+| **Переподключаться** | [pe-re-pat-klu-CHA-tsa] | To reconnect |
