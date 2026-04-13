@@ -3,13 +3,17 @@
 ## 📌 Index
 - [Sentences 1–50](#sentences-150)
 - [Sentences 51–100](#sentences-51100)
-- [Sentences 101+](#sentences-101)
+- [Sentences 101-150](#sentences-101150)
+- [Sentences 151+](#sentences-151)
 
 ---
 
-### | Representative Russian Sentences |
+# | Representative Russian Sentences |
 
-## sentences 150
+---
+
+# sentences 150
+
  **1️⃣. Expressing “I want to use…”**   
  Я хочу использовать телефон. | I want to use the phone.
 
@@ -148,7 +152,9 @@ eway works, and the user sees the update.
 
 **5️⃣0️⃣. Причина всегда есть.** | There is always a reason.
 
-## Sentences 51100
+---
+
+# Sentences 51100
 
 **5️⃣1️⃣. Я вижу проблему на странице.** | I see a problem on the page.
 
@@ -250,7 +256,9 @@ eway works, and the user sees the update.
 
 **1️⃣0️⃣0️⃣. Пользователь забывает пароль и видит ошибку доступа.** | The user forgets the password and sees an access error.
 
-## sentences 101+
+---
+
+# sentences 101150
 
 **1️⃣0️⃣1️⃣. Нужно запускать систему, если нет ответа.** | You need to launch the system if there is no response.
 
@@ -343,3 +351,15 @@ eway works, and the user sees the update.
 **1️⃣4️⃣5️⃣. Я проверяю сбойность системы.** | I check the instability of the system.
 
 **1️⃣4️⃣6️⃣. Вместо обработки данных система ждёт.** | Instead of processing data, the system waits.
+
+**1️⃣4️⃣7️⃣. Пакеты теряются из-за нестабильности соединения.** | Packets get lost due to connection instability.
+
+**1️⃣4️⃣8️⃣. Вдобавок к задержке, система накапливает потерю пакетов.** | Additionally to the latency, the system accumulates packet loss.
+
+**1️⃣4️⃣9️⃣. Если пакеты теряются, пользователь должен переподключаться.** | If packets are getting lost, the user needs to reconnect.
+
+**1️⃣5️⃣0️⃣. Пропускная задержка и нестабильность — причина потери пакетов.** | Transmission latency and instability are the cause of packet loss.
+
+---
+
+# sentences 151+
