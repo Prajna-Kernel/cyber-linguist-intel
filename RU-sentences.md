@@ -363,3 +363,11 @@ eway works, and the user sees the update.
 ---
 
 # sentences 151+
+
+**1️⃣5️⃣1️⃣. Система внезапно переключает переход сети.** | The system suddenly switches the network transition.
+
+**1️⃣5️⃣2️⃣. Программа постоянно зависает из-за нагрузки.** | The program constantly freezes due to load.
+
+**1️⃣5️⃣3️⃣. Я переключаю сеть и проверяю состояние.** | I switch the network and check the state.
+
+**1️⃣5️⃣4️⃣. Внезапно происходит зависание системы.** | Suddenly a system freeze occurs.
