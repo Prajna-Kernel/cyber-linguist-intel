@@ -120,6 +120,8 @@
 | **Пропускная задержка** | [pra-pus-KNA-ya za-DYERZH-ka] | Transmission latency | **Пропускную задержку** |
 | **Нестабильность** | [nye-sta-BIL'-nast'] | Instability | **Нестабильность** |
 | **Потеря пакетов (more natural phrase)** |[pa-TYE-rya pa-KYE-tov] | Packet loss | **Потерю пакетов** |
+| **переход** | [pe-re-KHOT] | transition / switch | **переход** |
+| **зависание** | [za-vee-SA-nee-ye] | freeze / system hang | **зависание** |
 
 
 ---
@@ -227,6 +229,8 @@
 | **вместо** | [VMES-ta] | instead of |
 | **сбойность** | [SBOY-nastʹ] | instability / faultiness |
 | **Вдобавок** | [vda-DA-vak] | Additionally |
+| **внезапно** | [vne-ZAP-na] | suddenly |
+| **постоянно** | [pa-sta-YAN-na] |  constantly |
 
 ---
 
@@ -286,3 +290,5 @@
 | **откликаться** | [at-klee-KAT-sa] | to respond |
 | **Теряться** | [tye-RYAT-sa] | To be lost / To get lost |
 | **Переподключаться** | [pe-re-pat-klu-CHA-tsa] | To reconnect |
+| **переключать** | [pe-re-klyu-CHATʹ] | to switch | 
+| **зависать** | [za-vee-SATʹ] | to freeze / hang |
