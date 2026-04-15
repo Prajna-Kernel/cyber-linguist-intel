@@ -122,7 +122,8 @@
 | **Потеря пакетов (more natural phrase)** |[pa-TYE-rya pa-KYE-tov] | Packet loss | **Потерю пакетов** |
 | **переход** | [pe-re-KHOT] | transition / switch | **переход** |
 | **зависание** | [za-vee-SA-nee-ye] | freeze / system hang | **зависание** |
-
+| **буферизация** | [boo-fe-ri-ZA-tsi-ya] | buffering | **буферизацию** |
+| **поток данных**| [pa-TOK da-NYKH] | data stream | **поток данных** |
 
 ---
 
@@ -231,6 +232,8 @@
 | **Вдобавок** | [vda-DA-vak] | Additionally |
 | **внезапно** | [vne-ZAP-na] | suddenly |
 | **постоянно** | [pa-sta-YAN-na] |  constantly |
+| **однако** | [ad-NA-ka] | however |
+| **частота** | [chas-TA-ta] | frequency
 
 ---
 
@@ -292,3 +295,5 @@
 | **Переподключаться** | [pe-re-pat-klu-CHA-tsa] | To reconnect |
 | **переключать** | [pe-re-klyu-CHATʹ] | to switch | 
 | **зависать** | [za-vee-SATʹ] | to freeze / hang |
+| **обновлять** | [ab-nov-LYATʹ] | to update |
+| **сохранять** | [sa-khra-NYATʹ] | to save |
