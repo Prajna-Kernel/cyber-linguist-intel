@@ -371,3 +371,11 @@ eway works, and the user sees the update.
 **1️⃣5️⃣3️⃣. Я переключаю сеть и проверяю состояние.** | I switch the network and check the state.
 
 **1️⃣5️⃣4️⃣. Внезапно происходит зависание системы.** | Suddenly a system freeze occurs.
+
+**1️⃣5️⃣5️⃣. Система обновляет поток данных.** | The system updates the data stream.
+
+**1️⃣5️⃣6️⃣. Однако буферизация замедляет процесс.** | However, buffering slows down the process.
+
+**1️⃣5️⃣7️⃣. Я сохраняю данные и проверяю частоту.** | I save the data and check the frequency.
+
+**1️⃣5️⃣8️⃣. Сервер обновляет систему постоянно.** | The server constantly updates the system.
