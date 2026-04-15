@@ -1020,3 +1020,99 @@ This is the **fourth** supply chain incident documented in this log in April 202
 The Russian-language installer is a notable indicator — not conclusive attribution, but consistent with the broader pattern of Russian-ecosystem threat actors operating infrastructure that surfaces across multiple campaigns. The FileZilla infrastructure overlap reinforces that this actor is active, resourced, and reusing proven delivery pipelines across targets.
 
 **The fundamental defense gap here is the same as Smart Slider and Trivy:** users trust official update channels by design. Hash verification before installation, delayed updates (48-72 hours after release), and monitoring for unexpected installer filenames or hosting endpoints are the only mitigations that apply when the distribution chain itself is the attack vector.
+
+---
+
+# Incident #020 — April 16, 2026
+
+**Target:** nginx-ui (open-source Nginx management interface)
+
+**Sector:** Web Infrastructure / Server Management
+
+**Threat Actor:** Unknown
+
+**Origin:** Unattributed
+
+**Source:** The Hacker News — April 15, 2026
+
+**Attack Type:** Authentication Bypass (CWE-306)
+
+**Labels:** CVE-2026-33032, CVSS 9.8, MCP, Active Exploitation, Web Server Takeover
+
+---
+
+## Analysis
+A critical authentication bypass vulnerability in nginx-ui, tracked as CVE-2026-33032 (CVSS 9.8) and codenamed MCPwn by Pluto Security, was confirmed under active exploitation in March 2026. The root cause is a design oversight in how nginx-ui implemented Model Context Protocol (MCP) support — specifically, the /mcp_message endpoint, which processes all tool invocations, shipped without the AuthRequired() middleware that protects its sister endpoint /mcp.
+
+**The default IP whitelist being empty compounds this:** the middleware treats an empty list as allow-all, meaning any network-reachable attacker has a fully open door. Exploitation requires just two HTTP requests — a GET to establish a session, then a POST to /mcp_message to invoke any MCP tool without presenting credentials. Once in, an attacker can rewrite Nginx configuration files, reload the server, intercept all passing traffic, and harvest administrator credentials.
+
+Recorded Future listed this among 31 actively exploited vulnerabilities in March 2026, assigning it a risk score of 94/100. Approximately 2,689 exposed instances remain reachable via Shodan, concentrated in China, the U.S., Indonesia, Germany, and Hong Kong. Patch available in version 2.3.4 since March 15, 2026.
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-33032, CVSS 9.8 (AV:N/AC:L/PR:N/UI:N)
+- **Vulnerable endpoint:**  /mcp_message — missing AuthRequired() middleware
+- **Attack chain:** GET /mcp (obtain session ID) → POST /mcp_message (invoke tools unauthenticated)
+- **Impact:** config file read/write/delete, server restart, traffic interception, credential harvesting
+- **Affected versions:** nginx-ui ≤ 2.3.5
+- **Fix:** nginx-ui v2.3.4 (March 15, 2026)
+- *2,689 internet-exposed instances (Shodan)*
+- *VulnCheck KEV-listed; Recorded Future risk score: 94/100*
+
+### MITRE ATT&CK Mapping
+- **TA0001 — Initial Access** — unauthenticated exploitation of the /mcp_message endpoint in nginx-ui (CVE-2026-33032); missing AuthRequired() middleware and empty default IP whitelist treated as allow-all; two-request chain (GET /mcp for session ID → POST /mcp_message) bypasses all credentials
+- **TA0002 — Execution** — invocation of MCP tools post-bypass to execute configuration changes, server reloads, and arbitrary commands on the Nginx server
+- **TA0004 — Privilege Escalation** — immediate administrative control over nginx-ui allowing config file read/write/delete and administrator credential harvesting
+- **TA0005 — Defense Evasion** — complete bypass of all existing authentication mechanisms and security controls through MCP integration oversight; appears as legitimate tool invocation
+- **TA0040 — Impact** — full web server takeover enabling traffic interception, persistent access, and potential downstream compromise of web infrastructure
+
+## Strategic Context
+What makes this incident significant beyond the CVSS score is what it reveals about MCP as an emerging attack surface. MCP is being bolted onto existing applications to enable AI agent integration, but developers are inheriting full application capabilities without necessarily carrying over the security controls. The result, as the researcher put it, is a backdoor that bypasses every authentication mechanism the application was built with. This is a structural pattern, not a one-off mistake — and as MCP adoption accelerates across tools, expect more CVEs with this exact fingerprint. For defenders, this is a reminder that AI integration layers need the same security review as any other external-facing endpoint.
+
+---
+
+# Incident #021 — April 16, 2026
+
+**Target:** Rockstar Games (via Anodot — third-party SaaS)
+
+**Sector:** Gaming / Cloud Infrastructure
+
+**Threat Actor:** ShinyHunters
+
+**Origin:** English-speaking, "The Com" network, cybercrime-motivated
+
+**Source:** Security Affairs — April 15, 2026
+
+**Attack Type:** Third-Party Breach / Token Theft / Extortion
+
+**Labels:** Supply Chain, Credential Theft, Data Extortion, Snowflake, SaaS Compromise
+
+---
+
+## Analysis
+ShinyHunters breached Anodot, a third-party SaaS platform used by Rockstar Games for cloud cost monitoring and analytics, and extracted authentication tokens that granted access to Rockstar's connected Snowflake environment. Because the tokens appeared as legitimate credentials, the access blended into normal database operations — detection was not immediate. 
+
+The group posted a ransom demand on their dark web leak site on April 11 with a deadline of April 14, threatening to release stolen data if payment was not made. Rockstar acknowledged the breach but described the accessed information as "non-material company information" with no player impact — likely damage control. When the deadline passed without payment, ShinyHunters leaked 8.1GB of data including anti-cheat source code, player analytics, financial data, and Zendesk support tickets. 
+
+**The gaming angle makes this particularly sensitive:** any leaked GTA 6 development assets, anti-cheat logic, or financial projections could cause significant reputational and commercial damage ahead of launch. Rockstar has been here before — a Lapsus$ affiliate leaked GTA VI development footage in 2022, forcing the company to restructure its communications strategy around one of its most secretive projects.
+
+---
+
+## Key Technical Indicators:
+- **Initial access:** Anodot SaaS breach → authentication token extraction
+- **Pivot:** tokens used to access Rockstar's Snowflake instances without exploiting Snowflake directly
+- **Exfiltrated:** 8.1GB — anti-cheat source code, player analytics, game assets, Zendesk tickets, financial data
+- **Ransom deadline:** April 14, 2026 — not met, data leaked
+- *ShinyHunters also claimed Salesforce-linked data from 400+ companies in March 2026*
+- **Attack vector:** third-party integration trust, not direct corporate intrusion
+
+## MITRE ATT&CK Mapping
+- **TA0001 — Initial Access** — compromise of third-party SaaS provider (Anodot) used by Rockstar Games; extraction of authentication tokens granting trusted access to connected Snowflake environment
+- **TA0006 — Credential Access** — theft of legitimate-looking authentication tokens from the compromised SaaS platform
+- **TA0009 — Collection** — targeted gathering of anti-cheat source code, player analytics, financial data, Zendesk support tickets, and game assets (8.1GB total)
+- **TA0010 — Exfiltration** — transfer of stolen data to attacker-controlled dark web leak site
+- **TA0040 — Impact** — extortion via ransom demand followed by public data leak after unmet deadline; reputational and commercial damage to unreleased game assets and anti-cheat logic
+
+---
+
+## Strategic Context
+This incident is a textbook example of why third-party SaaS integrations are one of the most underdefended attack surfaces in enterprise security. ShinyHunters didn't need to break Snowflake or Rockstar's internal defenses — they went through a monitoring tool that held the keys. The access looked legitimate the entire time. This mirrors a broader pattern the group has established: target identity systems, API keys, and SaaS integrations rather than hardened corporate infrastructure. For high-value targets like gaming studios sitting on unreleased IP, the damage isn't just financial — leaked source code and anti-cheat logic has downstream consequences for product security and competitive advantage that can't be undone by a patch.
