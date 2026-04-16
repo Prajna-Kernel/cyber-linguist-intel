@@ -237,6 +237,7 @@
 | **однако** | [ad-NA-ka] | however |
 | **частота** | [chas-TA-ta] | frequency
 | **только** | [TOL-ka] | only |
+| **обычно** | [a-BYCH-na] | usually |
 
 
 ---
@@ -301,5 +302,5 @@
 | **зависать** | [za-vee-SATʹ] | to freeze / hang |
 | **обновлять** | [ab-nov-LYATʹ] | to update |
 | **сохранять** | [sa-khra-NYATʹ] | to save |
-| **обнаруживать** | [ab-na-roo-ZHÉE-vatʹ] | to detect |
-| **исправлять** | [is-pra-VLYÁTʹ] | to fix / correct |
+| **переносить** | [pe-re-no-SEE-tʹ] | to transfer / carry over |
+| **отслеживать** | [at-SLE-zhi-vatʹ] | to track / monitor |
