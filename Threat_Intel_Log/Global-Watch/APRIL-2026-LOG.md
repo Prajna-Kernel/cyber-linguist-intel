@@ -1116,3 +1116,57 @@ The group posted a ransom demand on their dark web leak site on April 11 with a 
 
 ## Strategic Context
 This incident is a textbook example of why third-party SaaS integrations are one of the most underdefended attack surfaces in enterprise security. ShinyHunters didn't need to break Snowflake or Rockstar's internal defenses — they went through a monitoring tool that held the keys. The access looked legitimate the entire time. This mirrors a broader pattern the group has established: target identity systems, API keys, and SaaS integrations rather than hardened corporate infrastructure. For high-value targets like gaming studios sitting on unreleased IP, the damage isn't just financial — leaked source code and anti-cheat logic has downstream consequences for product security and competitive advantage that can't be undone by a patch.
+
+---
+
+# Incident #022 — April 17, 2026
+
+**Target:** McGraw-Hill — via Salesforce-hosted webpage misconfiguration
+
+**Sector:** Education / EdTech
+
+**Threat Actor:**  ShinyHunters — English-speaking, "The Com" cybercrime network
+
+**Origin:** Unattributed — financially motivated
+
+**Source:**  BleepingComputer — April 16, 2026 | Have I Been Pwned | McGraw-Hill statement
+
+**Attack Type:** Cloud Misconfiguration Exploitation → Data Extortion
+
+**Labels:** ShinyHunters | Salesforce | Misconfiguration | Data Extortion | PII | Education | The Com | HIBP
+
+---
+
+## Analysis
+
+ShinyHunters exploited a misconfiguration in a Salesforce-hosted webpage belonging to McGraw-Hill and exfiltrated data before issuing a ransom demand with an April 14 deadline. McGraw-Hill didn't pay. Over 100GB was leaked publicly, with Have I Been Pwned confirming 13.5 million unique email addresses alongside names, phone numbers, and physical addresses.
+
+McGraw-Hill's public statement called the exposed data "limited" and "non-sensitive." ShinyHunters claims 45 million Salesforce records with PII — a significant gap that suggests the company is minimizing. McGraw-Hill serves millions of students, educators, and institutions globally across more than 100 countries. In an education context, contact data isn't boring — it's fuel for spear-phishing, impersonation of trusted institutions, and targeted fraud against students and faculty.
+
+This breach happened the same week as the Rockstar Games leak via Anodot, both claimed by ShinyHunters, both following the same extortion playbook.
+
+---
+
+## Key Technical Indicators:
+- **Entry point:** Salesforce-hosted webpage misconfiguration — no direct breach of core systems
+- **Exfiltrated:** claimed 45 million Salesforce records; confirmed 13.5M unique emails via HIBP
+- **Leaked data:** names, email addresses, phone numbers, physical addresses (100GB+)
+- **Ransom deadline:** April 14, 2026 — unpaid, data released publicly
+- *No SSNs, financial data, or courseware accessed per McGraw-Hill statement*
+- *47% of exposed emails already present in prior breach collections (HIBP)*
+
+---
+
+**MITRE ATT&CK Tactics:**
+- **TA0001 — Initial Access** — Salesforce-hosted webpage misconfiguration exploited; no authentication bypass required — data accessible due to improper access controls
+- **TA0009 — Collection** — 45M claimed Salesforce records staged including names, emails, phone numbers, physical addresses
+- **TA0010 — Exfiltration** — 100GB+ leaked publicly after ransom deadline passed unpaid; 13.5M unique emails confirmed via Have I Been Pwned
+- **TA0040 — Impact** — mass PII exposure affecting students and educators globally; data publicly available for downstream phishing and fraud
+
+---
+
+## Strategic Context
+
+ShinyHunters is running a coordinated Salesforce campaign. McGraw-Hill, Rockstar via Anodot, European Commission, and at least 39 other organizations have all been hit in the same wave. The method is consistent: find misconfigured cloud integrations, pull data, extort, leak when ignored.
+
+The education sector is underdefended relative to the volume of PII it holds. McGraw-Hill touching over 100 countries worth of students and educators means this data has global spear-phishing utility. The company's "non-sensitive" framing will age poorly.
