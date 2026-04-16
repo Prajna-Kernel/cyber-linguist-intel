@@ -379,3 +379,11 @@ eway works, and the user sees the update.
 **1️⃣5️⃣7️⃣. Я сохраняю данные и проверяю частоту.** | I save the data and check the frequency.
 
 **1️⃣5️⃣8️⃣. Сервер обновляет систему постоянно.** | The server constantly updates the system.
+
+**1️⃣5️⃣9️⃣. Система обнаруживает ошибку и исправляет её.** | The system detects an error and fixes it.
+
+**1️⃣6️⃣0️⃣. Обработка ошибок влияет на состояние системы.** | Error handling affects the system state.
+
+**1️⃣6️⃣1️⃣. Я проверяю очередность процессов в сети.** | I check the order of processes in the network.
+
+**1️⃣6️⃣2️⃣. Только система знает состояние системы.** | Only the system knows the system state.
