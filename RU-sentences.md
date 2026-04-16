@@ -380,10 +380,10 @@ eway works, and the user sees the update.
 
 **1️⃣5️⃣8️⃣. Сервер обновляет систему постоянно.** | The server constantly updates the system.
 
-**1️⃣5️⃣9️⃣. Система обнаруживает ошибку и исправляет её.** | The system detects an error and fixes it.
+**1️⃣5️⃣9️⃣. Система обычно отслеживает очередность запросов.** | The system usually tracks the order of requests.
 
-**1️⃣6️⃣0️⃣. Обработка ошибок влияет на состояние системы.** | Error handling affects the system state.
+**1️⃣6️⃣0️⃣. Я переношу данные и проверяю обработку ошибок.** | I transfer data and check error handling.
 
-**1️⃣6️⃣1️⃣. Я проверяю очередность процессов в сети.** | I check the order of processes in the network.
+**1️⃣6️⃣1️⃣. Обработка ошибок важна для стабильной системы.** | Error handling is important for a stable system.
 
-**1️⃣6️⃣2️⃣. Только система знает состояние системы.** | Only the system knows the system state.
+**1️⃣6️⃣2️⃣. Очередность запросов влияет на результат.** | The order of requests affects the result.
