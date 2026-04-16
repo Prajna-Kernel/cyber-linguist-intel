@@ -124,6 +124,8 @@
 | **зависание** | [za-vee-SA-nee-ye] | freeze / system hang | **зависание** |
 | **буферизация** | [boo-fe-ri-ZA-tsi-ya] | buffering | **буферизацию** |
 | **поток данных**| [pa-TOK da-NYKH] | data stream | **поток данных** |
+| **очередность** | [a-che-ryéd-nastʹ] | order / sequencing | **очередность** |
+| **обработка ошибок** | [ab-ra-BÓT-ka a-SHÉ-bak] | error handling | **обработку ошибок** |
 
 ---
 
@@ -234,6 +236,8 @@
 | **постоянно** | [pa-sta-YAN-na] |  constantly |
 | **однако** | [ad-NA-ka] | however |
 | **частота** | [chas-TA-ta] | frequency
+| **только** | [TOL-ka] | only |
+
 
 ---
 
@@ -297,3 +301,5 @@
 | **зависать** | [za-vee-SATʹ] | to freeze / hang |
 | **обновлять** | [ab-nov-LYATʹ] | to update |
 | **сохранять** | [sa-khra-NYATʹ] | to save |
+| **обнаруживать** | [ab-na-roo-ZHÉE-vatʹ] | to detect |
+| **исправлять** | [is-pra-VLYÁTʹ] | to fix / correct |
