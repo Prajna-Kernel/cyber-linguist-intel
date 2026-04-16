@@ -266,3 +266,66 @@ The use of Filen.io for C2 is a detection evasion technique with direct implicat
 ## Russian Language Context
 
 APT28 operates under GRU Unit 26165 and is one of Russia's most documented state cyber actors. The PRISMEX campaign's targeting of Ukraine's defense supply chain and NATO logistics partners is consistent with GRU tasking during active conflict — disrupting Western military aid infrastructure serves direct battlefield objectives. The COVENANT framework's prior documentation by CERT-UA (June 2025) and the continuity of tool lineage from NotDoor through MiniDoor to PrismexStager confirms this is a sustained, resourced operation with institutional continuity, not an opportunistic campaign.
+
+---
+
+# Incident #005 — April 17, 2026
+
+**Target:** Ukrainian government agencies, municipal clinics, emergency hospitals
+
+**Sector:** Government / Healthcare
+
+**Threat Actor:** UAC-0247 — suspected Russia-aligned (unconfirmed)
+
+**Origin:** Unknown — Russia-nexus assessed based on target selection pattern
+
+**Source:** The Hacker News — April 16, 2026 | CERT-UA
+
+**Attack Type:** Spear Phishing → Multi-Stage Malware Delivery (Credential Theft + Remote Access)
+
+**Labels:** UAC-0247 | AGINGFLY | RAVENSHELL | SILENTLOOP | Spear Phishing | Ukraine | Government | Healthcare | Credential Theft | Telegram C2 | Active Campaign
+
+---
+
+## Analysis
+
+UAC-0247 ran a phishing campaign against Ukrainian government and healthcare targets between March and April 2026, deploying a custom malware stack built for credential theft and remote control. The entry point was a fake humanitarian aid email linking to either a legitimate site compromised via XSS or an AI-generated fake — either way, **the goal was identical:** get the victim to run an LNK file.
+
+The LNK launched mshta.exe to execute a remote HTA. The HTA displayed a decoy form while injecting shellcode into runtimeBroker.exe in the background. From there the chain deployed **three tools:** RAVENSHELL for TCP reverse shell access, AGINGFLY for full remote control via WebSockets including keylogging and payload delivery, and SILENTLOOP, a PowerShell script that fetched C2 addresses from a Telegram channel as a fallback mechanism.
+
+The campaign also stole browser credentials via ChromElevator, which bypasses Chromium's app-bound encryption, and WhatsApp data via ZAPiXDESK. A secondary vector targeted Ukrainian Defence Forces personnel via malicious ZIP archives distributed through Signal, using DLL side-loading to drop AGINGFLY. An XMRig cryptominer was deployed post-compromise on at least some systems.
+
+Targeting hospitals and emergency services during active conflict is deliberate. These are high-pressure environments where staff are least likely to scrutinize unexpected emails — and where stolen credentials from WhatsApp and browsers could expose operational communications, contacts, and logistics.
+
+---
+
+## Key Technical Indicators:
+- **Initial access:** spear-phishing — fake humanitarian aid lure via email and Signal
+- **Execution chain:** LNK → mshta.exe → remote HTA → shellcode injection into runtimeBroker.exe
+- **Malware deployed:** RAVENSHELL (TCP reverse shell), AGINGFLY (C# RAT via WebSocket), SILENTLOOP (PowerShell C2 resolver via Telegram)
+- **Credential theft:** ChromElevator (Chromium ABE bypass), ZAPiXDESK (WhatsApp local DB decryption)
+- **Network tools:** RustScan, Ligolo-Ng, Chisel (tunneling and network reconnaissance)
+- **Secondary vector:** malicious ZIP via Signal → DLL side-loading → AGINGFLY
+- **C2 fallback:** Telegram channel used to resolve current C2 address
+- **Post-compromise:** XMRig cryptominer deployed
+
+---
+
+**MITRE ATT&CK Tactics:**
+- **TA0001 — Initial Access** — spear-phishing emails with fake humanitarian aid lures; secondary vector via malicious ZIP distributed through Signal; victims directed to XSS-compromised legitimate sites or AI-generated fakes
+- **TA0002 — Execution** — LNK file executed via user interaction → mshta.exe loads remote HTA → shellcode injected into runtimeBroker.exe; DLL side-loading used in Signal-based vector
+- **TA0005 — Defense Evasion** — shellcode injected into legitimate process (runtimeBroker.exe); DLL side-loading to blend with trusted application execution; decoy form displayed to victim post-execution; AI-generated phishing sites bypass visual detection
+- **TA0006 — Credential Access** — ChromElevator bypasses Chromium app-bound encryption to harvest browser credentials; ZAPiXDESK decrypts WhatsApp local database
+- **TA0007 — Discovery** — RustScan used for network reconnaissance post-compromise
+- **TA0011 — Command & Control** — AGINGFLY RAT communicates via WebSocket; RAVENSHELL establishes TCP reverse shell; SILENTLOOP resolves C2 addresses via Telegram channel; Ligolo-Ng and Chisel used for tunneling
+- **TA0009 — Collection** — browser credentials, WhatsApp data, and communications harvested from government and healthcare targets
+- **TA0040 — Impact** — XMRig cryptominer deployed post-compromise; operational disruption to Ukrainian government and healthcare infrastructure during active conflict
+
+---
+
+## Strategic Context
+
+Using Telegram as a C2 fallback is smart tradecraft — it blends into legitimate traffic and is nearly impossible to block without disrupting communications the targets depend on. The AI-generated phishing sites are also significant: the barrier to building convincing lures is gone.
+
+What stands out most is the targeting logic. Municipal clinics and emergency hospitals in an active warzone run with minimal IT staff and maximum operational pressure. Stealing credentials from WhatsApp and browsers in that environment means potentially exposing communications, contacts, and logistics. This isn't opportunistic — it's deliberate degradation of civilian and government capacity in a conflict zone.
+
