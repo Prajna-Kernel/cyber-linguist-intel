@@ -387,3 +387,11 @@ eway works, and the user sees the update.
 **1️⃣6️⃣1️⃣. Обработка ошибок важна для стабильной системы.** | Error handling is important for a stable system.
 
 **1️⃣6️⃣2️⃣. Очередность запросов влияет на результат.** | The order of requests affects the result.
+
+**1️⃣6️⃣3️⃣. Поскольку нагрузка системы высокая, очередь запросов накапливается.** | Since the system load is high, the request queue accumulates.
+
+**1️⃣6️⃣4️⃣. Система обрывает соединение, если пропускная способность низкая.** | The system cuts off the connection if throughput is low.
+
+**1️⃣6️⃣5️⃣. Загружать данные сложно, если очередь запросов не обрабатывается.** | Loading data is difficult if the request queue is not being processed.
+
+**1️⃣6️⃣6️⃣. Поскольку нагрузка высокая, система обрывает передачу данных.** | Since the load is high, the system interrupts data transmission.
