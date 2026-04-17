@@ -1170,3 +1170,69 @@ This breach happened the same week as the Rockstar Games leak via Anodot, both c
 ShinyHunters is running a coordinated Salesforce campaign. McGraw-Hill, Rockstar via Anodot, European Commission, and at least 39 other organizations have all been hit in the same wave. The method is consistent: find misconfigured cloud integrations, pull data, extort, leak when ignored.
 
 The education sector is underdefended relative to the volume of PII it holds. McGraw-Hill touching over 100 countries worth of students and educators means this data has global spear-phishing utility. The company's "non-sensitive" framing will age poorly.
+
+---
+
+# Incident #023 — April 17, 2026
+
+**Target:** Enterprise environments — broad, no single sector
+
+**Sector:** Enterprise Infrastructure
+
+**Threat Actor:** Payouts King (STAC4713) — ex-BlackBasta affiliates, financially motivated
+
+**Origin:** Unattributed — cybercrime, financially motivated
+
+**Source:** BleepingComputer — April 16, 2026 | Zscaler ThreatLabz | Sophos
+
+**Attack Type:** Ransomware — EDR Evasion via QEMU Virtual Machine + Social Engineering
+
+**Labels:** Ransomware | BlackBasta | QEMU | VM Evasion | Vishing | Quick Assist | Social Engineering | EDR Bypass | STAC4713 | STAC3725
+
+---
+
+## Analysis
+
+Payouts King is a ransomware group tracked since April 2025, confirmed by Zscaler ThreatLabz to be operating with former BlackBasta affiliate infrastructure, tactics, and access brokers. Their entry method starts with people, not systems — victims get spam bombed, then receive a call from someone posing as internal IT, pressuring them to join a Microsoft Teams session and hand over Quick Assist remote access. Once inside, the real work begins.
+
+The QEMU angle is what makes this entry worth logging. Sophos flagged that STAC4713, a cluster tied to Payouts King, deployed QEMU — an open-source machine emulator — to run a hidden Linux virtual machine inside the compromised Windows host. Malicious activity running inside that VM is essentially invisible to endpoint security tools including Windows Defender, because EDR has no visibility into guest OS processes. The VM disk image was disguised first as vault.db then switched to birsv.dll. From inside the VM, attackers created a reverse SSH tunnel back to their C2 for persistent remote access.
+
+They also abused native Windows tools — Paint, Notepad, Edge — for network share discovery and file access, keeping their footprint indistinguishable from normal user activity. Privilege escalation was achieved via a scheduled task using the SYSTEM account. A second cluster, STAC3725, used QEMU similarly for enumeration and credential theft as early as February 2026, suggesting the technique is spreading across affiliated groups.
+
+This isn't a new technique — QEMU-based evasion appeared in the CRON#TRAP campaign in late 2024 — but its adoption by ransomware groups with mature access broker networks signals it's going mainstream.
+
+---
+
+## Key Technical Indicators:
+- **Initial access:** spam bombing → vishing via Microsoft Teams → Quick Assist remote access granted by victim
+- QEMU deployed on compromised Windows host to run hidden Linux VM
+- VM disk image disguised as vault.db, later renamed to birsv.dll
+- Reverse SSH tunnel established from inside VM to attacker C2 for persistent access
+- Native Windows tools (Paint, Notepad, Edge) abused for network share discovery and file access
+- **Privilege escalation:** scheduled task via SYSTEM account
+- **STAC4713:** linked to Payouts King ransomware deployment
+- **STAC3725:** used QEMU for enumeration and credential theft — February 2026
+- **Predecessor technique:** CRON#TRAP campaign, late 2024
+- **Actor lineage:** former BlackBasta affiliates — inherited access broker network
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — spam bombing followed by vishing via Microsoft Teams; victim manipulated into granting Quick Assist remote access to attacker posing as internal IT
+- **TA0002 — Execution** — QEMU deployed to execute hidden Linux VM on compromised Windows host; malicious activity run inside guest OS; reverse SSH tunnel initiated from VM
+- **TA0004 — Privilege Escalation** — scheduled task created using SYSTEM account to elevate privileges
+- **TA0005 — Defense Evasion** — QEMU Linux VM hides malicious activity from host EDR and Windows Defender; VM disk image disguised as vault.db then birsv.dll; native Windows tools (Paint, Notepad, Edge) abused to blend reconnaissance with normal user activity
+- **TA0007 — Discovery** — network share discovery and file access conducted via abused native Windows applications
+- **TA0003 — Persistence** — reverse SSH tunnel from QEMU VM maintains persistent C2 access; scheduled task provides persistent privilege
+- **TA0011 — Command & Control** — reverse SSH tunnel from inside QEMU Linux VM connects to attacker-controlled server; bypasses host-level network monitoring
+- **TA0040 — Impact** — ransomware deployed by STAC4713; operational disruption to enterprise environments
+
+---
+
+## Strategic Context
+
+Running a full Linux VM inside a compromised Windows host to hide ransomware activity is a meaningful evasion step up. Endpoint tools watch processes, files, and network calls on the host OS — they have no visibility into what runs inside a QEMU guest. The fact that this works without admin privileges in some configurations makes it worse.
+
+Payouts King inheriting BlackBasta's access broker network means they started with a mature targeting pipeline, not from scratch. The vishing plus Quick Assist combination keeps working because it exploits people, not software — and social engineering at scale doesn't require any technical sophistication to initiate.
+
+This group is operationally mature, technically creative, and growing. The spread of QEMU-based evasion from CRON#TRAP in 2024 to two separate STAC clusters in 2026 confirms the technique is being actively shared and refined across the ransomware ecosystem.
