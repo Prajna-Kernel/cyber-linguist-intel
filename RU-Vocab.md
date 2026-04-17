@@ -126,6 +126,8 @@
 | **поток данных**| [pa-TOK da-NYKH] | data stream | **поток данных** |
 | **очередность** | [a-che-ryéd-nastʹ] | order / sequencing | **очередность** |
 | **обработка ошибок** | [ab-ra-BÓT-ka a-SHÉ-bak] | error handling | **обработку ошибок** |
+| **Очередь запросов** | [O-che-red' za-PRO-sov] | Request queue | **Очередь запросов** |
+| **Нагрузка системы** | [na-GRUZ-ka sis-TYE-my] | System load | **Нагрузку системы** |
 
 ---
 
@@ -238,6 +240,7 @@
 | **частота** | [chas-TA-ta] | frequency
 | **только** | [TOL-ka] | only |
 | **обычно** | [a-BYCH-na] | usually |
+| **Поскольку** | [pa-SKOL'-ku] | Since / Because |
 
 
 ---
@@ -304,3 +307,5 @@
 | **сохранять** | [sa-khra-NYATʹ] | to save |
 | **переносить** | [pe-re-no-SEE-tʹ] | to transfer / carry over |
 | **отслеживать** | [at-SLE-zhi-vatʹ] | to track / monitor |
+| **Обрывать** | [ab-ry-VAT'] | To interrupt / To cut off |
+| **Загружать** | [za-gru-ZHAT'] | To load |
