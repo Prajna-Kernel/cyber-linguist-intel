@@ -395,3 +395,11 @@ eway works, and the user sees the update.
 **1️⃣6️⃣5️⃣. Загружать данные сложно, если очередь запросов не обрабатывается.** | Loading data is difficult if the request queue is not being processed.
 
 **1️⃣6️⃣6️⃣. Поскольку нагрузка высокая, система обрывает передачу данных.** | Since the load is high, the system interrupts data transmission.
+
+**1️⃣6️⃣7️⃣. Если уровень нагрузки высокий, система начинает перегрев.** | If the load level is high, the system starts overheating.
+
+**1️⃣6️⃣8️⃣. Буфер переполняется, поскольку система не обрабатывает очередь запросов.** | The buffer overflows because the system is not processing the request queue.
+
+**1️⃣6️⃣9️⃣. Сначала нужно проверить уровень нагрузки, затем разрешать доступ.** | First you need to check the load level, then allow access.
+
+**1️⃣7️⃣0️⃣. Переполнение буфера вызывает сбой системы.** | Buffer overflow causes a system failure.
