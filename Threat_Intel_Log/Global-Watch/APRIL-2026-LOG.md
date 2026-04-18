@@ -1236,3 +1236,111 @@ Running a full Linux VM inside a compromised Windows host to hide ransomware act
 Payouts King inheriting BlackBasta's access broker network means they started with a mature targeting pipeline, not from scratch. The vishing plus Quick Assist combination keeps working because it exploits people, not software — and social engineering at scale doesn't require any technical sophistication to initiate.
 
 This group is operationally mature, technically creative, and growing. The spread of QEMU-based evasion from CRON#TRAP in 2024 to two separate STAC clusters in 2026 confirms the technique is being actively shared and refined across the ransomware ecosystem.
+
+---
+
+# Incident #024 — April 19, 2026
+
+**Target:** Applications using protobuf.js (JavaScript/Node.js ecosystem)
+
+**Sector:** Software Supply Chain / Developer Infrastructure
+
+**Threat Actor:** N/A — Vulnerability Disclosure
+
+**Origin:** N/A
+
+**Source:** BleepingComputer — April 18, 2026 | Endor Labs (Cristian Staicu)
+
+**Vulnerability Class:** Remote Code Execution via Code Injection (Function() constructor abuse) — PoC published, no confirmed active exploitation at time of disclosure
+
+**Labels:** protobuf.js | RCE | GHSA-xq3m-2v4x-88gg | Supply Chain | JavaScript | Node.js | PoC Published | Transitive Dependency
+
+---
+
+## Analysis
+
+A critical RCE vulnerability in protobuf.js — the JavaScript implementation of Google's Protocol Buffers, used across millions of Node.js applications — was publicly disclosed with proof-of-concept exploit code available. Tracked as GHSA-xq3m-2v4x-88gg (no CVE assigned at time of writing), the flaw exists because the library builds JavaScript functions by concatenating strings from protobuf schemas and executing them via the Function() constructor without validating schema-derived identifiers.
+
+An attacker who can supply a malicious schema — through any application that loads attacker-influenced schemas — can inject arbitrary JavaScript that executes on the server. This gives access to environment variables, credentials, databases, and internal systems, and opens a path for lateral movement.
+
+The vulnerability was reported by Endor Labs researcher Cristian Staicu on March 2, patched by maintainers on March 11, and npm fixes were released April 4 (8.x branch) and April 15 (7.x branch). PoC is now public. The exposure window is significant because protobuf.js is a transitive dependency in many projects — developers may not know they're using it.
+
+---
+
+## Key Technical Indicators:
+- Tracked as GHSA-xq3m-2v4x-88gg — no CVE assigned at time of writing
+- **Root cause:** unsafe string concatenation in schema processing, executed via Function() constructor
+- **Trigger:** attacker supplies malicious schema with injected JavaScript in message name or identifier fields
+- **Impact:** arbitrary code execution on server, access to env vars, credentials, DBs, lateral movement path
+- PoC exploit published publicly — exploitation timeline accelerated
+- **Affected:** protobuf.js 7.x before April 15 patch, 8.x before April 4 patch
+- **Fix:** upgrade to patched 7.x or 8.x npm package versions
+
+---
+
+> **Entry Type:** Vulnerability Disclosure — no confirmed threat actor, no confirmed active exploitation. PoC published — *exploitation risk elevated. MITRE ATT&CK tags not applicable.*
+
+---
+
+## Strategic Context
+
+protobuf.js is everywhere in the Node.js ecosystem — gRPC services, microservices, APIs. The attack surface here isn't just direct users, it's every application that pulls it in as a transitive dependency without knowing. PoC being public accelerates the exploitation timeline significantly. Any server that loads schemas from external or user-influenced sources is a candidate for exploitation right now.
+
+This is a supply chain risk even for teams that didn't consciously choose protobuf.js — dependency audits are the immediate priority.
+
+---
+
+# Incident #025 — April 19, 2026
+
+**Target:** TBK DVR devices, EoL TP-Link routers (IoT/CCTV infrastructure)
+
+**Sector:** IoT / Physical Security Infrastructure
+
+**Threat Actor:** Unknown — unattributed, financially motivated (DDoS-for-hire assessed)
+
+**Origin:** Unknown
+
+**Source:** The Hacker News — April 18, 2026 | Unit 42 (Palo Alto Networks)
+
+**Attack Type:** Botnet Recruitment via IoT Exploitation — DDoS Infrastructure Building
+
+**Labels:** Mirai | Nexcorium | CVE-2024-3721 | CVE-2017-17215 | CVE-2023-33538 | IoT | DDoS | Botnet | TBK DVR | TP-Link | Huawei | CISA KEV
+
+---
+
+## Analysis
+
+A new Mirai variant called Nexcorium is actively exploiting CVE-2024-3721, a command injection flaw in TBK DVR-4104 and DVR-4216 CCTV devices, to recruit them into a DDoS botnet. The attack chain downloads a script that drops architecture-specific botnet payloads, displays "nexuscorp has taken control" on execution, then establishes persistence via crontab and systemd. The malware deletes its own binary after execution to avoid analysis.
+
+Nexcorium also carries an exploit for CVE-2017-17215 targeting Huawei HG532 routers, and includes brute-force capability against Telnet using hardcoded credential lists — expanding its infection surface beyond the initial DVR targets.
+
+A parallel campaign tracked by Unit 42 is scanning for CVE-2023-33538 in end-of-life TP-Link routers. Current exploitation attempts are flawed and not succeeding. The TP-Link flaw was CISA KEV-listed in June 2025. CVE-2024-3721 has been exploited repeatedly over the past year — previously to drop another Mirai variant and the RondoDox botnet.
+
+---
+
+## Key Technical Indicators:
+- CVE-2024-3721, CVSS 6.3 — command injection in TBK DVR-4104 and DVR-4216
+- **Nexcorium payload:** XOR-encoded config, watchdog module, DDoS module over UDP, TCP, SMTP
+- **Secondary exploit:** CVE-2017-17215 against Huawei HG532 devices
+- **Persistence:** crontab and systemd; binary self-deletion post-execution
+- **Brute-force:** hardcoded credential list targeting Telnet
+- **Parallel activity:** CVE-2023-33538 scanning against EoL TP-Link TL-WR940N, TL-WR740N, TL-WR841N — exploitation attempts currently unsuccessful
+- **Prior exploitation of CVE-2024-3721:** Mirai variant + RondoDox botnet within past year
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — CVE-2024-3721 command injection exploited on internet-exposed TBK DVR devices; Telnet brute-force using hardcoded credentials as secondary vector; CVE-2017-17215 exploited against Huawei HG532 routers in victim networks
+- **TA0002 — Execution** — architecture-specific botnet payload executed on compromised devices via exploit chain
+- **TA0003 — Persistence** — crontab and systemd entries created for reboot-surviving persistence; binary self-deleted post-execution to hinder analysis
+- **TA0005 — Defense Evasion** — malware binary deleted after execution to avoid forensic analysis
+- **TA0011 — Command & Control** — compromised devices enrolled in Nexcorium botnet C2 infrastructure
+- **TA0040 — Impact** — DDoS capability built across recruited IoT devices; UDP, TCP, SMTP attack modules deployed
+
+---
+
+## Strategic Context
+
+DVRs and CCTV infrastructure are low-hanging fruit for botnet operators — they run 24/7, rarely get patched, and owners have no visibility into what's running on them. CVE-2024-3721 has now been exploited by at least three distinct malware families in under a year. These devices will not receive vendor patches. The only real remediation is replacement, which most small businesses and individuals won't do. This guarantees a steady pool of recruitable nodes.
+
+The Nexcorium campaign fits into a broader IoT botnet ecosystem where the same vulnerable device population gets cycled through by different operators, each building DDoS capacity for hire.
