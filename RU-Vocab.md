@@ -128,6 +128,9 @@
 | **обработка ошибок** | [ab-ra-BÓT-ka a-SHÉ-bak] | error handling | **обработку ошибок** |
 | **Очередь запросов** | [O-che-red' za-PRO-sov] | Request queue | **Очередь запросов** |
 | **Нагрузка системы** | [na-GRUZ-ka sis-TYE-my] | System load | **Нагрузку системы** |
+| **Перегрев** | [pe-re-GRYEV] | Overheating | **Перегрев** |
+| **Переполнение** | [pe-re-pal-NYE-ni-ye] | Overflow | **Переполнение** |
+| **Уровень** | [U-ra-ven'] | Level | **Уровень** |
 
 ---
 
@@ -241,6 +244,7 @@
 | **только** | [TOL-ka] | only |
 | **обычно** | [a-BYCH-na] | usually |
 | **Поскольку** | [pa-SKOL'-ku] | Since / Because |
+| **Затем** | [za-TEM] | Then / Afterwards |
 
 
 ---
@@ -309,3 +313,5 @@
 | **отслеживать** | [at-SLE-zhi-vatʹ] | to track / monitor |
 | **Обрывать** | [ab-ry-VAT'] | To interrupt / To cut off |
 | **Загружать** | [za-gru-ZHAT'] | To load |
+| **Разрешать** | [ra-zre-SHAT'] | To allow / To permit |
+| **Переполняться** | [pe-re-pal-NYAT-sa] | To overflow |
