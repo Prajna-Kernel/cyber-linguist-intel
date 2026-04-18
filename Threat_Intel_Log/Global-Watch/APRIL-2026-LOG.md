@@ -1344,3 +1344,69 @@ A parallel campaign tracked by Unit 42 is scanning for CVE-2023-33538 in end-of-
 DVRs and CCTV infrastructure are low-hanging fruit for botnet operators — they run 24/7, rarely get patched, and owners have no visibility into what's running on them. CVE-2024-3721 has now been exploited by at least three distinct malware families in under a year. These devices will not receive vendor patches. The only real remediation is replacement, which most small businesses and individuals won't do. This guarantees a steady pool of recruitable nodes.
 
 The Nexcorium campaign fits into a broader IoT botnet ecosystem where the same vulnerable device population gets cycled through by different operators, each building DDoS capacity for hire.
+
+---
+
+# Incident #026 — April 19, 2026
+
+**Target:** Grinex cryptocurrency exchange (sanctioned Russia-linked, assessed Garantex rebrand)
+
+**Sector:** Finance / Cryptocurrency / Sanctions Evasion Infrastructure
+
+**Threat Actor:** Unknown — false flag assessed; internally motivated or financially motivated actor suspected
+
+**Origin:** Unattributed — Grinex claims Western intelligence agencies; Chainalysis disputes attribution
+
+**Source:** The Hacker News — April 18, 2026 | Chainalysis | TRM Labs | Elliptic
+
+**Attack Type:** Cryptocurrency Theft / Financial Infrastructure Disruption
+
+**Labels:** Sanctions Evasion | Crypto Theft | Russia | Garantex | Grinex | False Flag | TRON | Ethereum | Stablecoin | Ransomware Infrastructure
+
+---
+
+## Analysis
+
+Grinex, a Kyrgyzstan-registered crypto exchange widely believed to be a rebranded Garantex — sanctioned by both the U.S. and UK for laundering ransomware and darknet market funds — announced suspension of operations after losing $13.74 million in a hack on April 15, 2026. The exchange blamed Western intelligence agencies, framing it as a state-coordinated attack against Russia's financial sovereignty.
+
+Blockchain analysts aren't buying it. Chainalysis flagged the incident as potentially a false flag, noting that the stolen stablecoins were rapidly swapped for non-freezable tokens using the same obfuscation techniques Garantex itself favoured — not the behaviour of a foreign intelligence operation, more consistent with insiders or financially motivated criminals familiar with the exchange's own methods. TRM Labs identified around 70 addresses connected to the theft. TokenSpot, a Kyrgyzstan exchange believed to be a Grinex front, was simultaneously hit but lost under $5,000, with funds routed to the same consolidation addresses.
+
+The stolen USDT was quickly converted to TRX or ETH on TRON and Ethereum to avoid Tether freezing the assets. Elliptic previously tied Grinex to Rapira, another Russia-linked exchange, through over $72 million in direct transactions. Whether this was an external hack or an inside job dressed up as a geopolitical attack, the result is the same: one of Russia's primary sanctions evasion platforms is now offline.
+
+---
+
+## Key Technical Indicators:
+- **Theft occurred:** April 15, 2026 around 12:00 UTC
+- **Stolen:** $13.74 million, over 1 billion rubles
+- **Method:** USDT stolen → converted to TRX or ETH to avoid Tether freeze
+- TokenSpot simultaneously affected — funds routed to same consolidation addresses
+- **TRM Labs:** approximately 70 addresses linked to the incident
+- **Obfuscation technique:** consistent with Garantex's own laundering methods (Chainalysis)
+- Grinex assessed as Garantex rebrand — sanctioned April 2022 and August 2025
+- **Elliptic:** $72M+ in direct transactions between Grinex and Rapira (Russia-linked exchange)
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — Grinex exchange infrastructure breached; method undisclosed — insider threat or external compromise both assessed as plausible
+- **TA0009 — Collection** — $13.74 million in USDT staged from Grinex wallets; TokenSpot simultaneously accessed via linked infrastructure
+- **TA0010 — Exfiltration** — stolen USDT transferred to approximately 70 attacker-controlled addresses identified by TRM Labs
+- **TA0005 — Defense Evasion** — stolen USDT rapidly converted to TRX and ETH to avoid Tether freeze; obfuscation techniques consistent with Garantex's own laundering methods — blending theft activity with known exchange behaviour
+- **TA0040 — Impact** — $13.74 million stolen; Grinex suspended operations; key Russian sanctions evasion infrastructure taken offline
+
+---
+
+## Strategic Context
+
+Garantex/Grinex has been one of the most significant nodes in Russian sanctions evasion infrastructure since at least 2022, processing over $100 million in illicit transactions. Taking it offline — however it happened — removes a key financial channel that ransomware operators, darknet markets, and sanctioned entities have relied on.
+
+**The false flag framing from Grinex is notable:** attributing a hack to Western intelligence is a standard Russian information operation move, but Chainalysis's observation that the obfuscation techniques match Garantex's own methods weakens that narrative significantly.
+
+This is worth watching for follow-on activity — if Garantex/Grinex operators resurface under another brand, the pattern will repeat. Elliptic's Rapira connection suggests the infrastructure network extends beyond Grinex alone.
+
+---
+
+## Russian Language Context
+
+Garantex (Гарантекс) operated as a ruble-facing exchange and used a ruble-backed stablecoin called A7A5 to maintain operations after sanctions. The term финансовый суверенитет (finansovy suverenitet — financial sovereignty) used in Grinex's statement is standard Kremlin framing applied to sanctions resistance narratives. The exchange's claim of Western intelligence involvement fits the established pattern of Russian state-adjacent actors deflecting accountability through geopolitical attribution.
+
