@@ -329,3 +329,11 @@ Using Telegram as a C2 fallback is smart tradecraft — it blends into legitimat
 
 What stands out most is the targeting logic. Municipal clinics and emergency hospitals in an active warzone run with minimal IT staff and maximum operational pressure. Stealing credentials from WhatsApp and browsers in that environment means potentially exposing communications, contacts, and logistics. This isn't opportunistic — it's deliberate degradation of civilian and government capacity in a conflict zone.
 
+---
+
+# ⚠️ Cross-Sector Alert: Grinex/Garantex — Russian Sanctions Evasion Infrastructure
+**Status:** Operations Suspended — $13.74M Stolen (April 15, 2026)   
+**Target:** Grinex exchange (assessed Garantex rebrand) — primary financial node for Russian ransomware and darknet market laundering   
+**Note:** False flag attribution to Western intelligence disputed by Chainalysis. Insider or financially motivated actor suspected based on obfuscation technique overlap with Garantex's own methods.
+
+👉 **[Read Full Technical Briefing in Global-Watch](../Global-Watch/APRIL-2026-LOG.md#incident-026)**
