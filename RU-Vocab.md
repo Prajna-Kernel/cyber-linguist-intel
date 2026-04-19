@@ -131,6 +131,9 @@
 | **Перегрев** | [pe-re-GRYEV] | Overheating | **Перегрев** |
 | **Переполнение** | [pe-re-pal-NYE-ni-ye] | Overflow | **Переполнение** |
 | **Уровень** | [U-ra-ven'] | Level | **Уровень** |
+| **Отклонение** | [at-kla-NYE-ni-ye] | Deviation | **Отклонение** |
+| **Сжатие** | [SZHA-ti-ye] | Compression | **Сжатие** |
+| **Значение** | [zna-CHYE-ni-ye] | Value | **Значение** |
 
 ---
 
@@ -245,7 +248,7 @@
 | **обычно** | [a-BYCH-na] | usually |
 | **Поскольку** | [pa-SKOL'-ku] | Since / Because |
 | **Затем** | [za-TEM] | Then / Afterwards |
-
+| **Поэтому** | [pa-ET-a-mu] |Therefore |
 
 ---
 
@@ -315,3 +318,5 @@
 | **Загружать** | [za-gru-ZHAT'] | To load |
 | **Разрешать** | [ra-zre-SHAT'] | To allow / To permit |
 | **Переполняться** | [pe-re-pal-NYAT-sa] | To overflow |
+| **Отклоняться** | [at-kla-NYAT-sa] | To deviate |
+| **Сжиматься** | [szhi-MAT-sa] | To compress |
