@@ -403,3 +403,11 @@ eway works, and the user sees the update.
 **1️⃣6️⃣9️⃣. Сначала нужно проверить уровень нагрузки, затем разрешать доступ.** | First you need to check the load level, then allow access.
 
 **1️⃣7️⃣0️⃣. Переполнение буфера вызывает сбой системы.** | Buffer overflow causes a system failure.
+
+**1️⃣7️⃣1️⃣. Если значение отклоняется от нормы, система обнаруживает ошибку.** | If the value deviates from the norm, the system detects an error.
+
+**1️⃣7️⃣2️⃣. Данные сжимаются, поэтому пропускная способность увеличивается.** | Data compresses, therefore throughput increases.
+
+**1️⃣7️⃣3️⃣. Поэтому важно проверять значение уровня нагрузки.** | Therefore it is important to check the load level value.
+
+**1️⃣7️⃣4️⃣. Сжатие данных уменьшает отклонение в передаче пакетов.** | Data compression reduces deviation in packet transmission.
