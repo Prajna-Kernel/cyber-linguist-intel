@@ -1410,3 +1410,69 @@ This is worth watching for follow-on activity — if Garantex/Grinex operators r
 
 Garantex (Гарантекс) operated as a ruble-facing exchange and used a ruble-backed stablecoin called A7A5 to maintain operations after sanctions. The term финансовый суверенитет (finansovy suverenitet — financial sovereignty) used in Grinex's statement is standard Kremlin framing applied to sanctions resistance narratives. The exchange's claim of Western intelligence involvement fits the established pattern of Russian state-adjacent actors deflecting accountability through geopolitical attribution.
 
+---
+
+# Incident #027 — April 20, 2026
+
+**Target:** Israeli water treatment and desalination infrastructure
+
+**Sector:** Critical Infrastructure / OT / Water
+
+**Threat Actor:** Unknown — ideologically motivated, handle "0xICS", pro-Iran/Palestine/Yemen messaging
+
+**Origin:** Unknown — Middle East or Iran-aligned assessed based on embedded strings
+
+**Source:** BleepingComputer — April 17, 2026 | Darktrace
+
+**Attack Type:** OT Sabotage Malware — ICS Targeting (Non-functional Sample)
+
+**SamplLabels:** ZionSiphon | OT | ICS | Modbus | Water Infrastructure | Sabotage | Israel | Iran-aligned | Non-Functional Sample
+
+---
+
+## Analysis
+
+Darktrace identified a malware sample called ZionSiphon designed specifically to sabotage Israeli water treatment and desalination systems. The malware targets Mekorot — Israel's national water company — and four of its five major desalination plants: Sorek, Hadera, Ashdod, and Palmachim, plus the Shafdan wastewater facility.
+
+It checks whether the host IP falls within Israeli ranges and whether the system contains water or OT-related files before activating. If both conditions are met, it modifies configuration files to set Chlorine_Dose=10, Chlorine_Pump=ON, Chlorine_Flow=MAX, and RO_Pressure=80 — values that could cause serious harm to anyone consuming that water.
+
+The malware scans the local network for OT devices on Modbus (port 502), DNP3 (port 20000), and S7comm (port 102). The Modbus module is fully developed and capable of reading and writing registers directly. DNP3 and S7comm are placeholder code only. It persists via a registry autorun key, copies itself as a hidden svchost.exe, and spreads via USB shortcut files to reach air-gapped systems. Political strings embedded in the binary reference support for Iran, Palestine, and Yemen and explicitly mention poisoning populations in Tel Aviv and Haifa.
+
+The current sample is non-functional due to a broken XOR encryption comparison in the country-validation logic — the country check always fails and triggers self-destruct. This appears to be either a development build or a prematurely deployed sample. One bug fix is all that separates intent from execution.
+
+---
+
+## Key Technical Indicators:
+- **Malware name:** ZionSiphon — **author handle:** 0xICS
+- **Targets:** Mekorot, Sorek, Hadera, Ashdod, Palmachim desalination plants, Shafdan wastewater
+- **Geographic targeting:** hardcoded Israeli IP ranges (2.52.0.0/2.55.255.255, 79.176.0.0/79.191.255.255, 212.150.0.0/212.150.255.255)
+- **Sabotage method:** config file modification — Chlorine_Dose=10, Chlorine_Pump=ON, Chlorine_Flow=MAX, RO_Pressure=80
+- **OT scanning:** Modbus port 502 (functional), DNP3 port 20000 (placeholder), S7comm port 102 (placeholder)
+- **Modbus capability:** Read Holding Registers, Write Single Register to force chlorine values
+- **Persistence:** HKCU autorun key, hidden svchost.exe copy
+- **Propagation:** USB shortcut files, hidden system attributes
+- **Privilege escalation:** PowerShell RunAs if not admin
+- **Current status:** non-functional — broken country-validation XOR logic triggers self-destruct
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0002 — Execution** — malware executes on target host; checks IP range and OT file presence before activating; PowerShell RunAs used if not admin
+- **TA0004 — Privilege Escalation** — PowerShell RunAs invoked to elevate to admin if required
+- **TA0003 — Persistence** — HKCU autorun registry key established; hidden svchost.exe copy created
+- **TA0005 — Defense Evasion** — malware disguised as svchost.exe with hidden system attributes; self-destruct triggered on failed country validation
+- **TA0007 — Discovery** — local network scanned for OT devices on Modbus (502), DNP3 (20000), S7comm (102)
+- **TA0008 — Lateral Movement** — USB shortcut file propagation to reach air-gapped OT systems
+- **TA0040 — Impact** — intended: chlorine dosing manipulation via Modbus register writes to cause population harm; actual: non-functional due to broken XOR validation — no confirmed impact
+
+> **Note:** No confirmed Initial Access vector documented — sample identified via malware analysis, not active incident response. Delivery mechanism to initial host undisclosed.
+
+---
+
+## Strategic Context
+
+ZionSiphon is not operational yet but the intent is clear and the technical groundwork is mostly done. Water infrastructure is one of the most underfunded sectors in terms of OT security, and air-gapped systems that rely on USB for updates are exactly the environments this malware is built for. The Modbus write capability is real and functional in this sample. The only thing preventing actual poisoning is a single mismatched string comparison.
+
+This fits a broader pattern of Iran-aligned actors experimenting with ICS sabotage tools — similar ideological framing was seen in Predatory Sparrow's steel plant attack and earlier attacks on Israeli water facilities. ZionSiphon signals that OT sabotage capability is no longer exclusive to top-tier nation-states. Even smaller ideologically motivated groups are building multi-protocol ICS weapons.
+
+---
