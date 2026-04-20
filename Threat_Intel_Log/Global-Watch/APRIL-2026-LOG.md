@@ -1476,3 +1476,119 @@ ZionSiphon is not operational yet but the intent is clear and the technical grou
 This fits a broader pattern of Iran-aligned actors experimenting with ICS sabotage tools — similar ideological framing was seen in Predatory Sparrow's steel plant attack and earlier attacks on Israeli water facilities. ZionSiphon signals that OT sabotage capability is no longer exclusive to top-tier nation-states. Even smaller ideologically motivated groups are building multi-protocol ICS weapons.
 
 ---
+
+# Incident #028 — April 21, 2026
+
+**Target:** US companies, individual cryptocurrency holders
+
+**Sector:** Finance / Cybercrime
+
+**Threat Actor:** Scattered Spider — Tyler Robert Buchanan ("tylerb", "Dread Pirate Roberts")
+
+**Origin:** UK/Scotland — English-speaking cybercrime network "The Com"
+
+**Source:** The Register — April 20, 2026 | US DOJ | Court filings
+
+**Attack Type:** Phishing → Corporate Intrusion → SIM Swapping → Cryptocurrency Theft
+
+**Labels:** Scattered Spider | SIM Swap | Phishing | Crypto Theft | The Com | Guilty Plea | Wire Fraud | Identity Theft
+
+---
+
+## 
+Analysis
+
+Tyler Robert Buchanan, 24, a Scottish national and Scattered Spider member operating under aliases including "tylerb" and "Dread Pirate Roberts," pleaded guilty in a US federal court to conspiracy to commit wire fraud and aggravated identity theft. He faces up to 22 years. Sentencing is scheduled for August 21, 2026.
+
+Between September 2021 and April 2023, Buchanan and co-conspirators defrauded at least a dozen US companies through phishing campaigns and computer intrusions — using fake VPN expiry warnings and copycat credential-harvesting sites to steal corporate data. Stolen corporate credentials were then used to identify individual victims' cryptocurrency holdings. SIM swaps bypassed two-factor authentication by transferring victims' phone numbers to attacker-controlled devices, intercepting OTP codes and gaining direct wallet access. Buchanan personally admitted to stealing at least $8 million in cryptocurrency. The wider group is accused of stealing at least $11 million.
+
+He was arrested in Spain in June 2024 and extradited to the US in April 2025. Police found wallet seed phrases and victim login credentials at his Scotland residence in April 2023. This is the second Scattered Spider guilty plea in the US — Noah Urban pleaded guilty in 2025 and is currently serving 10 years. Three co-defendants — Ahmed Elbadawy, Evans Osiebo, and Joel Evans — still face charges and are described as senior figures in the group.
+
+Buchanan's period of involvement ended before Scattered Spider's most high-profile attacks including MGM Resorts, Caesars, Transport for London, and the 2025 UK retail attacks.
+
+---
+
+## Key Technical Indicators:
+- **Method:** phishing — fake VPN expiry warnings, copycat credential-harvesting sites
+- SIM swapping used to bypass 2FA on cryptocurrency accounts
+- **Infrastructure:** group created and maintained phishing domains and fake websites
+- Corporate intrusion data used to identify and target individual crypto holders
+- **Evidence found at residence:** victim wallet seed phrases, account login credentials
+- **Period of activity:** September 2021 — April 2023
+- **Stolen amount (Buchanan personally):** at least $8 million in cryptocurrency
+- **Group total:** at least $11 million stolen
+- **Arrest:** Spain, June 2024 — extradited to US April 2025
+- **Sentencing:** August 21, 2026
+
+---
+
+ ## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — phishing campaigns using fake VPN expiry warnings and copycat credential-harvesting sites targeting US companies
+- **TA0006 — Credential Access** — corporate credentials harvested via phishing; SIM swapping used to intercept OTP codes and bypass 2FA on cryptocurrency accounts; wallet seed phrases and login credentials physically recovered from residence
+- **TA0007 — Discovery** — stolen corporate data used to identify individual cryptocurrency holders and their wallet information
+- **TA0009 — Collection** — victim wallet seed phrases, account credentials, and cryptocurrency access information staged
+- **TA0040 — Impact** — at least $8M stolen by Buchanan personally; at least $11M stolen by group total; victims lost cryptocurrency holdings and corporate data
+
+---
+
+## Strategic Context
+
+Scattered Spider has been one of the most effective English-language cybercrime groups of recent years. The SIM swap plus phishing combination works because it exploits telecom infrastructure and human trust simultaneously — corporate credentials open the door, SIM swaps bypass the lock.
+
+Buchanan's guilty plea is the second in a series of prosecutions slowly dismantling the group's known membership. The three remaining co-defendants being described as "senior figures" suggests the most significant prosecutions may still be coming. For defenders, the lesson remains unchanged — SIM-based 2FA is not sufficient protection for high-value accounts.
+
+This connects to #021 Rockstar/ShinyHunters and #022 McGraw-Hill — all three involve "The Com" network, English-speaking financially motivated actors operating at scale against US targets using identity and credential theft as the primary weapon.
+
+---
+
+# Incident #029 — April 21, 2026
+
+**Target:** SGLang inference server deployments (AI/ML infrastructure)
+
+**Sector:** AI Infrastructure / Developer Tooling
+
+**Threat Actor:** N/A — Vulnerability Disclosure
+
+**Origin:** N/A
+
+**Source:** The Hacker News — April 20, 2026
+
+**Vulnerability Class:** Server-Side Template Injection → Remote Code Execution via malicious GGUF model file — no confirmed active exploitation at time of disclosure
+
+**Labels:** CVE-2026-5760 | CVSS 9.8 | SGLang | SSTI | Jinja2 | GGUF | AI Supply Chain | LLM Infrastructure | No Patch Available
+
+---
+
+## Analysis
+
+A critical SSTI vulnerability in SGLang — a widely used open-source inference framework for LLMs with over 26,000 GitHub stars — allows an attacker to achieve RCE on the inference server by loading a maliciously crafted GGUF model file. Tracked as CVE-2026-5760 (CVSS 9.8), the flaw exists because SGLang uses jinja2.Environment() without sandboxing to render chat templates embedded in model files.
+
+An attacker crafts a GGUF file with a malicious tokenizer.chat_template field containing a Jinja2 SSTI payload and a Qwen3 reranker trigger phrase. The victim downloads the model from a platform like Hugging Face and loads it into SGLang. When any request hits the /v1/rerank endpoint, the template renders and the payload executes arbitrary Python code with the privileges of the SGLang service. Full server access — environment variables, credentials, databases, internal network — is possible from that point.
+
+No patch was available at time of disclosure. The fix is switching from jinja2.Environment() to ImmutableSandboxedEnvironment. This follows the same vulnerability class as Llama Drama (CVE-2024-34359, CVSS 9.7) in llama_cpp_python and a similar flaw in vLLM (CVE-2025-61620). The same attack surface is being found repeatedly across AI inference frameworks.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-5760, CVSS 9.8
+- **Vulnerable component:** /v1/rerank endpoint in entrypoints/openai/serving_rerank.py
+- **Root cause:** jinja2.Environment() used without sandboxing for chat template rendering
+- **Attack vector:** malicious GGUF model file with crafted tokenizer.chat_template SSTI payload
+- **Trigger:** Qwen3 reranker phrase activates vulnerable code path
+- **Impact:** arbitrary Python code execution on SGLang inference server
+- **Access gained:** env vars, credentials, databases, internal network, lateral movement path
+- No patch at time of disclosure — **fix:** replace with ImmutableSandboxedEnvironment
+- **Same vulnerability class:**
+- CVE-2024-34359 (llama_cpp_python), CVE-2025-61620 (vLLM)
+
+---
+
+> **Entry Type:** Vulnerability Disclosure — no confirmed threat actor, no confirmed active exploitation. No patch available at time of disclosure — immediate risk for exposed SGLang deployments. MITRE ATT&CK tags not applicable.
+
+---
+
+## Strategic Context
+
+AI model files are becoming a new malware delivery vector. GGUF files are widely shared on Hugging Face and similar platforms — developers routinely download and load models from strangers without treating them as potentially hostile inputs. Template injection through model metadata is a silent attack: no network exploit, no vulnerability in the host OS, just load a model and get owned.
+
+This is the third major inference framework hit by the same vulnerability class in two years. The pattern is clear and the fixes are known, but teams building AI infrastructure are not consistently applying them. For anyone running SGLang-based inference servers exposed to the internet, this is an immediate risk until patched.
