@@ -411,3 +411,11 @@ eway works, and the user sees the update.
 **1️⃣7️⃣3️⃣. Поэтому важно проверять значение уровня нагрузки.** | Therefore it is important to check the load level value.
 
 **1️⃣7️⃣4️⃣. Сжатие данных уменьшает отклонение в передаче пакетов.** | Data compression reduces deviation in packet transmission.
+
+**1️⃣7️⃣5️⃣. Кроме параметра нагрузки, нужно проверить очередность выполнения.** | Besides the load parameter, you need to check the execution order.
+
+**1️⃣7️⃣6️⃣. Система выполняет нагрузочный тест, затем проверяет параметры.** | The system executes a load test, then checks the parameters.
+
+**1️⃣7️⃣7️⃣. Поскольку параметр отклоняется, очередность выполнения нарушается.** | Since the parameter deviates, the execution order is disrupted.
+
+**1️⃣7️⃣8️⃣. Кроме сжатия данных, нагрузочный тест помогает обнаружить проблему.** | Besides data compression, a load test helps detect the problem.
