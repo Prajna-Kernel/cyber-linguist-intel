@@ -134,6 +134,9 @@
 | **Отклонение** | [at-kla-NYE-ni-ye] | Deviation | **Отклонение** |
 | **Сжатие** | [SZHA-ti-ye] | Compression | **Сжатие** |
 | **Значение** | [zna-CHYE-ni-ye] | Value | **Значение** |
+| **Очередность выполнения** | [a-che-red-NOST' vy-pal-NYE-ni-ya] | Execution order | **Очередность выполнения** |
+| **Нагрузочный тест** | [na-GRUZ-ach-nyy TEST] | Load test | **Нагрузочный тест** |
+| **Параметр** | [pa-ra-METR] | Parameter | **Параметр** |
 
 ---
 
@@ -249,6 +252,7 @@
 | **Поскольку** | [pa-SKOL'-ku] | Since / Because |
 | **Затем** | [za-TEM] | Then / Afterwards |
 | **Поэтому** | [pa-ET-a-mu] |Therefore |
+| **Кроме** | [KRO-me] | Except / Besides |
 
 ---
 
