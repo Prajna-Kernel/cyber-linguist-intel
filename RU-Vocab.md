@@ -137,6 +137,9 @@
 | **Очередность выполнения** | [a-che-red-NOST' vy-pal-NYE-ni-ya] | Execution order | **Очередность выполнения** |
 | **Нагрузочный тест** | [na-GRUZ-ach-nyy TEST] | Load test | **Нагрузочный тест** |
 | **Параметр** | [pa-ra-METR] | Parameter | **Параметр** |
+| **пропуск кадра** | [pra-POOSK KAD-ra] | frame drop | **пропуск кадра** |
+| **восстановление** | [vas-sta-nav-LYE-ni-ye] | recovery / restoration | **восстановление** |
+| **предел** | [pre-DYEL] | limit | **предел** |
 
 ---
 
@@ -253,6 +256,7 @@
 | **Затем** | [za-TEM] | Then / Afterwards |
 | **Поэтому** | [pa-ET-a-mu] |Therefore |
 | **Кроме** | [KRO-me] | Except / Besides |
+| **либо** | [LEE-ba] | either / or |
 
 ---
 
@@ -324,3 +328,5 @@
 | **Переполняться** | [pe-re-pal-NYAT-sa] | To overflow |
 | **Отклоняться** | [at-kla-NYAT-sa] | To deviate |
 | **Сжиматься** | [szhi-MAT-sa] | To compress |
+| **восстанавливаться** | [vas-sta-nav-LEE-vat-sa] | to recover / be restored | 
+| **ускоряться** |[oo-ska-RYAT-sa] | to speed up (itself) |
