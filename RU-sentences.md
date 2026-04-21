@@ -419,3 +419,12 @@ eway works, and the user sees the update.
 **1️⃣7️⃣7️⃣. Поскольку параметр отклоняется, очередность выполнения нарушается.** | Since the parameter deviates, the execution order is disrupted.
 
 **1️⃣7️⃣8️⃣. Кроме сжатия данных, нагрузочный тест помогает обнаружить проблему.** | Besides data compression, a load test helps detect the problem.
+
+**1️⃣7️⃣9️⃣. Если есть нагрузка, система замедляется, затем есть пропуск кадра.** | 
+If there is load, the system slows down, then there is a frame drop.
+
+**1️⃣8️⃣0️⃣. Если параметр достигает предела, система начинает ускоряться.** | If the parameter reaches the limit, the system starts speeding up.
+
+**1️⃣8️⃣1️⃣. Либо есть пропуск кадра, либо система не успевает восстановиться.** | Either there is a frame drop, or the system does not manage to recover.
+
+**1️⃣8️⃣2️⃣. После сбоя система восстанавливается, затем работает.** | After a failure, the system recovers, then works.
