@@ -1592,3 +1592,128 @@ No patch was available at time of disclosure. The fix is switching from jinja2.E
 AI model files are becoming a new malware delivery vector. GGUF files are widely shared on Hugging Face and similar platforms — developers routinely download and load models from strangers without treating them as potentially hostile inputs. Template injection through model metadata is a silent attack: no network exploit, no vulnerability in the host OS, just load a model and get owned.
 
 This is the third major inference framework hit by the same vulnerability class in two years. The pattern is clear and the fixes are known, but teams building AI infrastructure are not consistently applying them. For anyone running SGLang-based inference servers exposed to the internet, this is an immediate risk until patched.
+
+---
+
+# Incident #030 — April 22, 2026
+
+**Target:** Vercel — cloud app hosting platform
+
+**Sector:** Developer Infrastructure / Cloud Hosting
+
+**Threat Actor:** Unknown — sophisticated, unattributed (ShinyHunters denied involvement)
+
+**Origin:** Unattributed
+
+**Source:** BleepingComputer — April 19, 2026 | Vercel CEO statement
+
+**Attack Type:** OAuth Hijack → Third-Party Supply Chain → Internal Environment Access
+
+**Labels:** Supply Chain | OAuth | Third-Party Breach | Context AI | Developer Infrastructure | Google Workspace | Environment Variables
+
+---
+
+## Analysis
+
+Vercel disclosed a security breach originating from a compromise of Context AI, a third-party AI tool used by a Vercel employee. The attacker used Context AI's breach to hijack the employee's Google Workspace account via OAuth — the employee had connected Context AI to their corporate Google account, which handed the attacker a trusted credential path into Vercel's internal systems.
+
+From there, the attacker accessed environment variables that were not marked as sensitive and therefore stored unencrypted. Vercel stated that sensitive environment variables are encrypted at rest and showed no evidence of access to those. The attacker enumerated non-sensitive environment variables and used them to gain further access. Vercel's CEO described the attacker as sophisticated based on their operational speed and detailed understanding of Vercel's internal systems.
+
+A threat actor claiming to be ShinyHunters posted on a hacking forum claiming to sell stolen Vercel access keys, source code, and database data. ShinyHunters-linked actors denied involvement to BleepingComputer. Attribution remains unclear. Vercel's open-source projects were confirmed unaffected. The breach is contained but the full scope of customer exposure is not disclosed.
+
+---
+
+## Key Technical Indicators:
+- **Initial access:** Context AI breach → OAuth token hijack of Vercel employee's Google Workspace account
+- **Pivot:** hijacked Google account used to access Vercel internal environments
+- **Data accessed:** non-sensitive environment variables stored unencrypted
+- **Sensitive env vars:** encrypted at rest, no evidence of access
+- **Claimed stolen:** access keys, source code, database data, npm tokens, GitHub tokens
+- **Attribution:** unknown — ShinyHunters denied involvement
+- *Context AI did not disclose its own breach prior to Vercel's disclosure*
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — Context AI third-party tool compromised; OAuth token hijacked from Vercel employee's connected Google Workspace account; trusted credential path into Vercel internal systems established
+- **TA0006 — Credential Access** — OAuth tokens harvested from Context AI breach; employee's Google Workspace credentials leveraged without direct phishing of Vercel systems
+- **TA0007 — Discovery** — non-sensitive environment variables enumerated; internal system mapping conducted at speed per CEO statement
+- **TA0009 — Collection** — non-sensitive environment variables accessed; claimed: access keys, npm tokens, GitHub tokens, source code staged
+- **TA0005 — Defense Evasion** — OAuth hijack presented as legitimate employee access; third-party tool used as proxy to avoid direct targeting of Vercel infrastructure
+
+---
+
+## Strategic Context
+
+This is another OAuth supply chain attack - an employee connects a third-party tool to their corporate account and the trust relationship becomes an attack vector. Context AI's breach cascaded into Vercel because OAuth grants persist silently until explicitly revoked.
+
+Vercel serves a massive portion of the web's deployment infrastructure. Even if the immediate data accessed was non-sensitive, the attacker had internal access long enough to enumerate systems and map the environment. The ShinyHunters denial is notable - it suggests either a copycat actor or a deliberate attribution play.
+
+This connects directly to #022 Rockstar/Anodot and #023 McGraw-Hill/Salesforce - all three involve third-party SaaS integrations used as breach vectors into larger targets. **The pattern is consistent:** attackers are not breaking down front doors, they are walking through side doors left open by trusted integrations.
+
+---
+
+# Incident #029 — April 22, 2026
+
+**Target:** KelpDAO — Ethereum liquid restaking DeFi protocol
+
+**Sector:** Finance / Cryptocurrency / DeFi
+
+**Threat Actor:** Lazarus Group / TraderTraitor — DPRK state-affiliated
+
+**Origin:** North Korea — DPRK state-directed
+
+**Source:** BleepingComputer — April 20, 2026 | LayerZero post-incident | Arbitrum Security Council
+
+**Attack Type:** RPC Infrastructure Compromise → Cross-Chain Bridge Exploit → $290M Crypto Theft
+
+**Labels:** DPRK | Lazarus | TraderTraitor | DeFi | LayerZero | rsETH | RPC Poisoning | DDoS | Crypto Theft | $290M | Cross-Chain Bridge
+
+---
+
+## Analysis
+
+On April 18, 2026, Lazarus Group's TraderTraitor subunit drained approximately $290 million from KelpDAO — the largest crypto theft of 2026 — by exploiting a single point of failure in the protocol's cross-chain bridge configuration. KelpDAO used a 1-of-1 DVN (Decentralized Verifier Network) setup on LayerZero despite LayerZero having previously warned against it.
+
+Attackers compromised two independent RPC nodes that the LayerZero DVN relied on for verification, swapping out the binaries running the op-geth nodes. Because they couldn't directly compromise the DVN instance itself due to least-privilege controls, they used the poisoned RPCs as a pivot point — executing an RPC-spoofing attack. They then DDoS'd the non-compromised RPCs, forcing failover to the two they controlled. With both active RPCs under their control, they injected a forged cross-chain message which LayerZero's verifier accepted as valid, authorising an unauthorized transfer of 116,500 rsETH.
+
+The stolen rsETH was immediately moved through Tornado Cash and laundered across Ethereum and Bitcoin. Arbitrum's Security Council used emergency powers to freeze approximately 30,766 ETH (~$71 million) linked to the exploit. Aave froze rsETH as collateral and blocked new deposits. The incident triggered over $10 billion in withdrawals from Aave amid contagion fears. LayerZero has since announced it will no longer sign messages for any project running a 1-of-1 verifier configuration.
+
+This is the second major Lazarus DeFi attack in April 2026 — Drift Protocol lost $285 million on April 1. Combined, Lazarus drained over $575 million from DeFi in 18 days using two structurally different methods: social engineering at Drift, infrastructure poisoning at KelpDAO.
+
+---
+
+## Key Technical Indicators:
+- **Stolen:** 116,500 rsETH — approximately $290-293 million
+- **Attack date:** April 18, 2026
+- **Method:** compromise of two RPC nodes used by LayerZero DVN — binary replacement on op-geth nodes
+- DDoS against non-compromised RPCs to force failover to attacker-controlled nodes
+- RPC spoofing used to inject forged cross-chain message accepted as valid by LayerZero verifier
+- **Root cause:** KelpDAO's 1-of-1 DVN configuration — single verifier = single point of failure
+- **Laundering:** Tornado Cash, cross-chain bridging to Ethereum and Bitcoin
+- Arbitrum Security Council froze ~30,766 ETH (~$71M) via emergency powers
+- Aave froze rsETH as collateral, blocked new deposits — $10B+ in withdrawals triggered
+- **Attribution:** TraderTraitor subunit of Lazarus Group (LayerZero preliminary assessment)
+- **Connected:** Drift Protocol attack April 1, 2026 — same group, different vector
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — two independent RPC nodes compromised; op-geth binaries replaced with malicious versions
+- **TA0002 — Execution** — malicious op-geth binaries executed on compromised RPC nodes; forged cross-chain message injected and accepted as valid
+- **TA0040 — Impact (Preparation)** — DDoS attack against non-compromised RPC nodes to force failover to attacker-controlled infrastructure
+- **TA0005 — Defense Evasion** — RPC spoofing made forged cross-chain message appear as legitimate verification; least-privilege controls on DVN instance bypassed via RPC pivot rather than direct compromise
+- **TA0040 — Impact** — 116,500 rsETH (~$290M) drained; Aave contagion triggered $10B+ in withdrawals; Arbitrum emergency freeze recovered ~$71M; LayerZero forced architectural policy change
+
+---
+
+
+ ## Strategic Context
+
+Drift was social engineering. KelpDAO was infrastructure poisoning. Same group, 18 days apart, two completely different attack vectors. Lazarus is not running a playbook — it is actively adapting and testing new methods against DeFi architecture.
+
+The common thread is single points of failure: one compromised RPC configuration at KelpDAO, two-of-five multisig at Drift. DeFi protocols consistently underinvest in governance security and trust architecture. LayerZero's post-incident move to force multi-DVN configurations is the right call but it took a $290 million theft to make it happen.
+
+DPRK crypto operations have now stolen over $575 million in April 2026 alone across two structurally different attacks, feeding a state apparatus that uses these funds directly for weapons programs.
+
+---
