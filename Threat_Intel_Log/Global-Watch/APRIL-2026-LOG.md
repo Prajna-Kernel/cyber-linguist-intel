@@ -1653,7 +1653,7 @@ This connects directly to #022 Rockstar/Anodot and #023 McGraw-Hill/Salesforce -
 
 ---
 
-# Incident #029 — April 22, 2026
+# Incident #031 — April 22, 2026
 
 **Target:** KelpDAO — Ethereum liquid restaking DeFi protocol
 
