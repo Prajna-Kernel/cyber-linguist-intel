@@ -428,3 +428,11 @@ If there is load, the system slows down, then there is a frame drop.
 **1️⃣8️⃣1️⃣. Либо есть пропуск кадра, либо система не успевает восстановиться.** | Either there is a frame drop, or the system does not manage to recover.
 
 **1️⃣8️⃣2️⃣. После сбоя система восстанавливается, затем работает.** | After a failure, the system recovers, then works.
+
+**1️⃣8️⃣3️⃣. Если загрузка процессора, система начинает перегружать очередь процессов.** | If CPU load increases, the system starts overloading the process queue.
+
+**1️⃣8️⃣4️⃣. Если очередь процессов, система начинает снижать нагрузку.** | If there is a process queue, the system starts reducing load.
+
+**1️⃣8️⃣5️⃣. Система распределяет нагрузку, включая очередь процессов и другие факторы.** | The system distributes load, including the process queue and other factors.
+
+**1️⃣8️⃣6️⃣. Загрузка процессора примерно зависит от очереди процессов.** | CPU load approximately depends on the process queue.
