@@ -140,6 +140,8 @@
 | **пропуск кадра** | [pra-POOSK KAD-ra] | frame drop | **пропуск кадра** |
 | **восстановление** | [vas-sta-nav-LYE-ni-ye] | recovery / restoration | **восстановление** |
 | **предел** | [pre-DYEL] | limit | **предел** |
+| **загрузка процессора** | [za-GRUZ-ka pra-tse-SSO-ra] | CPU load | **загрузку процессора** |
+| **очередь процессов** | [O-che-redʹ pro-TSE-sov] | process queue | **очередь процессов** |
 
 ---
 
@@ -257,6 +259,8 @@
 | **Поэтому** | [pa-ET-a-mu] |Therefore |
 | **Кроме** | [KRO-me] | Except / Besides |
 | **либо** | [LEE-ba] | either / or |
+| **включая** | [v-klyu-CHA-ya] | including |
+| **примерно** | [pri-MYER-na] | approximately |
 
 ---
 
@@ -330,3 +334,5 @@
 | **Сжиматься** | [szhi-MAT-sa] | To compress |
 | **восстанавливаться** | [vas-sta-nav-LEE-vat-sa] | to recover / be restored | 
 | **ускоряться** |[oo-ska-RYAT-sa] | to speed up (itself) |
+| **распределять нагрузку** | [ras-pre-de-LYATʹ na-GROOZ-ku] | to distribute load |
+| **снижать** | [sni-ZHATʹ] | to reduce / lower |
