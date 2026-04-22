@@ -110,7 +110,7 @@ The SEC 8-K disclosure pattern is increasingly a monitoring surface for threat i
 
 **Target:** Cisco UCS C-Series / E-Series Servers, APIC, Catalyst Center, Secure Firewall Management Center Appliances, Secure Network Analytics Appliances, Catalyst 8300 Edge uCPE, 5000 Series ENCS
 
-**Sector:**Network Infrastructure / Enterprise Server Management
+**Sector:** Network Infrastructure / Enterprise Server Management
 
 **Threat Actor:** No attribution — vulnerability disclosure (no active exploitation confirmed)
 
@@ -1717,3 +1717,117 @@ The common thread is single points of failure: one compromised RPC configuration
 DPRK crypto operations have now stolen over $575 million in April 2026 alone across two structurally different attacks, feeding a state apparatus that uses these funds directly for weapons programs.
 
 ---
+
+# Incident #032 — April 23, 2026
+
+**Target:** Enterprise Windows file servers and VMware ESXi infrastructure
+
+**Sector:** Enterprise Infrastructure / Virtualization
+
+**Threat Actor:** Kyber ransomware group — unattributed
+
+**Origin:** Unknown
+
+**Source:** BleepingComputer — April 21, 2026 | Rapid7 analysis
+
+**Attack Type:** Cross-Platform Ransomware — ESXi + Windows simultaneous deployment
+
+**Labels:** Ransomware | Kyber | ESXi | Windows | Rust | ChaCha8 | Post-Quantum Marketing | Hyper-V | Cross-Platform | Defense Contractor
+
+---
+
+## Analysis
+
+Rapid7 analyzed two Kyber ransomware payloads recovered from the same March 2026 incident response engagement — one targeting VMware ESXi infrastructure, one targeting Windows file servers — providing a rare side-by-side look at coordinated cross-platform ransomware deployment. Both samples share a campaign identifier and Tor-based ransom infrastructure confirming they are part of the same operation.
+
+The ESXi variant encrypts datastores, can terminate virtual machines, and defaces management interfaces. The Windows variant is written in Rust and includes an experimental feature for targeting Hyper-V. The group's first known victim was a US defense contractor, suggesting deliberate high-value targeting.
+
+The most analytically interesting aspect is the post-quantum claim. The ESXi ransom note claims AES-256-CTR encryption with X25519/Kyber1024 — Kyber1024 being a NIST-standardised post-quantum key encapsulation mechanism. **Rapid7's decompilation tells a different story:** the actual cipher is ChaCha8, not AES-256-CTR. The code uses 8-round ChaCha loops with the standard rotation constants and the "expand 32-byte k" sigma constant. The post-quantum branding is marketing — intended to intimidate victims into believing decryption is impossible without the attacker's key.
+
+---
+
+## Key Technical Indicators:
+
+- **ESXi variant:** datastore encryption, VM termination, management interface defacement
+- **Windows variant:** written in Rust, experimental Hyper-V targeting capability
+- **Claimed encryption:** AES-256-CTR with X25519/Kyber1024 (post-quantum)
+- **Actual encryption per Rapid7 decompilation:** ChaCha8 — 8-round loop, 32-bit rotation constants 16/20/24/25, sigma constant "expand 32-byte k"
+- Both variants share campaign identifier and Tor ransom infrastructure
+- **First known victim:** US defense contractor
+- Cross-platform deployment confirmed from single March 2026 IR engagement
+- **March 2026:**
+- 900+ publicly reported ransomware incidents per Rapid7
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — initial access vector undisclosed; US defense contractor confirmed as first known victim
+- **TA0002 — Execution** — ESXi and Windows ransomware payloads executed simultaneously from same campaign; VM termination triggered on ESXi infrastructure
+- **TA0005 — Defense Evasion** — false post-quantum encryption claims in ransom note to intimidate victims and discourage decryption attempts; ChaCha8 deployed under AES-256-CTR branding
+- **TA0040 — Impact** — ESXi datastores encrypted, virtual machines terminated, management interfaces defaced; Windows file servers encrypted; cross-platform simultaneous deployment maximized enterprise disruption
+
+---
+
+## Strategic Context
+
+Kyber is doing something tactically interesting — attaching a legitimate post-quantum algorithm name to ransomware that doesn't actually implement it. **The goal is psychological:** defenders and victims who see "Kyber1024" in a ransom note may assume decryption is computationally impossible even for future quantum machines. In reality the underlying cipher is ChaCha8, a weaker variant of ChaCha20. This is ransomware branding, not cryptographic sophistication.
+
+The operational picture is real regardless. Cross-platform deployment hitting ESXi and Windows simultaneously from the same campaign causes maximum damage in enterprise environments — virtualisation infrastructure and file servers going down together removes both the primary systems and the fallback options. The Hyper-V targeting feature, even described as experimental, signals the group is actively expanding its platform reach.
+
+---
+
+# Incident #033 — April 23, 2026
+
+**Target:** Hospital Caribbean Medical Center — 25-bed acute care, Fajardo, Puerto Rico
+
+**Sector:** Healthcare
+
+**Threat Actor:** The Gentlemen — ransomware group
+
+**Origin:** Unknown
+
+**Source:** HIPAA Journal — April 2026
+
+**Attack Type:** Ransomware — Double Extortion / Data Theft
+
+**Labels:** Ransomware | Healthcare | Puerto Rico | PHI | The Gentlemen | Double Extortion | Small Hospital
+
+---
+
+## Analysis
+
+Hospital Caribbean Medical Center, a small 25-bed acute care hospital in Fajardo, Puerto Rico, disclosed a ransomware attack affecting approximately 92,000 individuals. Nine days after the hospital's public announcement, The Gentlemen claimed responsibility on their dark web portal, stating they had obtained hospital data and intended to release it within nine to ten days if demands were not met.
+
+The types of data compromised are still under analysis at time of disclosure. The hospital notified relevant authorities and engaged external specialists. No credit monitoring, identity protection services, or dedicated call center for affected individuals was mentioned in the public announcement — a notable gap given the scale of 92,000 affected patients.
+
+**Small hospitals are consistently high-value targets for ransomware operators:** they hold highly sensitive PHI, operate on thin margins with limited IT resources, and cannot afford extended downtime. A 25-bed facility serving a regional population has fewer defensive options than large health systems.
+
+---
+
+## Key Technical Indicators:
+- **Threat actor:** The Gentlemen — dark web leak site claim
+- **Affected individuals:**  approximately 92,000
+- **Attack type:** double extortion — data theft plus encryption implied
+- **Data types:** under analysis at time of disclosure
+- **Timeline:** public announcement → dark web claim nine days later → 9-10 day leak deadline issued
+- No credit monitoring or patient call center offered at time of disclosure
+- **Initial access vector:** undisclosed
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — initial access vector undisclosed; investigation ongoing
+- **TA0009 — Collection** — hospital data staged including patient PHI; scope under analysis
+- **TA0010 — Exfiltration** — data exfiltrated to attacker infrastructure; threatened for public release on dark web leak site
+- **TA0011 — Command & Control** — Tor-based dark web leak site used to issue ransom demand and publish deadline
+- **TA0040 — Impact** — ransomware encryption implied; 92,000 individuals affected; PHI at risk of public release; operational disruption to acute care facility
+
+---
+
+## Strategic Context
+
+Small and rural hospitals are the softest targets in healthcare. They rarely have dedicated security staff, run legacy systems, and cannot take beds offline for patching cycles. The Gentlemen operating against a 25-bed Puerto Rico hospital fits the pattern of ransomware groups targeting volume — smaller facilities, less resistance, faster payment decisions.
+
+Puerto Rico's healthcare infrastructure is still recovering from years of post-hurricane resource strain, making this doubly significant from a community impact standpoint.
+
+**This continues the healthcare ransomware pattern documented across this log:** AMHC/Qilin (RU-Threats MARCH #001), ChipSoft (DE-Threats APRIL #002), Children's Council SF (Global-Watch APRIL #006), Signature Healthcare/Anubis (Global-Watch APRIL ). Ransomware groups consistently target healthcare because operational disruption creates maximum pressure to pay and sensitive patient data provides secondary extortion leverage.
