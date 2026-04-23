@@ -1831,3 +1831,146 @@ Small and rural hospitals are the softest targets in healthcare. They rarely hav
 Puerto Rico's healthcare infrastructure is still recovering from years of post-hurricane resource strain, making this doubly significant from a community impact standpoint.
 
 **This continues the healthcare ransomware pattern documented across this log:** AMHC/Qilin (RU-Threats MARCH #001), ChipSoft (DE-Threats APRIL #002), Children's Council SF (Global-Watch APRIL #006), Signature Healthcare/Anubis (Global-Watch APRIL ). Ransomware groups consistently target healthcare because operational disruption creates maximum pressure to pay and sensitive patient data provides secondary extortion leverage.
+
+---
+
+# Incident #034 — April 24, 2026
+
+**Target:** Software developers — npm users, CI/CD pipeline operators, Bitwarden CLI users
+
+**Sector:** Software Supply Chain / Developer Infrastructure
+
+**Threat Actor:** TeamPCP (suspected) — Shai-Hulud campaign, third wave
+
+**Origin:** Unknown — skips execution on Russian-locale systems
+
+**Source:** The Hacker News — April 23, 2026; BleepingComputer — April 23, 2026
+
+**Attack Type:** Supply Chain Attack — npm Package Compromise / CI/CD Pipeline Injection
+
+**Labels:** Supply Chain | npm | Bitwarden | CI/CD | GitHub Actions | TeamPCP | Shai-Hulud | Credential Theft | Developer Targeting | AES-256 | Checkmarx Campaign
+
+---
+
+## Analysis
+
+Bitwarden's CLI npm package got compromised on April 22 for about an hour and a half. Version 2026.4.0 was pushed to npm with a malicious file called bw1.js hidden inside. The attack came through a compromised GitHub Action in Bitwarden's own CI/CD pipeline — same pattern as the broader Checkmarx supply chain campaign hitting multiple repos right now.
+
+The payload runs on install via a preinstall hook. You don't even have to do anything — just npm install and it's already running. It goes straight for everything: GitHub tokens, npm tokens, SSH keys, .env files, shell history, cloud secrets, GitHub Actions variables. But the interesting new addition is AI coding tool configs — Claude, Cursor, Kiro, Codex CLI, Aider. Attackers are now specifically targeting AI assistant credentials which makes sense given how embedded those tools are in dev workflows now.
+
+Everything gets encrypted with AES-256-GCM then sent to audit.checkmarx[.]cx — a fake domain impersonating Checkmarx. If that fails it falls back to pushing data to a public GitHub repo created under your own account. If it finds GitHub tokens it weaponizes them to inject malicious Actions workflows into your repos and grab more CI/CD secrets. One compromised developer becomes a door into every pipeline their token can reach.
+
+This is wave three of Shai-Hulud. They literally put "Shai-Hulud: The Third Coming" in the package. TeamPCP is suspected — their X account got suspended during this. The Russian locale skip is there again, same as prior waves.
+
+Bitwarden confirmed it, said no vault data was touched, deprecated the version. CVE incoming for 2026.4.0.
+
+## Key Technical Indicators:
+- **Compromised package:** @bitwarden/cli@2026.4.0
+- **Malicious file:** bw1.js
+- **Execution trigger:** npm preinstall hook — fires on install, no interaction needed
+- **Attack vector:** compromised GitHub Action in Bitwarden CI/CD pipeline
+- **Exfil domain:** audit.checkmarx[.]cx (fake Checkmarx domain)
+- **Fallback:** public GitHub repos under victim accounts — Dune-themed naming
+- **Encryption:** AES-256-GCM before exfil
+- **Targets:** GitHub/npm tokens, SSH keys, .env files, shell history, Actions secrets, cloud creds, AI tool configs
+- **GitHub token abuse:** injects malicious Actions workflows into victim repos
+- **Campaign string:** "Shai-Hulud: The Third Coming"
+- **Locale check:** exits on Russian-locale systems
+- **Suspected actor:** TeamPCP — X account suspended
+- **Exposure window:** April 22, 2026 5:57 PM – 7:30 PM ET
+- *CVE pending for v2026.4.0*
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — compromised GitHub Action published malicious npm package into trusted distribution pipeline
+- **TA0002 — Execution** — preinstall hook fires credential stealer automatically on package install
+- **TA0003 — Persistence** — malicious Actions workflows injected into victim repos via harvested GitHub tokens
+- **TA0005 — Defense Evasion** — AES-256-GCM encryption before exfil; domain impersonates Checkmarx; fallback to victim-owned GitHub repos; Russian locale check kills execution
+- **TA0006 — Credential Access** — GitHub/npm tokens, SSH keys, .env files, shell history, cloud secrets, AI tool configs all harvested
+- **TA0009 — Collection** — full developer environment sweep including CI/CD secrets and AI assistant configurations
+- **TA0010 — Exfiltration** — primary to attacker domain; fallback to public GitHub repos under victim accounts
+- **TA0040 — Impact** — malicious workflows cascade through every pipeline reachable by victim's GitHub token
+
+---
+
+## Strategic Context
+
+Bitwarden CLI being the target is kind of poetic in a bad way. It's a password manager. People use the CLI in automation specifically because they trust it. Hitting it through the CI/CD pipeline means Bitwarden never wrote bad code — the attacker just got inside the publishing process.
+
+The AI tool credential targeting is new and worth watching. Claude, Cursor, Codex — these aren't just convenience tools anymore, they're embedded in how developers write and ship code. Those API keys and session tokens are now worth stealing. Expect this to become standard in supply chain payloads going forward.
+
+Wave three of Shai-Hulud and they're still running. The Russian locale skip keeps showing up. Not enough to confirm origin but enough to keep noting it.
+
+---
+
+# Incident #035 — April 24, 2026
+
+**Target:** Corporate employees — mostly executives and senior staff
+
+**Sector:** Enterprise / Corporate Security
+
+**Threat Actor:** UNC6692
+
+**Origin:** Unknown
+
+**Source:** The Hacker News — April 23, 2026; Mandiant (Google Cloud) — April 23, 2026
+
+**Attack Type:** Social Engineering — IT Helpdesk Impersonation / Custom Malware Deployment
+
+**Labels:** UNC6692 | Microsoft Teams | Social Engineering | SNOW Malware | SNOWBELT | SNOWGLAZE | SNOWBASIN | Black Basta Playbook | Credential Theft | Lateral Movement | Cloud Abuse
+
+---
+
+## Analysis
+
+So UNC6692 is basically running the old Black Basta playbook but with their own malware now. They spam your inbox until you're panicking, then someone hits you on Teams pretending to be IT support offering to fix it. Classic. Once they get you talking they send a phishing link — fake "Mailbox Repair" page — and from there it's an AutoHotkey script pulling from an AWS S3 bucket they control.
+
+What's different here is they're not just dropping Quick Assist or some RMM tool anymore. They built a whole malware suite called SNOW. SNOWBELT is a malicious browser extension that loads into Edge in headless mode. SNOWGLAZE tunnels back to their C2 via WebSocket. SNOWBASIN sits as a persistent backdoor running as a local HTTP server. Together they basically have full access — commands, screenshots, file transfers, the works.
+
+The executive targeting stat is wild. 77% of victims between March and April 2026 were senior-level employees, up from 59% the two months before. And some chats were started 29 seconds apart which means they're automating the outreach. They know who they want and they're moving fast.
+
+The AWS abuse is the sneaky part. Hosting payloads on S3 and exfiltrating to S3 means the traffic just looks normal. Most networks aren't going to flag that.
+
+---
+
+## Key Technical Indicators:
+- **Threat actor:** UNC6692 — newly designated cluster, unattributed
+- **Attack vector:** Microsoft Teams — IT helpdesk impersonation following email bombing
+- **Phishing page:** "Mailbox Repair and Sync Utility v2.1.5"
+- **Payload delivery:** AutoHotkey script pulled from attacker-controlled AWS S3 bucket
+- **Malware suite:** SNOWBELT (malicious Edge extension / JS backdoor), SNOWGLAZE (Python WebSocket tunneler), SNOWBASIN (persistent HTTP backdoor ports 8000–8002)
+- **Execution method:** Edge launched headless with --load-extension to load SNOWBELT
+- **Evasion:** gatekeeper script filters sandbox environments; S3 hosting bypasses reputation filters
+- **Credential harvesting:** fake "Health Check" portal captures mailbox credentials
+- **Exfiltration:** credentials and data sent to attacker-controlled AWS S3
+- **Lateral movement:** PsExec and RDP sessions via SNOWGLAZE tunnel; Pass-The-Hash against domain controllers
+- **Privilege escalation:** LSASS dumped via Windows Task Manager
+- **Collection:** AD database pulled with FTK Imager; staged in \Downloads; LimeWire for final exfil
+- **Network recon:** Python script scanning ports 135, 445, 3389
+- **Targeting:** 77% senior-level employees March–April 2026; chats 29 seconds apart — automated outreach
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — Teams phishing link delivered under IT helpdesk impersonation after email bombing
+- **TA0002 — Execution** — AutoHotkey script runs post-click; SNOWBASIN executes commands via cmd.exe and powershell.exe
+- **TA0003 — Persistence** — SNOWBASIN persistent local HTTP server; SNOWBELT extension survives sessions
+- **TA0004 — Privilege Escalation** — LSASS dumped via Task Manager; Pass-The-Hash against domain controllers
+- **TA0005 — Defense Evasion** — gatekeeper script filters sandboxes; S3 hosting bypasses reputation filters; headless Edge loads malicious extension
+- **TA0006 — Credential Access** — mailbox creds harvested via fake portal; password hashes from LSASS dump
+- **TA0007 — Discovery** — Python script scans for ports 135, 445, 3389
+- **TA0008 — Lateral Movement** — PsExec and RDP via SNOWGLAZE tunnel; Pass-The-Hash to domain controllers
+- **TA0009 — Collection** — AD database pulled with FTK Imager; staged in \Downloads
+- **TA0010 — Exfiltration** — LimeWire for data; AWS S3 for credentials
+- **TA0011 — Command & Control** — SNOWGLAZE WebSocket tunnel to C2; SNOWBELT relays to SNOWBASIN
+
+---
+
+## Strategic Context
+
+Black Basta is dead but their playbook isn't. UNC6692 just upgraded it. The switch from RMM tools to custom malware is the big tell — they got tired of defenders catching Quick Assist and built something harder to flag.
+
+Targeting executives specifically makes sense. They have more access, fewer restrictions, and honestly are probably more likely to trust an IT call without questioning it. 77% is not a coincidence, that's a deliberate targeting strategy.
+
+Teams as an attack surface is still underestimated. Everyone's got email security dialed in but external Teams messages from fake accounts still slip through. Until organizations tighten external communication policies on Teams this playbook isn't going anywhere.
