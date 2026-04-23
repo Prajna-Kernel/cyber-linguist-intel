@@ -142,6 +142,9 @@
 | **предел** | [pre-DYEL] | limit | **предел** |
 | **загрузка процессора** | [za-GRUZ-ka pra-tse-SSO-ra] | CPU load | **загрузку процессора** |
 | **очередь процессов** | [O-che-redʹ pro-TSE-sov] | process queue | **очередь процессов** |
+| **инициализация** | [i-ni-tsi-a-li-ZA-tsi-ya] | initialization | **инициализацию** |
+| **задержка обработки** | [za-DYERZH-ka ab-ra-BOT-ki] | processing delay | **задержку обработки** |
+| **граница** | [gra-NEE-tsa] | boundary / limit | **границу** |
 
 ---
 
@@ -261,6 +264,7 @@
 | **либо** | [LEE-ba] | either / or |
 | **включая** | [v-klyu-CHA-ya] | including |
 | **примерно** | [pri-MYER-na] | approximately |
+| **впрочем** | [VPRO-chem] | however / though |
 
 ---
 
@@ -336,3 +340,4 @@
 | **ускоряться** |[oo-ska-RYAT-sa] | to speed up (itself) |
 | **распределять нагрузку** | [ras-pre-de-LYATʹ na-GROOZ-ku] | to distribute load |
 | **снижать** | [sni-ZHATʹ] | to reduce / lower |
+| **перезапускать** | [pe-re-za-pus-KATʹ] | to restart |
