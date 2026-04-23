@@ -436,3 +436,11 @@ If there is load, the system slows down, then there is a frame drop.
 **1️⃣8️⃣5️⃣. Система распределяет нагрузку, включая очередь процессов и другие факторы.** | The system distributes load, including the process queue and other factors.
 
 **1️⃣8️⃣6️⃣. Загрузка процессора примерно зависит от очереди процессов.** | CPU load approximately depends on the process queue.
+
+**1️⃣8️⃣7️⃣. Если есть задержка обработки, система начинает перезапускать процесс.** | If there is a processing delay, the system starts restarting the process.
+
+**1️⃣8️⃣8️⃣. После инициализации система обрабатывает данные.** | After initialization, the system processes data.
+
+**1️⃣8️⃣9️⃣. Если система достигает границы, она начинает снижать нагрузку.** | If the system reaches the boundary, it starts reducing load.
+
+**1️⃣9️⃣0️⃣. Есть задержка обработки, впрочем система продолжает работать.** | There is a processing delay, however the system continues to work.
