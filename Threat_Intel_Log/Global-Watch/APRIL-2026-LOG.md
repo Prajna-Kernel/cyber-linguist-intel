@@ -1974,3 +1974,238 @@ Black Basta is dead but their playbook isn't. UNC6692 just upgraded it. The swit
 Targeting executives specifically makes sense. They have more access, fewer restrictions, and honestly are probably more likely to trust an IT call without questioning it. 77% is not a coincidence, that's a deliberate targeting strategy.
 
 Teams as an attack surface is still underestimated. Everyone's got email security dialed in but external Teams messages from fake accounts still slip through. Until organizations tighten external communication policies on Teams this playbook isn't going anywhere.
+
+---
+
+# Incident #036 — April 25, 2026
+
+**Target:** Zimbra Collaboration Suite (ZCS) deployments globally
+
+**Sector:** Enterprise Communications / Email Infrastructure
+
+**Threat Actor:** Unknown — confirmed active exploitation; APT28 (Russia) linked to adjacent CVE-2025-66376
+
+**Origin:** Unattributed for CVE-2025-48700; APT28 Russia-nexus for related campaign
+
+**Source:** BleepingComputer — April 25, 2026 | CISA KEV | Shadowserver
+
+**Attack Type:** Stored XSS → Session Hijacking → JavaScript Injection
+
+**Labels:** CVE-2025-48700 | CISA KEV | Zimbra | XSS | Session Hijacking | APT28 Adjacent | Email Infrastructure
+
+---
+
+## Analysis
+
+CISA added CVE-2025-48700 to its KEV catalog on April 21, 2026, confirming active exploitation of a stored XSS flaw in Zimbra Collaboration Suite's Classic UI. The vulnerability is triggered when a user opens a specially crafted email — insufficient HTML sanitization allows attackers to inject arbitrary JavaScript that executes within the authenticated session context. No user interaction beyond opening the email is required. CISA ordered federal agencies to patch by April 23.
+
+Shadowserver simultaneously reported over 10,500 ZCS instances still exposed and unpatched globally — 3,794 in Asia, 3,793 in Europe. Synacor had released patches in June 2025. The 10-month gap between patch release and CISA KEV flag means most of these systems sat vulnerable for nearly a year.
+
+This CVE is separate from but adjacent to CVE-2025-66376 — a related stored XSS flaw that APT28 exploited in Operation GhostMail against Ukrainian government entities earlier in 2026. Zimbra has been a recurring attack surface: Winter Vivern exploited it against NATO in 2023, APT29 at mass scale in 2024, APT28 in 2026. CVE-2025-48700 has no confirmed nation-state attribution yet, but the targeting pattern of unpatched government and enterprise Zimbra servers matches previous APT activity.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2025-48700 — ZCS versions 8.8.15, 9.0, 10.0, 10.1 affected
+- **Attack vector:** specially crafted email opened in Zimbra Classic UI triggers stored XSS
+- *Insufficient HTML sanitization allows arbitrary JavaScript execution in authenticated user session*
+- **Impact:** session hijacking, mailbox data access, collaboration environment pivot
+- *CISA KEV listed April 21, 2026 — federal patch deadline April 23*
+- *10,500+ exposed instances per Shadowserver — Asia (3,794), Europe (3,793)*
+- *Patch available since June 2025 — 10-month exposure window*
+- *Adjacent CVE-2025-66376 exploited by APT28 (Operation GhostMail) against Ukrainian government*
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — specially crafted email delivered to target Zimbra user; stored XSS triggered on email open with no additional interaction required
+- **TA0002 — Execution** — arbitrary JavaScript injected and executed within authenticated session context via insufficient HTML sanitization
+- **TA0006 — Credential Access** — session hijacking via JavaScript execution in authenticated context; mailbox access obtained through hijacked session
+- **TA0009 — Collection** — mailbox data accessible via hijacked authenticated session
+
+---
+
+## Strategic Context
+
+Zimbra has been hit by Russian-linked APT groups three years running. CVE-2025-48700 has no confirmed Russian attribution, but the scale of exposed European servers and the history of this platform as a preferred APT target makes it high-risk. 3,793 unpatched European instances 10 months after a patch exists is a systemic patching failure. For a collaboration suite holding government and enterprise email, that is a significant intelligence collection opportunity for any actor with the means and intent.
+
+The APT28 Operation GhostMail campaign using a related Zimbra XSS flaw in the same period is context defenders should not ignore — two different XSS CVEs in the same product, both actively exploited, in overlapping timeframes.
+
+---
+
+# Incident #037 — April 25, 2026
+
+**Target:** Debian, Ubuntu, Fedora, Red Hat Linux distributions (default installations)
+
+**Sector:** Linux / Enterprise Infrastructure
+
+**Threat Actor:** N/A — Vulnerability Disclosure
+
+**Origin:** Germany — Deutsche Telekom Red Team (researcher origin)
+
+**Source:** BleepingComputer — April 22, 2026 | Deutsche Telekom Red Team
+
+**Vulnerability Class:** Local Privilege Escalation via TOCTOU Race Condition in PackageKit — working PoC exists, not publicly released
+
+**Labels:** CVE-2026-41651 | CVSS 8.8 | Pack2TheRoot | PackageKit | LPE | D-Bus | Linux | Deutsche Telekom
+
+---
+
+## Analysis
+
+Deutsche Telekom's Red Team disclosed Pack2TheRoot — CVE-2026-41651, CVSS 8.8 — a local privilege escalation flaw in PackageKit, the D-Bus abstraction daemon used for cross-distribution package management on Linux. The root cause is a TOCTOU race condition on transaction flags in pk-transaction.c.
+
+**Three distinct bugs combine:** InstallFiles() writes caller-supplied flags to cached_transaction_flags without checking transaction state, a silent state machine guard discards illegal backward transitions while leaving corrupted flags in place, and the scheduler fires an idle callback that reads the now-corrupted flags and passes them to the package manager backend with root privileges. The result is any local unprivileged user can install or remove arbitrary system packages as root without a password.
+
+Working PoC achieves root in seconds — not being published yet. The flaw has existed since PackageKit 1.0.2, covering over 12 years of releases across Ubuntu (18.04, 22.04, 24.04, 26.04 beta), Debian Trixie 13.4, Fedora 43, Rocky Linux 10.1, and RHEL instances running Cockpit. PackageKit and Cockpit activate on demand via D-Bus — they don't appear in a persistent process list, so ps aux won't tell you if the system is vulnerable.
+
+The patch is in PackageKit 1.3.5, released April 22, 2026. Exploitation leaves a detectable trace: PackageKit daemon crash logged in journalctl — the specific string is `PackageKit:ERROR:../src/pk-transaction.c:514:pk_transaction_finished_emit: assertion failed`.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-41651, CVSS 8.8 (AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H)
+- **Root cause:** TOCTOU race condition on transaction flags in PackageKit D-Bus interface
+- **Three-bug chain in pk-transaction.c:** flag overwrite → silent state guard → scheduler reads corrupted flags with root privileges
+- *Any local unprivileged user can install or remove system packages as root without authentication*
+- **Affected:** PackageKit 1.0.2 through 1.3.4 — 12+ years of releases
+- **Vulnerable distributions:** Ubuntu Desktop/Server, Debian Trixie, Fedora 43, Rocky Linux, RHEL with Cockpit
+- *PackageKit activates on demand via D-Bus — not visible in ps aux*
+- **Detection:** journalctl crash log — assertion failed in pk-transaction.c line 514
+- **Fix:** PackageKit 1.3.5 (April 22, 2026)
+- Working PoC exists — not publicly released
+
+---
+
+> **Entry Type:** Vulnerability Disclosure — Deutsche Telekom Red Team research finding. No confirmed threat actor, no confirmed active exploitation. Working PoC exists but not published — exploitation risk elevated. MITRE ATT&CK tags not applicable.
+
+---
+
+# Strategic Context
+
+A 12-year-old LPE in a default Linux component is a significant finding. PackageKit ships on virtually every major Linux desktop and many servers — it's not an optional install, it's a dependency of the desktop environment on Ubuntu and Fedora. In multi-user environments, shared servers, university systems, and corporate Linux workstations, this turns any low-level foothold into full root access with no extra steps. The Cockpit angle extends this to internet-facing admin panels on RHEL and Rocky Linux servers.
+
+The TOCTOU class of bug in D-Bus interfaces is expected to produce similar disclosures in coming months as researchers apply the same methodology to NetworkManager, AccountsService, and UDisks2.
+
+---
+
+# Incident #038 — April 25, 2026
+
+**Target:** LMDeploy inference server deployments (AI/ML infrastructure)
+
+**Sector:** AI Infrastructure / Cloud Security
+
+**Threat Actor:** Unknown — opportunistic, IP 103.116.72.119
+
+**Origin:** Unattributed
+
+**Source:** The Hacker News — April 24, 2026 | Sysdig
+
+**Attack Type:** Server-Side Request Forgery → Cloud Credential Theft
+
+**Labels:** CVE-2026-33626 | CVSS 7.5 | LMDeploy | SSRF | IMDS | AI Supply Chain | Active Exploitation | Cloud Credentials
+
+---
+
+## Analysis
+
+CVE-2026-33626 is an SSRF vulnerability in LMDeploy, an open-source LLM inference toolkit with over 26,000 GitHub stars. The flaw is in the vision-language module's load_image() function, which fetches arbitrary URLs without validating internal or private IP addresses. An attacker who can send image processing requests can point the function at internal services — cloud metadata endpoints, Redis instances, MySQL databases, internal admin interfaces — and extract credentials or sensitive data.
+
+Sysdig detected the first active exploitation attempt 12 hours and 31 minutes after the advisory was published to GitHub, with no PoC available at that point. The attacker's eight-minute session involved 10 distinct requests across **three phases:** targeting the AWS Instance Metadata Service (IMDS) and Redis, testing OOB DNS exfiltration via requestrepo.com, and port scanning the loopback interface. Requests were rotated between different VLMs — internlm-xcomposer2 and OpenGVLab/InternVL2-8B — to reduce detection likelihood.
+
+**This follows a pattern Sysdig has flagged repeatedly:** critical AI infrastructure CVEs are being weaponised within hours of advisory publication, with AI itself accelerating exploit development by turning detailed advisories into functional attack code almost immediately.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-33626, CVSS 7.5
+- **Vulnerable function:** load_image() in lmdeploy/vl/utils.py — fetches arbitrary URLs without internal IP validation
+- **Attack confirmed:** April 22, 2026 at 03:35 UTC — 12 hours 31 minutes after disclosure
+- **Attacker IP:** 103.116.72.119
+- **Three-phase attack:** IMDS and Redis targeting → OOB DNS exfiltration test via requestrepo.com → loopback port scan
+- **VLM rotation:** internlm-xcomposer2 and OpenGVLab/InternVL2-8B used alternately to evade detection
+- **Affected:** LMDeploy 0.12.0 and all prior versions with vision language support
+- *No patch at time of exploitation — fix: validate internal IP ranges in load_image()*
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — SSRF vulnerability in LMDeploy load_image() exploited via crafted image processing request; no authentication required for exposed inference servers
+- **TA0007 — Discovery** — loopback port scanning conducted; IMDS and Redis endpoints probed to map internal cloud environment
+- **TA0006 — Credential Access** — AWS IMDS targeted to extract cloud instance credentials; Redis probed for stored credentials and session data
+- **TA0005 — Defense Evasion** — requests rotated across multiple VLM endpoints to reduce detection likelihood; OOB DNS exfiltration tested via requestrepo.com
+- **TA0010 — Exfiltration** — OOB DNS exfiltration technique tested; cloud credentials and internal service data targeted for extraction
+
+---
+
+## Strategic Context
+
+This is the third AI inference framework vulnerability in this log after SGLang CVE-2026-5760 and the pattern is **consistent:** image or model input processing functions reach out to arbitrary URLs without validation. AI inference servers are being deployed at scale by teams that don't come from a security background and don't treat model input as an attack surface.
+
+The 12-hour exploitation window confirms how fast this environment moves — an advisory with enough technical detail is essentially a ready-made attack prompt for any LLM. Defenders running LMDeploy in cloud environments should treat this as **urgent:** IMDS access means cloud credential theft, not just information disclosure.
+
+---
+
+# Incident #039 — April 25, 2026
+
+**Target:** US federal civilian agency — Cisco Firepower / ASA device
+
+**Sector:** Government / Network Security / Federal Infrastructure
+
+**Threat Actor:** UAT4356 — China-nexus APT (ArcaneDoor campaign, suspected PRC state-affiliated)
+
+**Origin:** China — suspected, per Censys analysis
+
+**Source:** The Hacker News — April 24, 2026 | CISA | UK NCSC | Cisco Talos
+
+**Attack Type:** Firmware Backdoor → Post-Patch Persistence via Boot Sequence Manipulation
+
+**Labels:** FIRESTARTER | LINE VIPER | ArcaneDoor | UAT4356 | Cisco ASA | CVE-2025-20333 | CVE-2025-20362 | Firmware Backdoor | China-Nexus | Federal Infrastructure
+
+---
+
+## Analysis
+
+CISA and the UK NCSC jointly disclosed that an unnamed US federal civilian agency had a Cisco Firepower device running ASA software compromised in September 2025 with a custom backdoor called FIRESTARTER. The attack chain started with exploitation of two now-patched Cisco ASA flaws — CVE-2025-20333 (CVSS 9.9, authenticated RCE as root via crafted HTTP) and CVE-2025-20362 (authentication bypass via unauthenticated HTTP requests to restricted endpoints).
+
+Attackers deployed LINE VIPER — a post-exploitation toolkit capable of executing CLI commands, capturing packets, bypassing VPN AAA authentication, suppressing syslog messages to evade detection, and forcing delayed reboots. LINE VIPER was then used to deploy FIRESTARTER, a Linux ELF binary that embeds itself into the device boot sequence by manipulating the startup mount list, meaning it survives firmware updates and normal reboots. Only a hard power cycle clears it.
+
+FIRESTARTER hooks into LINA — the core network processing engine of Cisco ASA — and uses that hook to execute arbitrary shellcode delivered via specially crafted WebVPN authentication requests containing a "magic packet." The backdoor shares code overlap with a previously documented bootkit called RayInitiator. Compromise was first detected before September 25, 2025, and the device was still being accessed as recently as April 2026 — seven months after initial intrusion, surviving at least one patching cycle.
+
+This is part of the broader ArcaneDoor campaign which Cisco Talos attributes to UAT4356, with Censys analysis pointing toward a China-nexus origin. A joint advisory simultaneously warned of Chinese-nexus actors using SOHO router and IoT botnets to proxy espionage operations and complicate attribution, with Volt Typhoon and Flax Typhoon both confirmed users of such infrastructure.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2025-20333 (CVSS 9.9): authenticated RCE via crafted HTTP to Cisco ASA
+- **CVE:** CVE-2025-20362 (CVSS 6.5): auth bypass via unauthenticated HTTP to restricted endpoints
+- **LINE VIPER:** post-exploitation toolkit — CLI execution, packet capture, VPN AAA bypass, syslog suppression, delayed reboot
+- **FIRESTARTER:** Linux ELF backdoor, hooks into LINA engine, executes shellcode from WebVPN magic-packet requests
+- **Persistence:** boot sequence manipulation via startup mount list — survives firmware updates and reboots
+- *Cleared only by hard power cycle (pulling power cord)*
+- *Code overlap with RayInitiator bootkit*
+- *Active access confirmed April 2026 — 7+ months post-initial compromise*
+- **Attribution:** UAT4356 / ArcaneDoor — China-nexus suspected per Censys
+- **Related:** Volt Typhoon, Flax Typhoon confirmed users of SOHO botnet proxy infrastructure
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — CVE-2025-20362 auth bypass exploited to access restricted Cisco ASA endpoints; CVE-2025-20333 exploited for authenticated RCE as root
+- **TA0002 — Execution** — LINE VIPER toolkit executed post-compromise; FIRESTARTER Linux ELF deployed and executed; arbitrary shellcode delivered via WebVPN magic-packet requests to LINA hook
+- **TA0003 — Persistence** — FIRESTARTER embedded into device boot sequence via startup mount list manipulation; survives firmware updates and reboots; only cleared by hard power cycle
+- **TA0004 — Privilege Escalation** — CVE-2025-20333 achieves RCE as root on Cisco ASA device
+- **TA0005 — Defense Evasion** — LINE VIPER suppresses syslog messages to prevent detection; FIRESTARTER survives patching cycles; SOHO botnet proxying used to complicate attribution; delayed reboot capability used to time activity
+- **TA0007 — Discovery** — internal network accessible via compromised federal perimeter device; packet capture capability via LINE VIPER
+- **TA0011 — Command & Control** — FIRESTARTER receives commands via WebVPN magic-packet requests to LINA hook; active C2 access confirmed 7+ months post-compromise
+- **TA0009 — Collection** — packet capture conducted on federal network traffic via LINE VIPER; VPN AAA bypass enables access to VPN-protected network segments
+
+---
+
+## Strategic Context
+
+A backdoor that survives firmware patches on federal network perimeter devices is a serious operational problem. The standard remediation advice — apply the patch — doesn't work here. Cisco's own guidance says the only real fix is full device reimaging, and a simple shutdown command won't remove the implant. Patched does not equal clean.
+
+Any Cisco ASA or FTD device that was internet-exposed during the CVE-2025-20333 or CVE-2025-20362 window should be treated as potentially compromised until reimaged. The ArcaneDoor campaign first surfaced in 2024 targeting zero-days in Cisco gear — FIRESTARTER represents the evolution of that capability into persistent firmware-level implants.
+
+Combined with the SOHO botnet advisory, this reflects a Chinese APT operational doctrine of establishing deep, durable network footholds that are difficult to detect and expensive to remove.
