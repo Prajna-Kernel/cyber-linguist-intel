@@ -444,3 +444,11 @@ If there is load, the system slows down, then there is a frame drop.
 **1️⃣8️⃣9️⃣. Если система достигает границы, она начинает снижать нагрузку.** | If the system reaches the boundary, it starts reducing load.
 
 **1️⃣9️⃣0️⃣. Есть задержка обработки, впрочем система продолжает работать.** | There is a processing delay, however the system continues to work.
+
+**1️⃣9️⃣1️⃣. Если есть дефект, система начинает откатывать изменения.** | If there is a defect, the system starts rolling back changes.
+
+**1️⃣9️⃣2️⃣. Система перезаписывает данные, затем выполняет проверку.** | The system overwrites data, then performs a check.
+
+**1️⃣9️⃣3️⃣. Если есть ошибка, откат помогает исправлять результат.** | If there is an error, rollback helps fix the result.
+
+**1️⃣9️⃣4️⃣. Система зря перезаписывает данные, если нет дефекта.** | The system unnecessarily overwrites data if there is no defect.
