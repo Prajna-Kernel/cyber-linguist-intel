@@ -145,6 +145,9 @@
 | **инициализация** | [i-ni-tsi-a-li-ZA-tsi-ya] | initialization | **инициализацию** |
 | **задержка обработки** | [za-DYERZH-ka ab-ra-BOT-ki] | processing delay | **задержку обработки** |
 | **граница** | [gra-NEE-tsa] | boundary / limit | **границу** |
+| **откат** | [at-KAT] | rollback | **откат** |
+| **перезапись** | [pe-re-ZA-pisʹ] | overwrite | **перезапись** |
+| **дефект** | [de-FEKT] | defect / fault | **дефект** |
 
 ---
 
@@ -265,6 +268,7 @@
 | **включая** | [v-klyu-CHA-ya] | including |
 | **примерно** | [pri-MYER-na] | approximately |
 | **впрочем** | [VPRO-chem] | however / though |
+| **зря** | [zrya] | in vain / unnecessarily |
 
 ---
 
@@ -341,3 +345,5 @@
 | **распределять нагрузку** | [ras-pre-de-LYATʹ na-GROOZ-ku] | to distribute load |
 | **снижать** | [sni-ZHATʹ] | to reduce / lower |
 | **перезапускать** | [pe-re-za-pus-KATʹ] | to restart |
+| **откатывать** | [at-KA-ty-vatʹ] | to roll back |
+| **перезаписывать** | [pe-re-za-PIS-y-vatʹ] | to overwrite |
