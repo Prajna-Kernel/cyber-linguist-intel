@@ -128,3 +128,15 @@ The dependency is structural. ChipSoft has historically enforced gag clauses pre
 Z-CERT's own annual landscape report identified ransomware as the foremost threat to Dutch healthcare. Belgium's AZ Monica hospital network in Antwerp was paralyzed in January 2026, forcing staff to turn away ambulances and transfer critical patients. ChipSoft follows that pattern at a larger scale — one vendor, one attack, national impact.
 
 This connects to the broader healthcare ransomware pattern documented in this log: AMHC (RU-Threats MARCH-2026-LOG #001, Qilin) and Children's Council SF (Global-Watch APRIL-2026-LOG #007, SafePay). Ransomware groups consistently target healthcare because operational disruption creates maximum pressure to pay, and sensitive patient data provides secondary extortion leverage.
+
+---
+
+# ⚠️ Cross-Sector Alert: Pack2TheRoot (CVE-2026-41651) — Deutsche Telekom Red Team Discovery
+**Status:** Vulnerability Disclosed — April 22, 2026 | Patch Available PackageKit 1.3.5
+**Target:** Linux distributions globally — Ubuntu, Debian, Fedora, RHEL, Rocky Linux
+**Note:** Discovered by Deutsche Telekom's Red Team. 12-year-old LPE in default PackageKit component. Any local unprivileged user achieves root without authentication. Working PoC exists but not published.
+
+👉 **[Read Full Technical Briefing in Global-Watch](../Global-Watch/APRIL-2026-LOG.md#incident-037)**
+
+---
+
