@@ -337,3 +337,12 @@ What stands out most is the targeting logic. Municipal clinics and emergency hos
 **Note:** False flag attribution to Western intelligence disputed by Chainalysis. Insider or financially motivated actor suspected based on obfuscation technique overlap with Garantex's own methods.
 
 👉 **[Read Full Technical Briefing in Global-Watch](../Global-Watch/APRIL-2026-LOG.md#incident-026)**
+
+---
+
+# ⚠️ Cross-Sector Alert: Zimbra CVE-2025-48700 — APT28 Adjacent Campaign
+**Status:** Active Exploitation Confirmed — CISA KEV April 21, 2026
+**Target:** Zimbra Collaboration Suite globally — 3,793 unpatched European instances
+**Note:** CVE-2025-48700 has no confirmed Russian attribution, but adjacent CVE-2025-66376 was exploited by APT28 in Operation GhostMail against Ukrainian government in the same period. Same product, same vulnerability class, overlapping timeframe.
+
+👉 **[Read Full Technical Briefing in Global-Watch](../Global-Watch/APRIL-2026-LOG.md#incident-036)**
