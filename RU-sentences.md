@@ -452,3 +452,11 @@ If there is load, the system slows down, then there is a frame drop.
 **1️⃣9️⃣3️⃣. Если есть ошибка, откат помогает исправлять результат.** | If there is an error, rollback helps fix the result.
 
 **1️⃣9️⃣4️⃣. Система зря перезаписывает данные, если нет дефекта.** | The system unnecessarily overwrites data if there is no defect.
+
+**1️⃣9️⃣5️⃣. Система начинает журналирование после инициализации.** | The system starts logging after initialization.
+
+**1️⃣9️⃣6️⃣. Если есть событие, система его логирует.** | If there is an event, the system logs it.
+
+**1️⃣9️⃣7️⃣. Регистрировать событие важно при проверке очереди процессов.** | Registering an event is important when checking the process queue.
+
+**1️⃣9️⃣8️⃣. Теперь система выполняет журналирование и проверяет очередь процессов.** | Now the system performs logging and checks the process queue.
