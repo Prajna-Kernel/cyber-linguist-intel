@@ -148,6 +148,8 @@
 | **откат** | [at-KAT] | rollback | **откат** |
 | **перезапись** | [pe-re-ZA-pisʹ] | overwrite | **перезапись** |
 | **дефект** | [de-FEKT] | defect / fault | **дефект** |
+| **журналирование** | [zhoor-na-lee-RO-va-nee-ye] | logging | **журналирование** |
+| **событие** | [sa-BY-tee-ye] | event (system event) | **событие** |
 
 ---
 
@@ -269,6 +271,7 @@
 | **примерно** | [pri-MYER-na] | approximately |
 | **впрочем** | [VPRO-chem] | however / though |
 | **зря** | [zrya] | in vain / unnecessarily |
+| **теперь** | [te-PYERʹ] | now |
 
 ---
 
@@ -347,3 +350,5 @@
 | **перезапускать** | [pe-re-za-pus-KATʹ] | to restart |
 | **откатывать** | [at-KA-ty-vatʹ] | to roll back |
 | **перезаписывать** | [pe-re-za-PIS-y-vatʹ] | to overwrite |
+| **логировать** | [la-gee-RO-vatʹ] | to log (events/data) | 
+| **регистрировать** | [re-gis-TRI-ro-vatʹ] |  to register / record |
