@@ -103,7 +103,7 @@
 | **разрыв** | [raz-RYV] | disconnection / break | **разрыв** |
 | **узкое место** | [OOZ-ka-ye MYES-ta] | bottleneck | **узкое место** |
 | **хранилище** | [khra-NEE-lee-shche] | storage | **хранилище** |
-| **очередь** | [O-che-redʹ] | queue (task queue) | **очередь** |
+| **очередь** | [O-che-redʹ] | queue | **очередь** |
 | **отклик** | [at-KLEEK] | response (system response) | **отклик** |
 | **отказоустойчивость** | [at-kaz-oo-STOY-chee-vastʹ] | fault tolerance | **отказоустойчивость** |
 | **узел связи** | [oo-ZYOL SVA-zi] | communication node | **узел связи** |
@@ -150,6 +150,8 @@
 | **дефект** | [de-FEKT] | defect / fault | **дефект** |
 | **журналирование** | [zhoor-na-lee-RO-va-nee-ye] | logging | **журналирование** |
 | **событие** | [sa-BY-tee-ye] | event (system event) | **событие** |
+| **очередь задач** | [O-che-redʹ za-DACH] | task queue | **очередь задач** |
+| **анализ данных** | [a-na-LIZ da-NYKH] | data analysis | **анализ данных** |
 
 ---
 
@@ -272,6 +274,8 @@
 | **впрочем** | [VPRO-chem] | however / though |
 | **зря** | [zrya] | in vain / unnecessarily |
 | **теперь** | [te-PYERʹ] | now |
+| **далее** | [DA-lee-ye] | next / further step |
+| **ограничение** | [ag-ra-ni-CHYE-ni-ye] | constraint / limitation |
 
 ---
 
@@ -352,3 +356,4 @@
 | **перезаписывать** | [pe-re-za-PIS-y-vatʹ] | to overwrite |
 | **логировать** | [la-gee-RO-vatʹ] | to log (events/data) | 
 | **регистрировать** | [re-gis-TRI-ro-vatʹ] |  to register / record |
+| **ставить в очередь** | [STA-vit v O-che-redʹ] | to queue |
