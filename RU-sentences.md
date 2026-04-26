@@ -4,7 +4,8 @@
 - [Sentences 1–50](#sentences-150)
 - [Sentences 51–100](#sentences-51100)
 - [Sentences 101-150](#sentences-101150)
-- [Sentences 151+](#sentences-151)
+- [Sentences 151-200](#sentences-151200)
+- [Sentences 201+](#sentences-201+)
 
 ---
 
@@ -362,7 +363,7 @@ eway works, and the user sees the update.
 
 ---
 
-# sentences 151+
+# sentences 151200
 
 **1️⃣5️⃣1️⃣. Система внезапно переключает переход сети.** | The system suddenly switches the network transition.
 
@@ -460,3 +461,15 @@ If there is load, the system slows down, then there is a frame drop.
 **1️⃣9️⃣7️⃣. Регистрировать событие важно при проверке очереди процессов.** | Registering an event is important when checking the process queue.
 
 **1️⃣9️⃣8️⃣. Теперь система выполняет журналирование и проверяет очередь процессов.** | Now the system performs logging and checks the process queue.
+
+**1️⃣9️⃣9️⃣. Если есть ограничение, система ставит задачи в очередь.** | If there is a constraint, the system queues tasks.
+
+**2️⃣0️⃣0️⃣. Далее система выполняет анализ данных из очереди задач.** | Next, the system performs data analysis from the task queue.
+
+---
+
+# sentences 201+
+
+**2️⃣0️⃣1️⃣. Система ставит в очередь задачи и выполняет обработку данных.** | The system queues tasks and performs data processing.
+
+**2️⃣0️⃣2️⃣. Если очередь задач заполнена, анализ данных замедляется.** | If the task queue is full, data analysis slows down.
