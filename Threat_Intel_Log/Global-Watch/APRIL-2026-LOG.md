@@ -1621,7 +1621,7 @@ From there, the attacker accessed environment variables that were not marked as 
 
 A threat actor claiming to be ShinyHunters posted on a hacking forum claiming to sell stolen Vercel access keys, source code, and database data. ShinyHunters-linked actors denied involvement to BleepingComputer. Attribution remains unclear. Vercel's open-source projects were confirmed unaffected. The breach is contained but the full scope of customer exposure is not disclosed.
 
-**Hudson Rock subsequently confirmed the root cause:** a Context AI employee was infected with Lumma Stealer infostealer malware in February 2026 after downloading Roblox cheat scripts. The infostealer harvested Google Workspace credentials, along with keys and logins for Supabase, Datadog, and Authkit — including the support@context.ai account. This gave the attacker the ability to escalate privileges and pivot into Vercel's infrastructure through the existing OAuth trust relationship. 
+**Hudson Rock subsequently confirmed the root cause:** a Context AI employee was infected with Lumma Stealer infostealer malware in February 2026 after downloading Roblox cheat scripts. The infostealer harvested Google Workspace credentials, along with keys and logins for Supabase, Datadog, and Authkit — including the `support@context.ai` account. This gave the attacker the ability to escalate privileges and pivot into Vercel's infrastructure through the existing OAuth trust relationship. 
 
 The infected employee was assessed as a core member of the context-inc Vercel team. Google also removed Context AI's Chrome extension from the Web Store on March 27, 2026, after it was found to embed an additional OAuth grant enabling read access to users' Google Drive files.
 
@@ -1638,7 +1638,7 @@ The infected employee was assessed as a core member of the context-inc Vercel te
 
 ## Update — April 27, 2026
 - **Root cause confirmed:** Context AI employee infected with Lumma Stealer (February 2026) via Roblox cheat script download
-- **Harvested credentials:** Google Workspace, Supabase, Datadog, Authkit, support@context.ai account
+- **Harvested credentials:** Google Workspace, Supabase, Datadog, Authkit, `support@context.ai` account
 - *Context AI Chrome extension removed from Web Store March 27, 2026 — embedded OAuth grant for Google Drive read access*
 - **Vercel confirmed:** npm packages unaffected (verified with Microsoft, GitHub, npm, Socket)
 
