@@ -1621,6 +1621,10 @@ From there, the attacker accessed environment variables that were not marked as 
 
 A threat actor claiming to be ShinyHunters posted on a hacking forum claiming to sell stolen Vercel access keys, source code, and database data. ShinyHunters-linked actors denied involvement to BleepingComputer. Attribution remains unclear. Vercel's open-source projects were confirmed unaffected. The breach is contained but the full scope of customer exposure is not disclosed.
 
+**Hudson Rock subsequently confirmed the root cause:** a Context AI employee was infected with Lumma Stealer infostealer malware in February 2026 after downloading Roblox cheat scripts. The infostealer harvested Google Workspace credentials, along with keys and logins for Supabase, Datadog, and Authkit — including the support@context.ai account. This gave the attacker the ability to escalate privileges and pivot into Vercel's infrastructure through the existing OAuth trust relationship. 
+
+The infected employee was assessed as a core member of the context-inc Vercel team. Google also removed Context AI's Chrome extension from the Web Store on March 27, 2026, after it was found to embed an additional OAuth grant enabling read access to users' Google Drive files.
+
 ---
 
 ## Key Technical Indicators:
@@ -1631,6 +1635,12 @@ A threat actor claiming to be ShinyHunters posted on a hacking forum claiming to
 - **Claimed stolen:** access keys, source code, database data, npm tokens, GitHub tokens
 - **Attribution:** unknown — ShinyHunters denied involvement
 - *Context AI did not disclose its own breach prior to Vercel's disclosure*
+
+## Update — April 27, 2026
+- **Root cause confirmed:** Context AI employee infected with Lumma Stealer (February 2026) via Roblox cheat script download
+- **Harvested credentials:** Google Workspace, Supabase, Datadog, Authkit, support@context.ai account
+- *Context AI Chrome extension removed from Web Store March 27, 2026 — embedded OAuth grant for Google Drive read access*
+- **Vercel confirmed:** npm packages unaffected (verified with Microsoft, GitHub, npm, Socket)
 
 ---
 
@@ -2209,3 +2219,78 @@ A backdoor that survives firmware patches on federal network perimeter devices i
 Any Cisco ASA or FTD device that was internet-exposed during the CVE-2025-20333 or CVE-2025-20362 window should be treated as potentially compromised until reimaged. The ArcaneDoor campaign first surfaced in 2024 targeting zero-days in Cisco gear — FIRESTARTER represents the evolution of that capability into persistent firmware-level implants.
 
 Combined with the SOHO botnet advisory, this reflects a Chinese APT operational doctrine of establishing deep, durable network footholds that are difficult to detect and expensive to remove.
+
+---
+
+# Incident #040 — April 27, 2026
+
+**Target:** Open VSX marketplace — VS Code and forked editor developers globally (Cursor, Eclipse Theia)
+
+**Sector:** Developer Tools / Software Supply Chain
+
+**Threat Actor:** GlassWorm — unattributed, Russian locale evasion consistent with Russian-origin or Russian-adjacent actor
+
+**Origin:** Unattributed — Russian nexus assessed based on deliberate Russian locale evasion across all campaign waves
+
+**Source:** Cyber Security News — April 26, 2026 | Socket Research Team | Aikido Security
+
+**Attack Type:** Software Supply Chain — Sleeper Extension Campaign (Wave 5) / Credential Theft / Crypto Drain
+
+**Labels:** GlassWorm | Open VSX | Supply Chain | Sleeper Extensions | Solana C2 | Unicode Steganography | Credential Theft | Crypto Wallet | Developer Tools | Russian Locale Evasion
+
+---
+
+## Analysis
+
+GlassWorm is a supply chain campaign that's been hitting the Open VSX marketplace since October 2025. This is wave 5 — 73 new sleeper extensions identified in April 2026, following 72 malicious extensions in March and a compromised legitimate publisher account in January.
+
+The sleeper model is the new thing here. Extensions get published clean, look legitimate, build up downloads, then get weaponized through a normal update. By the time the malware activates, the extension already has trust signals — download count, familiar branding, established namespace. A developer browsing quickly won't catch it.
+
+The payload hides inside invisible Unicode characters that look like blank lines to human reviewers and most static analysis tools, but execute normally in JavaScript. C2 is resolved via Solana blockchain transaction memos — which means you can't take the infrastructure down. Blockchain transactions are permanent. The attacker just publishes a new memo to rotate servers.
+
+**Once on a machine it goes after everything:** GitHub tokens, npm tokens, SSH keys, macOS Keychain, browser credentials, 50+ crypto wallet extensions. It also drops SOCKS proxies and hidden VNC servers for persistent access. Every single wave has skipped systems with Russian locale settings — not once, not twice, five times consistently. That's not an accident.
+
+---
+
+## Key Technical Indicators:
+- **Campaign wave:** 5 — April 2026 (prior waves: Oct 2025, Jan 2026, Feb 2026, March 2026)
+- **New extensions identified:** 73 sleeper extensions in April cluster
+- **Prior waves:** 72 malicious extensions in March 2026, 4 compromised legitimate extensions in January 2026
+- **Delivery mechanism:** sleeper extensions published clean → weaponized via update after trust established
+- **Publisher pattern:** newly created GitHub accounts, one empty repo named with 8-character string
+- **Payload concealment:** invisible Unicode variation selectors — undetectable to code review and most static analysis
+- **C2 infrastructure:** Solana blockchain transaction memos — dead drop resolver, cannot be taken down
+- **Credential targets:** GitHub tokens, npm tokens, SSH keys, macOS Keychain, VPN configs, browser data
+- **Crypto targets:** MetaMask and 50+ cryptocurrency wallet extensions
+- **Post-compromise:** SOCKS proxy and hidden VNC server deployed for persistent remote access
+- **Russian locale evasion:** present across all campaign waves — systems with Russian locale are skipped
+- **Affected platforms:** Open VSX marketplace (VS Code, Cursor, Eclipse Theia)
+- **Tracking:** Socket GlassWorm v2 page — socket.dev/supply-chain-attacks/glassworm-v2
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — malicious VS Code extensions distributed via Open VSX marketplace; sleeper extensions appear benign at install, weaponized via subsequent update; prior wave compromised legitimate publisher account credentials to distribute under established trust
+- **TA0002 — Execution** — invisible Unicode variation selector payload executes at runtime via JavaScript interpreter; encrypted loader decrypts and runs second-stage malware
+- **TA0003 — Persistence** — SOCKS proxy servers and hidden VNC servers installed on compromised developer machines for sustained remote access; macOS LaunchAgent persistence via com.user.nodestart.plist
+- **TA0005 — Defense Evasion** — Unicode steganography hides payload in whitespace invisible to human review and static analysis; Russian locale check skips potential opsec-risk systems; runtime decryption evades signature detection; Solana dead drop rotates C2 without republishing extensions
+- **TA0006 — Credential Access** — GitHub tokens, npm tokens, SSH keys, macOS Keychain databases, VPN configurations, and browser credentials harvested from developer machines
+- **TA0009 — Collection** — developer credential stores, cryptocurrency wallet data, AWS credentials, CI/CD tokens staged from compromised machines
+- **TA0011 — Command & Control** — Solana blockchain transaction memos used as dynamic dead drop to resolve current C2 endpoint; blockchain immutability prevents infrastructure takedown
+- **TA0010 — Exfiltration** — harvested credentials, wallet data, and secrets exfiltrated to attacker-controlled infrastructure
+- **TA0040 — Impact** — cryptocurrency wallets drained; developer credentials stolen enabling downstream CI/CD and repository compromise; infected machines used as SOCKS proxies for further attacker operations
+
+---
+
+## Strategic Context
+
+GlassWorm is the most technically sophisticated persistent supply chain campaign in this log. Five waves in six months, each generation harder to detect than the last — from typosquatting to account compromise to transitive dependency abuse to sleeper extensions. The campaign is not opportunistic. It is methodical, adaptive, and specifically targeting the people who build software, not just the software itself.
+
+The Solana C2 infrastructure is the most operationally significant aspect. Defenders cannot take it down. The only viable defense is behavioral detection and rapid response — static indicators lose value quickly when the adversary can rotate infrastructure with a single blockchain transaction.
+
+The deliberate skipping of Russian locale systems is present across every wave. This is not a coincidence — it is a consistent operational decision that narrows the likely origin of the campaign to Russian-ecosystem actors, whether state-adjacent, criminal, or both.
+
+**For any developer who installed Open VSX extensions in April 2026:** treat it as a credential exposure event. Rotate all tokens, audit CI/CD pipelines, check for LaunchAgent persistence on macOS, and review recent GitHub activity for unauthorized commits.
+
+---
+
