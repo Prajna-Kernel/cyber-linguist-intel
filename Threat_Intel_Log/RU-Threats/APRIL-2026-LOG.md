@@ -341,8 +341,17 @@ What stands out most is the targeting logic. Municipal clinics and emergency hos
 ---
 
 # ⚠️ Cross-Sector Alert: Zimbra CVE-2025-48700 — APT28 Adjacent Campaign
-**Status:** Active Exploitation Confirmed — CISA KEV April 21, 2026
-**Target:** Zimbra Collaboration Suite globally — 3,793 unpatched European instances
+**Status:** Active Exploitation Confirmed — CISA KEV April 21, 2026   
+**Target:** Zimbra Collaboration Suite globally — 3,793 unpatched European instances   
 **Note:** CVE-2025-48700 has no confirmed Russian attribution, but adjacent CVE-2025-66376 was exploited by APT28 in Operation GhostMail against Ukrainian government in the same period. Same product, same vulnerability class, overlapping timeframe.
 
 👉 **[Read Full Technical Briefing in Global-Watch](../Global-Watch/APRIL-2026-LOG.md#incident-036)**
+
+---
+
+# ⚠️ Cross-Sector Alert: GlassWorm — Russian Locale Evasion Pattern
+**Status:** Active — Wave 5, April 27, 2026 | 73 new sleeper extensions identified   
+**Target:** Open VSX marketplace developers globally — GitHub tokens, npm tokens, SSH keys, crypto wallets   
+**Note:** All five GlassWorm campaign waves deliberately skip systems with Russian locale settings — consistent operational decision across six months of activity, assessed as Russian-ecosystem origin. Solana blockchain C2 cannot be taken down.
+
+👉 **[Read Full Technical Briefing in Global-Watch](../Global-Watch/APRIL-2026-LOG.md#incident-040)**
