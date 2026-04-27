@@ -355,3 +355,76 @@ What stands out most is the targeting logic. Municipal clinics and emergency hos
 **Note:** All five GlassWorm campaign waves deliberately skip systems with Russian locale settings — consistent operational decision across six months of activity, assessed as Russian-ecosystem origin. Solana blockchain C2 cannot be taken down.
 
 👉 **[Read Full Technical Briefing in Global-Watch](../Global-Watch/APRIL-2026-LOG.md#incident-040)**
+
+---
+
+# Incident #006 — April 27, 2026
+
+**Target:** Russian government and private sector organizations running TrueConf video conferencing servers
+
+**Sector:** Government / Enterprise / Video Conferencing Infrastructure
+
+**Threat Actor:** PhantomCore (aka Fairy Trickster, Head Mare, Rainbow Hyena, UNG0901) — pro-Ukrainian hacktivist group
+
+**Origin:** Ukraine-aligned — politically and financially motivated, active since 2022
+
+**Source:** The Hacker News — April 27, 2026 | Positive Technologies (Daniil Grigoryan, Georgy Khandozhko)
+
+**Attack Type:** Three-Vulnerability Exploit Chain → Remote Access + Lateral Movement across Russian Networks
+
+**Labels:** PhantomCore | TrueConf | Russia | Exploit Chain | MacTunnelRAT | PhantomSscp | Rogue Admin | Lateral Movement | Ukraine-aligned | Active Campaign
+
+---
+
+## Analysis
+
+PhantomCore, a pro-Ukrainian hacktivist group active since the start of the Russo-Ukrainian war in 2022, has been systematically targeting Russian organizations running TrueConf video conferencing servers since September 2025. The campaign was documented by Positive Technologies, who described PhantomCore as one of the most active threat groups operating in the Russian threat landscape.
+
+The group developed and independently reproduced an exploit chain comprising three TrueConf vulnerabilities — with no public exploits available for the chain at the time. The chain enables remote command execution on vulnerable servers. Once inside, attackers create a rogue administrator account named "TrueConf2" on the compromised video conferencing server, establishing a persistent privileged foothold. From there, lateral movement across connected organizational networks follows.
+
+PhantomCore's toolkit is split between publicly available tools — Velociraptor, Memprocfs, Dokan, DumpIt — and proprietary tools **developed in-house:** MacTunnelRAT for remote access, PhantomSscp for lateral movement, and PhantomProxyLite for network proxying. The group also runs parallel phishing campaigns using crafted ZIP and RAR archives to distribute a backdoor capable of running remote commands and serving arbitrary payloads — documented in January and February 2026 targeting Russian organizations.
+
+**The targeting is broad:** government agencies, private sector organizations, and entities across a wide range of industries operating in Russia. TrueConf is widely deployed across Russian government and military environments specifically because it supports air-gapped, on-premises deployments — making it an attractive attack surface for an actor focused on Russian network penetration.
+
+---
+
+## Key Technical Indicators:
+- **Active since:** September 2025 — ongoing as of April 2026
+- **Attack vector:** three-vulnerability TrueConf exploit chain — no public exploits existed at time of exploitation
+- **Rogue account:** "TrueConf2" administrator account created on compromised servers
+- **Proprietary tools:** MacTunnelRAT (remote access), PhantomSscp (lateral movement), PhantomProxyLite (network proxying)
+- **Public tools used:** Velociraptor, Memprocfs, Dokan, DumpIt
+- **Parallel vector:** phishing via ZIP/RAR archives — backdoor enabling remote commands and arbitrary payload delivery
+- **Phishing campaigns:** January and February 2026 — Russian organizations targeted
+- **Target scope:** government and private sector across multiple industries in Russia
+- **Attribution:** Positive Technologies — high confidence PhantomCore attribution
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — three-vulnerability TrueConf exploit chain used to gain remote access to servers; parallel phishing vector via ZIP/RAR archives delivering backdoor
+- **TA0002 — Execution** — remote command execution on compromised TrueConf servers via exploit chain; backdoor executes arbitrary payloads delivered via phishing vector
+- **TA0003 — Persistence** — rogue administrator account "TrueConf2" created on compromised servers; backdoor maintains persistent remote access
+- **TA0004 — Privilege Escalation** — rogue admin account creation grants administrative privileges on compromised TrueConf server
+- **TA0008 — Lateral Movement** — PhantomSscp used for lateral movement across connected organizational networks; PhantomProxyLite for network proxying
+- **TA0011 — Command & Control** — MacTunnelRAT provides remote access C2; backdoor from phishing vector accepts remote commands and serves payloads
+
+---
+
+## Strategic Context
+
+PhantomCore is doing something most hacktivist groups don't — developing proprietary tools and independently reproducing vulnerabilities with no public exploit code available. This is not script-kiddie hacktivism. The group identified a three-vulnerability chain in TrueConf, software specifically favored by Russian government and military for its air-gapped deployment capability, and has been exploiting it quietly since September 2025.
+
+TrueConf's presence in Russian government and military environments makes it a high-value attack surface. Compromising a TrueConf server gives access to internal communications infrastructure and a pivot point into connected networks — exactly what an intelligence-collection or disruption operation needs.
+
+This connects directly to Operation TrueChaos (Global-Watch APRIL-2026-LOG #00X) — a separate Chinese-nexus actor exploiting a different TrueConf vulnerability (CVE-2026-3502) against Southeast Asian government networks in the same period. Two different actors, two different vulnerabilities, same software as attack surface — TrueConf is becoming a consistent target across multiple threat actor clusters.
+
+---
+
+## Russian Language Context
+
+PhantomCore operates exclusively against Russian-speaking targets — government agencies, private sector organizations, and infrastructure across Russia. The group's name, tooling, and operational focus are directly tied to the Russo-Ukrainian conflict. TrueConf itself is a Russian-developed platform with its largest user base inside Russia, making it a deliberate and symbolically significant attack surface for a Ukraine-aligned actor. Positive Technologies, the Russian cybersecurity firm that documented this campaign, describes PhantomCore as one of the most active groups currently operating against Russian networks.
+
+---
+
+**Cross-Reference:** See Global-Watch APRIL-2026-LOG — Operation TrueChaos (Chinese-nexus, CVE-2026-3502) for parallel TrueConf exploitation by a separate actor in the same period.
