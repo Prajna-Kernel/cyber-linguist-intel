@@ -5,7 +5,7 @@
 - [Sentences 51–100](#sentences-51100)
 - [Sentences 101-150](#sentences-101150)
 - [Sentences 151-200](#sentences-151200)
-- [Sentences 201+](#sentences-201+)
+- [Sentences 201+](#sentences-201)
 
 ---
 
@@ -473,3 +473,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣0️⃣1️⃣. Система ставит в очередь задачи и выполняет обработку данных.** | The system queues tasks and performs data processing.
 
 **2️⃣0️⃣2️⃣. Если очередь задач заполнена, анализ данных замедляется.** | If the task queue is full, data analysis slows down.
+
+**2️⃣0️⃣3️⃣. Если есть перегрузка системы, система начинает перегружаться.** | If there is system overload, the system starts becoming overloaded.
+
+**2️⃣0️⃣4️⃣. При перегрузке системы система выполняет проверку.** | During system overload, the system performs a check.
+
+**2️⃣0️⃣5️⃣. Если система достигает точки отказа, она не работает.** | If the system reaches the point of failure, it does not work.
+
+**2️⃣0️⃣6️⃣. Система редко достигает точки отказа.** | The system rarely reaches the point of failure.
