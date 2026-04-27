@@ -152,6 +152,8 @@
 | **событие** | [sa-BY-tee-ye] | event (system event) | **событие** |
 | **очередь задач** | [O-che-redʹ za-DACH] | task queue | **очередь задач** |
 | **анализ данных** | [a-na-LIZ da-NYKH] | data analysis | **анализ данных** |
+| **перегрузка системы** | [pe-re-GRUZ-ka sis-TE-my] | system overload | **перегрузку системы** | 
+| **точка отказа** | [TOCH-ka at-KA-za] | point of failure | **точку отказа** |
 
 ---
 
@@ -276,6 +278,7 @@
 | **теперь** | [te-PYERʹ] | now |
 | **далее** | [DA-lee-ye] | next / further step |
 | **ограничение** | [ag-ra-ni-CHYE-ni-ye] | constraint / limitation |
+| **редко** | [RED-ka] | rarely |
 
 ---
 
@@ -357,3 +360,4 @@
 | **логировать** | [la-gee-RO-vatʹ] | to log (events/data) | 
 | **регистрировать** | [re-gis-TRI-ro-vatʹ] |  to register / record |
 | **ставить в очередь** | [STA-vit v O-che-redʹ] | to queue |
+| **перегружаться** | [pe-re-gru-ZHAT-sa] | to become overloaded |
