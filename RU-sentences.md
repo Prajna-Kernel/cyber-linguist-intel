@@ -481,3 +481,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣0️⃣5️⃣. Если система достигает точки отказа, она не работает.** | If the system reaches the point of failure, it does not work.
 
 **2️⃣0️⃣6️⃣. Система редко достигает точки отказа.** | The system rarely reaches the point of failure.
+
+**2️⃣0️⃣7️⃣. Система маршрутизирует данные через кластер.** | The system routes data through the cluster.
+
+**2️⃣0️⃣8️⃣. Таблица маршрутизации сохраняется после обновления.** | The routing table is saved after an update.
+
+**2️⃣0️⃣9️⃣. Если есть ошибка, таблица маршрутизации не сохраняется.** | If there is an error, the routing table is not saved.
+
+**2️⃣1️⃣0️⃣. Впоследствии система проверяет кластер.** | Subsequently, the system checks the cluster.
