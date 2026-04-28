@@ -570,11 +570,17 @@ No exploit required — access is inherited through trusted integrations. Identi
 # Incident #013 — April 8, 2026
 
 **Target:** Apache ActiveMQ Classic — enterprise deployments across financial services, healthcare, government, e-commerce
+
 **Sector:** Enterprise Middleware / Critical Infrastructure
+
 **Threat Actor:** N/A — Vulnerability Disclosure
+
 **Origin:** N/A
+
 **Source:** BleepingComputer — April 8, 2026 | Horizon3.ai Advisory | Infosecurity Magazine
+
 **Vulnerability Class:** Remote Code Execution via Code Injection (Jolokia JMX-HTTP Bridge) — no confirmed active exploitation as of disclosure
+
 **Labels:** CVE-2026-34197 | RCE | Apache ActiveMQ | Jolokia | Code Injection | Default Credentials | Unauthenticated RCE | AI-Discovered | Patch Required
 
 ---
@@ -756,7 +762,7 @@ The SEC 8-K disclosure pattern mirrors Trio-Tech (Global-Watch APRIL-2026-LOG #0
 
 **Sector:** Operational Technology / Industrial Control Systems / Critical Infrastructure
 
-***Threat Actor:** Iranian-affiliated APT group — assessed IRGC-linked (CyberAv3ngers overlap pattern)
+**Threat Actor:** Iranian-affiliated APT group — assessed IRGC-linked (CyberAv3ngers overlap pattern)
 
 **Origin:** Iran (state-directed — IRGC Cyber Electronic Command assessed)
 
@@ -793,7 +799,7 @@ This is not a new Iranian capability. It follows the 2023 CyberAv3ngers campaign
 
 ---
 
-**MITRE ATT&CK Tactics:**
+## MITRE ATT&CK Tactics:
 - **TA0001 — Initial Access** — internet-exposed PLCs accessed via legitimate Studio 5000 Logix Designer configuration software; default/weak credentials exploited
 - **TA0006 — Credential Access** — default and weak credentials on internet-facing PLC management interfaces leveraged for access
 - **TA0009 — Collection** — PLC project files extracted from compromised devices
@@ -859,7 +865,7 @@ The attacker built a working exploit directly from the advisory description. The
 
 ---
 
-**MITRE ATT&CK Tactics:**
+## MITRE ATT&CK Tactics:
 - **TA0001 — Initial Access** — unauthenticated WebSocket connection to exposed /terminal/ws endpoint; CVE-2026-39987; no credentials required
 - **TA0002 — Execution** — full interactive PTY shell obtained via WebSocket terminal endpoint; attacker executed commands manually
 - **TA0007 — Discovery** — manual file system exploration conducted after shell access obtained
@@ -2294,3 +2300,109 @@ The deliberate skipping of Russian locale systems is present across every wave. 
 
 ---
 
+# Incident #041 — April 29, 2026
+
+**Target:** Hugging Face LeRobot deployments — robotics AI inference infrastructure
+
+**Sector:** AI Infrastructure / Robotics
+
+**Threat Actor:** N/A — Vulnerability Disclosure
+
+**Origin:** Discovered independently by VulnCheck researcher Valentin Lobstein and researcher "chenpinji" (December 2025)
+
+**Source:** The Hacker News — April 28, 2026 | Resecurity | VulnCheck
+
+**Vulnerability Class:** Unsafe Pickle Deserialization over Unauthenticated gRPC — Unpatched RCE; physical safety risk
+
+**Labels:** CVE-2026-25874 | CVSS 9.3 | LeRobot | Hugging Face | Pickle Deserialization | gRPC | Unauthenticated RCE | AI Robotics | Unpatched
+
+---
+
+## Analysis
+
+CVE-2026-25874 is an unpatched critical RCE in Hugging Face's LeRobot — an open-source robotics AI platform with nearly 24,000 GitHub stars. The flaw is in the async inference pipeline's PolicyServer component, which uses pickle.loads() to deserialize data received over gRPC channels that have no authentication and no TLS. Any attacker who can reach the PolicyServer port can send a crafted pickle payload and get arbitrary code execution on the host machine — no credentials, no user interaction required.
+
+**The attack surface covers three gRPC calls:** SendPolicyInstructions, SendObservations, and GetActions. All three deserialize attacker-controlled input using pickle without validation. Because AI inference systems typically run with elevated privileges to access internal networks, datasets, and compute resources, exploitation here isn't just a server compromise — it's a foothold into everything that server can reach.
+
+**The possible impact list is significant:** unauthenticated RCE, complete PolicyServer host compromise, credential theft (API keys, SSH keys, model files), lateral movement, and — because this is a robotics platform — the ability to crash services, corrupt models, or directly interfere with physical robot operations. That last point makes this different from a standard RCE. Compromised robotics infrastructure can cause physical harm.
+
+The vulnerability was first reported by "chenpinji" in December 2025. The LeRobot team acknowledged it in January 2026 and noted the codebase needs significant refactoring. As of disclosure, it remains unpatched — a fix is planned for version 0.6.0. The irony flagged by Lobstein is **hard to ignore:** Hugging Face created Safetensors specifically because pickle is dangerous for ML data, yet their own robotics framework deserializes network input with pickle.loads() and has nosec comments to suppress the security scanner warnings.
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-25874, CVSS 9.3
+- **Vulnerability class:** unsafe pickle deserialization over unauthenticated gRPC channels
+- **Vulnerable component:** async inference PolicyServer — pickle.loads() called on attacker-controlled network input
+- **Affected gRPC calls:** SendPolicyInstructions, SendObservations, GetActions
+- *No authentication, no TLS on gRPC channels*
+- **Affected version:** LeRobot 0.4.3 and prior — confirmed by VulnCheck
+- **Status:** unpatched — fix planned in version 0.6.0
+- **Physical risk:** robotics platform — model corruption or sabotage can affect physical robot operations
+- *nosec comments used to suppress Bandit security scanner warnings on vulnerable code*
+- *Originally reported December 2025 by "chenpinji" — acknowledged January 2026, no patch released*
+
+> **Entry Type:** Vulnerability Disclosure — VulnCheck / Resecurity research finding. No confirmed threat actor, no confirmed exploitation. Currently unpatched — fix pending in v0.6.0. MITRE ATT&CK tags not applicable.
+
+---
+
+## Strategic Context
+
+This is the third AI inference framework RCE in this log alongside LMDeploy CVE-2026-33626 (#038) and SGLang CVE-2026-5760. The pattern is consistent — AI inference components handle external input (images, model data, network messages) without treating that input as an attack surface. Teams building these frameworks come from ML research backgrounds, not security engineering backgrounds, and it shows.
+
+LeRobot is different from the previous two because of the physical dimension. This isn't just cloud infrastructure — it's a platform that controls physical robots. An attacker who can corrupt the policy model or inject commands into the inference pipeline isn't just stealing data, they're potentially causing physical harm. That's a threat model most security teams haven't had to think about until now.
+
+The nosec suppression is the most troubling detail here. Someone on the team knew Bandit was flagging the pickle usage, and the response was to silence the warning rather than fix it. That's a security culture problem, not just a code problem.
+
+---
+
+# Incident #042 — April 29, 2026
+
+**Target:** Medtronic — world's largest medical device manufacturer, 95,000 employees, 150 countries, 79 million patients served annually
+
+**Sector:** Healthcare / Medical Technology
+
+**Threat Actor:** ShinyHunters — cybercrime and data extortion group
+
+**Origin:** Unknown
+
+**Source:** BleepingComputer — April 24, 2026 | SecurityWeek — April 27, 2026 | HIPAA Journal — April 24, 2026
+
+**Attack Type:** Corporate IT Breach — Data Theft and Extortion
+
+**Labels:** ShinyHunters | Medtronic | Healthcare | Medical Devices | Data Extortion | PII | 9 Million Records | Double Extortion | SEC Disclosure
+
+---
+
+## Analysis
+
+ShinyHunters listed Medtronic on its dark web leak site on April 17-18, 2026, claiming theft of over 9 million records containing PII and terabytes of internal corporate data. The group set an April 21 deadline for ransom payment before threatening to publish the data. Medtronic publicly confirmed the breach on April 24, filing disclosures with the SEC the same day. Medtronic has since been removed from the ShinyHunters leak site — suggesting either ransom payment or active negotiations, though neither has been confirmed.
+
+Medtronic's official statement emphasized that its corporate IT network is entirely separate from its product, manufacturing, distribution, and hospital customer networks. No impact to products, patient safety, or clinical operations was identified. The company activated incident response and engaged external cybersecurity specialists. The specific types of personal data accessed have not been confirmed — investigation is ongoing.
+
+The removal from the leak site before the April 21 deadline, combined with no public data dump, is consistent with ShinyHunters extracting a payment. The group has followed through on leak threats against other April victims — Mytheresa, Zara, Carnival, 7-Eleven — dumping roughly 38 million records total when ransoms weren't paid. Medtronic's quiet disappearance from that list stands out.
+
+ShinyHunters has been active since 2020 and is behind a running wave of high-profile breaches in early 2026 — at least 40 victims listed on their site, including Hallmark (8M records), ADT (5.5M records), and multiple Salesforce and Snowflake-linked victims. Medtronic is the highest-profile healthcare target in this current wave.
+
+## Key Technical Indicators:
+- **Threat actor:** ShinyHunters — dark web leak site claim April 17-18, 2026
+- **Data claimed:** 9 million+ PII records and terabytes of internal corporate data
+- **Ransom deadline:** April 21, 2026 — passed without confirmed payment or leak
+- *Medtronic removed from leak site post-deadline — ransom payment suspected*
+- **Breach scope:** corporate IT systems only — product and manufacturing networks confirmed separate
+- **SEC disclosure filed:** April 24, 2026
+- *MiniMed (diabetes subsidiary) confirmed unaffected separately*
+- **Initial access vector:** undisclosed — investigation ongoing
+- **ShinyHunters current wave:** 40+ victims, 38M+ records dumped across non-paying targets
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — unauthorized access to Medtronic corporate IT systems; initial vector undisclosed
+- **TA0009 — Collection** — 9 million+ PII records and internal corporate data staged for exfiltration
+- **TA0010 — Exfiltration** — data exfiltrated to ShinyHunters infrastructure; threatened for dark web publication
+- **TA0040 — Impact** — extortion demand issued with leak deadline; Medtronic removed from leak site post-deadline suggesting ransom paid or negotiated
+
+## Strategic Context
+
+Medtronic is the largest medical device company in the world by revenue. It makes pacemakers, surgical robots, insulin pumps, defibrillators, and neurosurgery systems for 79 million patients a year. ShinyHunters hitting them isn't just a data theft — it's a signal that even the biggest names in medtech corporate IT are accessible to financially motivated extortion groups.
+
+The network segmentation Medtronic pointed to — corporate IT separate from devices and manufacturing — is the right architecture. It limited blast radius here. But 9 million PII records from corporate systems still means patient data, employee data, and internal files are potentially in criminal hands. For a company with that footprint, the downstream phishing and identity fraud risk is significant.
+
+**This fits the healthcare targeting pattern across this log:** AMHC/Qilin, ChipSoft, Children's Council SF, Signature Healthcare/Anubis, Hospital Caribbean Medical Center. Healthcare keeps getting hit because the data is valuable, the organizations are high-profile, and the reputational pressure to resolve quietly is intense. Medtronic's quiet exit from the leak site says a lot.
