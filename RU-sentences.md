@@ -489,3 +489,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣0️⃣9️⃣. Если есть ошибка, таблица маршрутизации не сохраняется.** | If there is an error, the routing table is not saved.
 
 **2️⃣1️⃣0️⃣. Впоследствии система проверяет кластер.** | Subsequently, the system checks the cluster.
+
+**2️⃣1️⃣1️⃣. Если есть потеря соединения, система устраняет проблему.** | If there is connection loss, the system fixes the problem.
+
+**2️⃣1️⃣2️⃣. Система передаёт сигнал через канал связи.** | The system transmits a signal through the communication channel.
+
+**2️⃣1️⃣3️⃣. Порой возникает ошибка соединения при нагрузке.** | At times, a connection error arises under load.
+
+**2️⃣1️⃣4️⃣. Если возникает потеря соединения, система выполняет проверку.** | If connection loss occurs, the system performs a check.
