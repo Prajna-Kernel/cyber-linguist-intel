@@ -428,3 +428,69 @@ PhantomCore operates exclusively against Russian-speaking targets — government
 ---
 
 **Cross-Reference:** See Global-Watch APRIL-2026-LOG — Operation TrueChaos (Chinese-nexus, CVE-2026-3502) for parallel TrueConf exploitation by a separate actor in the same period.
+
+---
+
+# Incident #007 — April 30, 2026
+
+**Target:** Ukraine, EU countries — government and enterprise organizations
+
+**Sector:** Government / Enterprise / Windows Infrastructure
+
+**Threat Actor:** APT28 (Fancy Bear / Pawn Storm) — GRU, Russian state-sponsored
+
+**Origin:** Russia — GRU Unit 26165, high confidence
+
+**Source:** The Hacker News — April 28, 2026 | CISA KEV — April 28, 2026 | Trend Micro
+
+**Attack Type:** Incomplete Patch Bypass → Windows Shell Namespace Parsing → DLL Sideloading → Arbitrary Code Execution
+
+**Labels:** APT28 | CVE-2026-32202 | CVE-2026-21513 | Windows Shell | DLL Sideloading | CISA KEV | Ukraine | EU Targets | Fancy Bear | GRU | Incomplete Patch
+
+---
+
+## Analysis
+
+CISA added CVE-2026-32202 to its KEV catalog on April 28, 2026 — a Windows Shell protection mechanism bypass that APT28 is actively exploiting as the second stage of a two-CVE chain. The first stage, CVE-2026-21513, was a weaponized LNK file zero-day that APT28 used in a December 2025 campaign targeting Ukraine and multiple EU countries. When that campaign was disclosed in February 2026, researchers deliberately withheld details of a second chained exploit that hadn't been fully patched. That second exploit is now CVE-2026-32202.
+
+The mechanism is in Windows shell namespace parsing. APT28 leverages how the shell resolves UNC paths to load a DLL from an attacker-controlled remote server. The DLL executes attacker-controlled code, bypassing Microsoft Defender SmartScreen and other security feature protections in the process. The patch for CVE-2026-21513 addressed the LNK file vector but left the namespace parsing mechanism intact — which is exactly what APT28 exploited to keep the chain alive.
+
+The campaign is tied to Prismex, a malware framework Trend Micro has been tracking that combines CVE-2026-21513 and CVE-2026-21509 (a Microsoft Office RCE APT28 used in Operation Neusploit in January 2026). APT28 is running parallel campaigns using multiple incomplete patches from the same disclosure wave as overlapping attack surfaces. CERT-UA confirmed the December 2025 campaign targeting Ukrainian entities.
+
+APT28 has been active across this log — Operation GhostMail exploited Zimbra XSS (CVE-2025-66376) against Ukrainian government targets, cross-referenced in #036. This is a separate campaign but consistent operational pattern: exploit email and Windows infrastructure, target Ukraine and EU, move fast when patches are incomplete.
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-32202 — Windows Shell protection mechanism bypass, CVSS 4.3
+- **CVE:** CVE-2026-21513 — Windows LNK file zero-day, first stage of exploit chain
+- **Attack mechanism:** Windows shell namespace parsing used to load DLL from UNC path on attacker-controlled remote server
+- **Bypasses:** Microsoft Defender SmartScreen and Windows security feature protections
+- **Related malware framework:** Prismex — also uses CVE-2026-21509 (Office RCE from Operation Neusploit)
+- **Campaign origin:** December 2025 APT28 operation against Ukraine and EU countries
+- **CISA KEV listed:** April 28, 2026
+- *Confirmed by CERT-UA — Ukrainian government entities targeted
+- **Incomplete patch:** CVE-2026-21513 patched LNK vector, left namespace parsing mechanism exploitable
+- **Attribution:** APT28 / Fancy Bear / GRU Unit 26165 — high confidence
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — weaponized LNK file delivered to targets in Ukraine and EU countries; CVE-2026-21513 exploited as first stage
+- **TA0002 — Execution** — DLL loaded from attacker-controlled remote server via Windows shell namespace UNC path parsing; arbitrary code executed
+- **TA0005 — Defense Evasion** — Microsoft Defender SmartScreen bypassed via CVE-2026-32202; incomplete patch exploited to keep attack chain alive post-disclosure
+- **TA0011 — Command & Control** — attacker-controlled remote server delivers DLL payload via UNC path resolution
+
+---
+
+## Strategic Context
+
+APT28 using an incomplete patch as a continued attack surface is not new behavior — it's a documented doctrine. When a vendor patches the visible exploit surface without addressing the underlying mechanism, APT28 treats the residual as a new zero-day. CVE-2026-32202 is a direct result of that approach. The researcher who withheld the second CVE details at disclosure time was trying to give defenders a window — APT28 had already found it.
+
+The Prismex framework combining Office and Windows Shell exploits in parallel shows how APT28 maintains operational tempo across multiple campaigns simultaneously. Different CVEs, same infrastructure, same targets, same period. Ukraine and EU government entities are being hit from multiple angles at once.
+
+This connects directly to the GhostMail Zimbra campaign documented in the cross-reference at #036 — APT28 is running sustained operations against Ukrainian and EU targets across email infrastructure and Windows endpoints concurrently. The attack surface changes, the targeting doesn't.
+
+---
+
+## Russian Language Context
+
+CERT-UA (Команда реагування на комп'ютерні надзвичайні події України) confirmed this campaign targeting Ukrainian entities. CVE-2026-21513 was first reported in the context of attacks on Ukrainian government organizations — consistent with GRU operational priorities around Ukrainian state infrastructure access.
