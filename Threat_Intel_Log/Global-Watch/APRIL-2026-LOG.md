@@ -2328,6 +2328,8 @@ CVE-2026-25874 is an unpatched critical RCE in Hugging Face's LeRobot — an ope
 
 The vulnerability was first reported by "chenpinji" in December 2025. The LeRobot team acknowledged it in January 2026 and noted the codebase needs significant refactoring. As of disclosure, it remains unpatched — a fix is planned for version 0.6.0. The irony flagged by Lobstein is **hard to ignore:** Hugging Face created Safetensors specifically because pickle is dangerous for ML data, yet their own robotics framework deserializes network input with pickle.loads() and has nosec comments to suppress the security scanner warnings.
 
+---
+
 ## Key Technical Indicators:
 - **CVE:** CVE-2026-25874, CVSS 9.3
 - **Vulnerability class:** unsafe pickle deserialization over unauthenticated gRPC channels
@@ -2382,6 +2384,8 @@ The removal from the leak site before the April 21 deadline, combined with no pu
 
 ShinyHunters has been active since 2020 and is behind a running wave of high-profile breaches in early 2026 — at least 40 victims listed on their site, including Hallmark (8M records), ADT (5.5M records), and multiple Salesforce and Snowflake-linked victims. Medtronic is the highest-profile healthcare target in this current wave.
 
+---
+
 ## Key Technical Indicators:
 - **Threat actor:** ShinyHunters — dark web leak site claim April 17-18, 2026
 - **Data claimed:** 9 million+ PII records and terabytes of internal corporate data
@@ -2393,11 +2397,15 @@ ShinyHunters has been active since 2020 and is behind a running wave of high-pro
 - **Initial access vector:** undisclosed — investigation ongoing
 - **ShinyHunters current wave:** 40+ victims, 38M+ records dumped across non-paying targets
 
+---
+
 ## MITRE ATT&CK Tactics:
 - **TA0001 — Initial Access** — unauthorized access to Medtronic corporate IT systems; initial vector undisclosed
 - **TA0009 — Collection** — 9 million+ PII records and internal corporate data staged for exfiltration
 - **TA0010 — Exfiltration** — data exfiltrated to ShinyHunters infrastructure; threatened for dark web publication
 - **TA0040 — Impact** — extortion demand issued with leak deadline; Medtronic removed from leak site post-deadline suggesting ransom paid or negotiated
+
+---
 
 ## Strategic Context
 
@@ -2406,3 +2414,68 @@ Medtronic is the largest medical device company in the world by revenue. It make
 The network segmentation Medtronic pointed to — corporate IT separate from devices and manufacturing — is the right architecture. It limited blast radius here. But 9 million PII records from corporate systems still means patient data, employee data, and internal files are potentially in criminal hands. For a company with that footprint, the downstream phishing and identity fraud risk is significant.
 
 **This fits the healthcare targeting pattern across this log:** AMHC/Qilin, ChipSoft, Children's Council SF, Signature Healthcare/Anubis, Hospital Caribbean Medical Center. Healthcare keeps getting hit because the data is valuable, the organizations are high-profile, and the reputational pressure to resolve quietly is intense. Medtronic's quiet exit from the leak site says a lot.
+
+---
+
+# Incident #043 — April 29, 2026
+
+**Target:** LiteLLM proxy deployments globally — AI gateway operators, LLM API aggregators
+
+**Sector:** AI Infrastructure / Cloud Security
+
+**Threat Actor:** Unknown — opportunistic, IP 65.111.27[.]132 / 65.111.25[.]67
+
+**Origin:** Unattributed
+
+**Source:** The Hacker News — April 29, 2026 | Sysdig — April 29, 2026
+
+**Attack Type:** SQL Injection → Database Credential Theft — Exploited 36 Hours Post-Disclosure
+
+**Labels:** CVE-2026-42208 | CVSS 9.3 | LiteLLM | SQL Injection | AI Infrastructure | Pre-Auth | Cloud Credentials | Active Exploitation | TeamPCP Adjacent
+
+---
+
+## Analysis
+
+CVE-2026-42208 is a pre-authentication SQL injection in LiteLLM — an open-source AI gateway with 45,000+ GitHub stars used to proxy and manage LLM API calls across providers. The flaw is in the proxy's API key verification path: a database query handling incoming Authorization headers mixes the caller-supplied key value directly into the query string instead of using parameterized inputs. An unauthenticated attacker can craft a malicious Authorization header on any LLM API route — POST /chat/completions for example — and reach the vulnerable query through the proxy's error handling path.
+
+The first exploitation attempt was recorded April 26 at 16:17 UTC — 36 hours and 7 minutes after the GitHub advisory was indexed. No public PoC existed at that point. The attacker needed only the advisory text and LiteLLM's open-source schema to build a working exploit. Sysdig documented an eight-minute session from IP 65.111.27[.]132 covering two phases, followed by a second probe from an adjacent IP 65.111.25[.]67 roughly 20 minutes later.
+
+The attacker went straight for the high-value tables — litellm_credentials.credential_values and litellm_config — skipping user and team tables entirely. That targeting precision tells you this wasn't scanning, it was deliberate. Those two tables hold upstream LLM provider API keys and proxy runtime configuration. A single row in litellm_credentials can contain an OpenAI organization key with five-figure monthly spend caps, an Anthropic console key with workspace admin rights, and AWS Bedrock IAM credentials. This is cloud-account compromise territory, not a standard web app SQL injection.
+
+LiteLLM was also the target of a supply chain attack by TeamPCP last month — the same group behind the Shai-Hulud Bitwarden CLI campaign (#034). Two separate attack vectors against the same platform in consecutive months.
+
+The fix is in version 1.83.7-stable released April 19. If patching isn't immediate, disabling error logs via disable_error_logs: true removes the vulnerable code path.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-42208, CVSS 9.3
+- **Vulnerability class:** pre-auth SQL injection via unsanitized Authorization header in API key verification path
+- **Affected versions:** >=1.81.16, <1.83.7
+- **Attack vector:** crafted Authorization header on any LLM API route reaches vulnerable query via error handling path
+- **Targeted tables:** litellm_credentials.credential_values, litellm_config — upstream LLM provider keys and proxy runtime config
+- **Attacker IPs:** 65.111.27[.]132 (phase one), 65.111.25[.]67 (phase two)
+- **First exploitation:** April 26, 16:17 UTC — 36 hours 7 minutes post-advisory indexing
+- *No public PoC at time of exploitation — advisory text and open-source schema sufficient
+- **Fix:** LiteLLM v1.83.7-stable (April 19, 2026)
+- **Mitigation:** disable_error_logs: true under general_settings removes vulnerable path
+- *TeamPCP supply chain attack against LiteLLM documented March 2026 — second attack vector same platform
+
+---
+
+## MITRE ATT&CK Tactics:
+- **TA0001 — Initial Access** — unauthenticated SQL injection via crafted Authorization header on exposed LiteLLM proxy endpoint
+- **TA0006 — Credential Access** — targeted extraction of LLM provider API keys, workspace admin credentials, and AWS Bedrock IAM credentials from proxy database
+- **TA0007 — Discovery** — deliberate targeting of specific database tables containing high-value credentials; schema knowledge used to identify litellm_credentials and litellm_config
+- **TA0010 — Exfiltration** — database credential extraction attempted across two-phase session from adjacent IPs
+
+---
+
+## Strategic Context
+
+This is the fourth AI infrastructure exploit in this log alongside SGLang, LMDeploy (#038), and LeRobot (#041). The pattern is locked in — AI infrastructure components are being actively targeted and exploited fast. 36 hours from advisory to exploitation with no PoC means the advisory itself is the attack primitive now. Open-source schema plus a detailed bug description is all an attacker needs.
+
+LiteLLM specifically is a high-value target because of what it holds. It's an aggregation layer — one proxy managing API keys across OpenAI, Anthropic, AWS Bedrock, and whatever else the operator is running. Compromising one LiteLLM instance can hand an attacker keys to an entire organization's AI infrastructure. That's not just a data breach, it's access to every LLM workload that operator runs.
+
+Two attacks against LiteLLM in two months — supply chain in March, SQL injection in April — suggests this platform is being actively prioritized as a target. Anyone running LiteLLM in production should treat it as a high-risk surface and patch immediately.
