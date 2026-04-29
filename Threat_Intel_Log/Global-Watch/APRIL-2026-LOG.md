@@ -2479,3 +2479,12 @@ This is the fourth AI infrastructure exploit in this log alongside SGLang, LMDep
 LiteLLM specifically is a high-value target because of what it holds. It's an aggregation layer — one proxy managing API keys across OpenAI, Anthropic, AWS Bedrock, and whatever else the operator is running. Compromising one LiteLLM instance can hand an attacker keys to an entire organization's AI infrastructure. That's not just a data breach, it's access to every LLM workload that operator runs.
 
 Two attacks against LiteLLM in two months — supply chain in March, SQL injection in April — suggests this platform is being actively prioritized as a target. Anyone running LiteLLM in production should treat it as a high-risk surface and patch immediately.
+
+---
+
+# ⚠️ Cross-Sector Alert: APT28 — Windows Shell Exploit Chain
+**Status:** Active — CISA KEV April 28, 2026   
+**Target:** Ukraine and EU government entities — Windows infrastructure   
+**Note:** APT28 simultaneously exploiting Zimbra XSS (this entry) and Windows Shell CVE-2026-32202 against overlapping targets. Concurrent multi-vector campaign documented in RU-Threats.
+
+👉 **[Read Full Entry in RU-Threats](../RU-Threats/APRIL-2026-LOG.md#incident-007)**
