@@ -156,6 +156,9 @@
 | **точка отказа** | [TOCH-ka at-KA-za] | point of failure | **точку отказа** |
 | **кластер** | [KLAS-ter] | cluster | **кластер** |
 | **таблица маршрутизации** | [ta-BLEE-tsa mar-shroo-tee-ZA-tsi-i] | routing table | **таблицу маршрутизации** |
+| **канал связи** | [ka-NAL SVA-zi] | communication channel | **канал связи** | 
+| **потеря соединения** | [pa-TYE-rya sa-ye-di-NYE-ni-ya] | connection loss | **потерю соединения** |
+
 
 ---
 
@@ -282,6 +285,7 @@
 | **ограничение** | [ag-ra-ni-CHYE-ni-ye] | constraint / limitation |
 | **редко** | [RED-ka] | rarely |
 | **впоследствии** | [fpo-SLED-stvi-i] | subsequently |
+| **порой** | [pa-ROY] | at times / sometimes |
 
 ---
 
@@ -366,3 +370,5 @@
 | **перегружаться** | [pe-re-gru-ZHAT-sa] | to become overloaded |
 | **маршрутизировать** | [mar-shroo-tee-ZI-ro-vatʹ] | to route |
 | **сохраняться** | [sa-khra-NYAT-sa] | to be saved / persist |
+| **устранять** | [oo-stra-NYATʹ] | to eliminate / fix |
+| **возникать** | [vaz-ni-KATʹ] | to arise / occur |
