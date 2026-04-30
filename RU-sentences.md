@@ -497,3 +497,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣1️⃣3️⃣. Порой возникает ошибка соединения при нагрузке.** | At times, a connection error arises under load.
 
 **2️⃣1️⃣4️⃣. Если возникает потеря соединения, система выполняет проверку.** | If connection loss occurs, the system performs a check.
+
+**2️⃣1️⃣5️⃣. Система ограничивает доступ при ошибке.** | The system restricts access in case of an error.
+
+**2️⃣1️⃣6️⃣. Контроль доступа зависит от параметра системы.** | Access control depends on the system parameter.
+
+**2️⃣1️⃣7️⃣. Точность данных важна при обработке.** | Data accuracy is important during processing.
+
+**2️⃣1️⃣8️⃣. Причина ошибки связана с доступом к системе.** | The cause of the error is related to system access.
