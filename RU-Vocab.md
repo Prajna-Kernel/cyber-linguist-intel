@@ -158,6 +158,8 @@
 | **таблица маршрутизации** | [ta-BLEE-tsa mar-shroo-tee-ZA-tsi-i] | routing table | **таблицу маршрутизации** |
 | **канал связи** | [ka-NAL SVA-zi] | communication channel | **канал связи** | 
 | **потеря соединения** | [pa-TYE-rya sa-ye-di-NYE-ni-ya] | connection loss | **потерю соединения** |
+| **точность данных** | [TOCH-nostʹ DA-nïkh] | data accuracy | **точность данных** |
+| **контроль доступа** | [kan-TROLʹ DO-stu-pa] | access control | **контроль доступа** |
 
 
 ---
@@ -286,6 +288,9 @@
 | **редко** | [RED-ka] | rarely |
 | **впоследствии** | [fpo-SLED-stvi-i] | subsequently |
 | **порой** | [pa-ROY] | at times / sometimes |
+| **вместе** | [VMES-te] | together |
+| **причина** | [pri-CHI-na] | cause / reason |
+
 
 ---
 
@@ -372,3 +377,4 @@
 | **сохраняться** | [sa-khra-NYAT-sa] | to be saved / persist |
 | **устранять** | [oo-stra-NYATʹ] | to eliminate / fix |
 | **возникать** | [vaz-ni-KATʹ] | to arise / occur |
+| **ограничивать** | [a-gra-ni-CHI-vatʹ] | to restrict / limit |
