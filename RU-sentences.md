@@ -505,3 +505,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣1️⃣7️⃣. Точность данных важна при обработке.** | Data accuracy is important during processing.
 
 **2️⃣1️⃣8️⃣. Причина ошибки связана с доступом к системе.** | The cause of the error is related to system access.
+
+**2️⃣1️⃣9️⃣. Система выполняет параллельную обработку данных.** | The system performs parallel data processing.
+
+**2️⃣2️⃣0️⃣. Система измеряет временной интервал между запросами.** | The system measures the time interval between requests.
+
+**2️⃣2️⃣1️⃣. Если есть задержка, система увеличивает интервал.** | If there is delay, the system increases the interval.
+
+**2️⃣2️⃣2️⃣. Параллельная обработка ускоряет систему, зато увеличивает нагрузку.** | Parallel processing speeds up the system, but increases load.
