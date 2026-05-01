@@ -160,6 +160,8 @@
 | **потеря соединения** | [pa-TYE-rya sa-ye-di-NYE-ni-ya] | connection loss | **потерю соединения** |
 | **точность данных** | [TOCH-nostʹ DA-nïkh] | data accuracy | **точность данных** |
 | **контроль доступа** | [kan-TROLʹ DO-stu-pa] | access control | **контроль доступа** |
+| **параллельная обработка** | [pa-ra-LYELʹ-na-ya ab-ra-BOT-ka] | parallel processing | **параллельную обработку** |
+| **временной интервал** | [vre-men-NOY in-ter-VAL] | time interval | **временной интервал** |
 
 
 ---
@@ -290,6 +292,7 @@
 | **порой** | [pa-ROY] | at times / sometimes |
 | **вместе** | [VMES-te] | together |
 | **причина** | [pri-CHI-na] | cause / reason |
+| **зато** | [za-TO] | but / in contrast (advantage) |
 
 
 ---
@@ -378,3 +381,4 @@
 | **устранять** | [oo-stra-NYATʹ] | to eliminate / fix |
 | **возникать** | [vaz-ni-KATʹ] | to arise / occur |
 | **ограничивать** | [a-gra-ni-CHI-vatʹ] | to restrict / limit |
+| **измерять** | [iz-me-RYATʹ] | to measure |
