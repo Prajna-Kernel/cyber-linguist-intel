@@ -215,3 +215,108 @@ The vulnerability affects all cPanel and WHM versions after v11.40 and WP Square
 The disclosure process failure is worth flagging separately from the vulnerability itself. cPanel was notified two weeks before going public and initially dismissed the report. Hosting providers had no warning and couldn't take action while the patch was being developed. For a vulnerability of this severity affecting this much internet infrastructure, that's an institutional failure that amplified risk across the entire hosting industry.
 
 Any unpatched cPanel or WHM server should be treated as potentially already compromised given the two-month zero-day window. Patching is the floor — running cPanel's detection script and watchTowr's artifact generator is the actual minimum.
+
+---
+
+# Incident #004 — May 2, 2026
+
+**Target:** Government and defense sectors across South, East, and Southeast Asia; one NATO member (Poland); journalists and civil society including Uyghur, Tibetan, Taiwanese, and Hong Kong diaspora activists; ICIJ and international journalists
+
+**Sector:** Government / Defense / Civil Society / Journalism
+
+**Threat Actor:** SHADOW-EARTH-053 — China-aligned espionage cluster; GLITTER CARP and SEQUIN CARP — China-affiliated phishing clusters (Citizen Lab)
+
+**Origin:** China — assessed with medium-high confidence; commercial contractors hired by Chinese state suspected
+
+**Source:** The Hacker News — May 1, 2026 | Trend Micro (Daniel Lunghi, Lucas Silva) | Citizen Lab
+
+**Attack Type:** N-day Exploitation → Web Shell Deployment → ShadowPad Backdoor; Phishing → Credential Harvesting → OAuth Token Theft
+
+**Labels:** SHADOW-EARTH-053 | GLITTER CARP | SEQUIN CARP | ShadowPad | Godzilla | Noodle RAT | ProxyLogon | IIS | DLL Sideloading | Mimikatz | China-Nexus | Espionage | Journalists | Activists | NATO | India | Pakistan | Poland
+
+---
+
+## Analysis
+
+Trend Micro disclosed SHADOW-EARTH-053, a China-aligned espionage cluster active since at least December 2024, running sustained intrusion campaigns against government and defense targets across Pakistan, Thailand, Malaysia, India, Myanmar, Sri Lanka, and Taiwan — plus Poland as the lone NATO member in its victimology. The group shares network overlap with CL-STA-0049, Earth Alux, and REF7707, suggesting a shared contractor or infrastructure pool within China's broader cyber espionage ecosystem.
+
+The entry vector is N-day exploitation of internet-facing Microsoft Exchange and IIS servers — ProxyLogon being the primary chain used. Once inside, Godzilla web shells are deployed for persistent remote access and command execution. From there, the group stages ShadowPad implants via DLL sideloading of legitimate signed executables, a technique that abuses trusted binaries to load malicious DLLs without triggering standard detection. AnyDesk is used as a delivery vehicle for the ShadowPad backdoor. In at least one case, React2Shell (CVE-2025-55182) was used to deploy a Linux version of Noodle RAT. GTIG linked this specific chain to UNC6595.
+
+Lateral movement uses a custom RDP launcher and Sharp-SMBExec. Privilege escalation uses Mimikatz. Open-source tunneling tools — IOX, GOST, and Wstunnel — handle traffic obfuscation. RingQ packs malicious binaries to evade detection.
+
+Citizen Lab simultaneously disclosed GLITTER CARP and SEQUIN CARP. GLITTER CARP targets ICIJ and the Taiwanese semiconductor industry, using 1x1 tracking pixels in phishing emails to fingerprint recipients before deploying credential harvesting pages. SEQUIN CARP targets specific journalists covering topics of Chinese government interest, sharing infrastructure with Volexity's UTA0388 and Trend Micro's TAOTH. Both clusters use AiTM phishing kits and OAuth token theft as final access objectives. Citizen Lab assesses with medium confidence that commercial entities hired by the Chinese state are behind both clusters.
+
+## Key Technical Indicators:
+- **Threat cluster:** SHADOW-EARTH-053 — active since December 2024; overlaps with CL-STA-0049, Earth Alux, REF7707
+- **Entry vector:** N-day exploitation of Exchange and IIS — ProxyLogon chain primary
+- **Web shell:** Godzilla — persistent remote access and command execution
+- **Backdoor:** ShadowPad — deployed via DLL sideloading of legitimate signed executables; delivered via AnyDesk
+- **Secondary backdoor:** Noodle RAT (Linux) — deployed via CVE-2025-55182 (React2Shell); linked to UNC6595
+- **Privilege escalation:** Mimikatz
+- **Lateral movement:** custom RDP launcher; Sharp-SMBExec (C# SMBExec implementation)
+- **Tunneling:** IOX, GO Simple Tunnel (GOST), Wstunnel
+- **Evasion:** RingQ used to pack malicious binaries
+- **Targets:** Pakistan, Thailand, Malaysia, India, Myanmar, Sri Lanka, Taiwan, Poland (NATO)
+- **SHADOW-EARTH-054 overlap:** Malaysia, Sri Lanka, Myanmar targets compromised by both clusters
+- **GLITTER CARP:** targets ICIJ, Taiwanese semiconductor industry; 1x1 tracking pixels; AiTM phishing kit; linked to UNK_SparkyCarp
+- **SEQUIN CARP:** targets international journalists; overlaps with UTA0388 and TAOTH
+- **End goal:** email account access via credential harvesting, phishing pages, or OAuth token social engineering
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: ProxyLogon chain exploited against internet-facing Exchange and IIS servers
+  - T1566 — Phishing: GLITTER CARP and SEQUIN CARP deliver credential harvesting pages and OAuth token social engineering via email
+
+- **TA0002 — Execution**
+  - T1059 — Command and Scripting Interpreter: Godzilla web shell executes commands on compromised servers
+  - T1072 — Software Deployment Tools: Sharp-SMBExec used for remote execution during lateral movement
+
+- **TA0003 — Persistence**
+  - T1505.003 — Server Software Component: Web Shell: Godzilla web shell maintains persistent remote access on compromised Exchange/IIS servers
+  - T1543 — Create or Modify System Process: ShadowPad deployed as long-term persistent backdoor implant
+
+- **TA0004 — Privilege Escalation**
+  - T1068 — Exploitation for Privilege Escalation: Mimikatz used to extract credentials and escalate privileges on compromised systems
+
+- **TA0005 — Defense Evasion**
+  - T1574.002 — Hijack Execution Flow: DLL Side-Loading: ShadowPad loaded via DLL sideloading of legitimate signed executables
+  - T1027 — Obfuscated Files or Information: RingQ used to pack and obfuscate malicious binaries
+  - T1072 — Software Deployment Tools: AnyDesk used as legitimate delivery vehicle for ShadowPad
+  - T1090 — Proxy: IOX, GOST, Wstunnel tunnel C2 traffic through legitimate-looking connections
+
+- **TA0006 — Credential Access**
+  - T1003 — OS Credential Dumping: Mimikatz extracts credentials from compromised systems
+  - T1539 — Steal Web Session Cookie: GLITTER CARP and SEQUIN CARP harvest OAuth tokens via AiTM phishing kits
+
+- **TA0007 — Discovery**
+  - T1083 — File and Directory Discovery: reconnaissance conducted via Godzilla web shell before ShadowPad staging
+  - T1598 — Phishing for Information: 1x1 tracking pixels used to fingerprint and confirm target email opens
+
+- **TA0008 — Lateral Movement**
+  - T1021.001 — Remote Services: Remote Desktop Protocol: custom RDP launcher used for lateral movement
+  - T1021.002 — Remote Services: SMB/Windows Admin Shares: Sharp-SMBExec moves between internal systems via SMB
+
+- **TA0009 — Collection**
+  - T1114 — Email Collection: journalist and activist email accounts accessed via harvested credentials and OAuth tokens
+  - T1005 — Data from Local System: government and defense data collected via ShadowPad backdoor
+
+- **TA0011 — Command & Control**
+  - T1071 — Application Layer Protocol: ShadowPad C2 communication via application layer protocols
+  - T1090 — Proxy: IOX, GOST, Wstunnel obfuscate C2 traffic through tunneling
+
+## Strategic Context
+
+India is explicitly in SHADOW-EARTH-053's targeting list. Pakistan too. A China-aligned APT running sustained operations against both simultaneously — in the context of ongoing India-Pakistan tensions — means this group is positioned to collect intelligence on both sides of a live conflict. That's a significant strategic advantage for Beijing regardless of which direction the situation develops.
+
+The Poland angle is notable. One NATO member inside an otherwise Asia-Pacific campaign suggests SHADOW-EARTH-053 is not purely a regional actor — it's tracking European entities with connections to the Asian targets, likely diplomatic or defense cooperation threads.
+
+The Citizen Lab disclosure of GLITTER CARP and SEQUIN CARP adds the civil society dimension. Targeting Uyghur, Tibetan, Taiwanese, and Hong Kong diaspora activists alongside investigative journalists is a transnational repression operation running parallel to the state espionage campaign. These aren't separate priorities — they're the same intelligence collection doctrine applied to different target categories.
+
+---
+
+# ⚠️ Cross-Sector Alert: Russia — Parallel Government & Journalist Espionage Operations
+**Status:** Active — May 2026   
+**Target:** German government officials including cabinet members — Signal phishing campaign   
+**Note:** Russia and China running simultaneous espionage operations against government officials and journalists in overlapping timeframes. Different actors, different methods, same target categories.
+
+👉 **[Read Full Entry in RU-Threats](../RU-Threats/MAY-2026-LOG.md#incident-001)**
