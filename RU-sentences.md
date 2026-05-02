@@ -513,3 +513,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣2️⃣1️⃣. Если есть задержка, система увеличивает интервал.** | If there is delay, the system increases the interval.
 
 **2️⃣2️⃣2️⃣. Параллельная обработка ускоряет систему, зато увеличивает нагрузку.** | Parallel processing speeds up the system, but increases load.
+
+**2️⃣2️⃣3️⃣. Система копирует данные в буфер обмена.** | The system copies data to the clipboard.
+
+**2️⃣2️⃣4️⃣. Затем система вставляет данные через шину данных.** | Then the system inserts data via the data bus.
+
+**2️⃣2️⃣5️⃣. Система снова копирует данные при ошибке.** | The system copies data again in case of an error.
+
+**2️⃣2️⃣6️⃣. Вроде система работает, но есть задержка.** | The system kind of works, but there is delay.
