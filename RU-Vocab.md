@@ -162,6 +162,8 @@
 | **контроль доступа** | [kan-TROLʹ DO-stu-pa] | access control | **контроль доступа** |
 | **параллельная обработка** | [pa-ra-LYELʹ-na-ya ab-ra-BOT-ka] | parallel processing | **параллельную обработку** |
 | **временной интервал** | [vre-men-NOY in-ter-VAL] | time interval | **временной интервал** |
+| **шина данных** | [SHEE-na DA-nïkh] | data bus | **шину данных** | 
+| **буфер обмена** | [BOO-fer ab-MYE-na] | clipboard / buffer | **буфер обмена** |
 
 
 ---
@@ -293,7 +295,8 @@
 | **вместе** | [VMES-te] | together |
 | **причина** | [pri-CHI-na] | cause / reason |
 | **зато** | [za-TO] | but / in contrast (advantage) |
-
+| **вроде** | [VRO-de] | kind of / like |
+| **снова** | [SNO-va] | again |
 
 ---
 
@@ -382,3 +385,5 @@
 | **возникать** | [vaz-ni-KATʹ] | to arise / occur |
 | **ограничивать** | [a-gra-ni-CHI-vatʹ] | to restrict / limit |
 | **измерять** | [iz-me-RYATʹ] | to measure |
+| **копировать** | [ka-pee-RO-vatʹ] | to copy |
+| **вставлять** | [vstav-LYATʹ] |to paste / insert |
