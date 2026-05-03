@@ -164,6 +164,8 @@
 | **временной интервал** | [vre-men-NOY in-ter-VAL] | time interval | **временной интервал** |
 | **шина данных** | [SHEE-na DA-nïkh] | data bus | **шину данных** | 
 | **буфер обмена** | [BOO-fer ab-MYE-na] | clipboard / buffer | **буфер обмена** |
+| **порог нагрузки** | [PO-rog na-GRUZ-ki] | load threshold | **порог нагрузки** |
+| **выравнивание нагрузки** | [vy-rav-NI-va-ni-ye na-GRUZ-ki] | load balancing | **выравнивание нагрузки** |
 
 
 ---
@@ -297,6 +299,7 @@
 | **зато** | [za-TO] | but / in contrast (advantage) |
 | **вроде** | [VRO-de] | kind of / like |
 | **снова** | [SNO-va] | again |
+| **едва** | [yed-VA] | barely / hardly |
 
 ---
 
@@ -387,3 +390,5 @@
 | **измерять** | [iz-me-RYATʹ] | to measure |
 | **копировать** | [ka-pee-RO-vatʹ] | to copy |
 | **вставлять** | [vstav-LYATʹ] |to paste / insert |
+| **балансировать** | [ba-lan-si-RO-vatʹ] | to balance |
+| **распараллеливать** | [ras-pa-ra-LYE-li-vatʹ] | to parallelize |
