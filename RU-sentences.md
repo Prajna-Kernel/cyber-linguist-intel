@@ -521,3 +521,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣2️⃣5️⃣. Система снова копирует данные при ошибке.** | The system copies data again in case of an error.
 
 **2️⃣2️⃣6️⃣. Вроде система работает, но есть задержка.** | The system kind of works, but there is delay.
+
+**2️⃣2️⃣7️⃣. Система проверяет порог нагрузки перед обработкой.** | The system checks the load threshold before processing.
+
+**2️⃣2️⃣8️⃣. Система выполняет выравнивание нагрузки между узлами.** | The system performs load balancing between nodes.
+
+**2️⃣2️⃣9️⃣. Если нагрузка высокая, система начинает балансировать ресурсы.** If the load is high, the system starts balancing resources.
+
+**2️⃣3️⃣0️⃣. Система едва справляется с нагрузкой при ошибке.** | The system barely handles the load under error conditions.
