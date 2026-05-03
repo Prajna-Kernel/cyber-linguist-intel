@@ -320,3 +320,72 @@ The Citizen Lab disclosure of GLITTER CARP and SEQUIN CARP adds the civil societ
 **Note:** Russia and China running simultaneous espionage operations against government officials and journalists in overlapping timeframes. Different actors, different methods, same target categories.
 
 👉 **[Read Full Entry in RU-Threats](../RU-Threats/MAY-2026-LOG.md#incident-001)**
+
+---
+
+# Incident #005 — May 4, 2026
+
+**Target:** Mongolian government entities; Indian banks
+
+**Sector:** Government / Financial / Banking
+
+**Threat Actor:** GopherWhisper — newly identified China-aligned APT
+
+**Origin:** China — assessed
+
+**Source:** CYFIRMA Weekly Intelligence — May 1, 2026
+
+**Attack Type:** Spearphishing → Go-based Malware → C2 via Legitimate Collaboration Platforms
+
+**Labels** GopherWhisper | China-Nexus | Mongolia | India | Go Malware | Discord | Slack | Outlook | file.io | Espionage | Banking | Government
+
+---
+
+## Analysis
+
+CYFIRMA researchers published a report on GopherWhisper, a newly identified China-aligned APT targeting Mongolian government entities and Indian banks. The group uses malware written in Go — a language increasingly favored by threat actors for its cross-platform capability, smaller detection footprint, and ease of static compilation. What makes GopherWhisper operationally notable is its C2 architecture — the group abuses Discord, Slack, Microsoft 365 Outlook, and file.io as command-and-control and data exfiltration channels.
+
+Using legitimate collaboration platforms as C2 is a deliberate evasion strategy. Traffic to Discord, Slack, and Outlook blends seamlessly into normal enterprise and government network activity — standard reputation-based filtering won't flag it. Researchers were able to extract thousands of C2 messages from these services, giving unusual insight into the group's operational tempo and targeting patterns. The volume of extracted messages suggests GopherWhisper has been running sustained operations, not opportunistic hits.
+
+Targeting Mongolian government entities and Indian banks simultaneously reflects a China intelligence collection priority — Mongolia sits on China's northern border and maintains historically complex relationships with both China and Russia, making it a consistent target for Beijing's intelligence apparatus. Indian banking infrastructure is a high-value target for both financial intelligence and potential pre-positioning.
+
+---
+
+## Key Technical Indicators:
+- **Threat actor:** GopherWhisper — newly identified, China-aligned
+- **Malware language:** Go — cross-platform, static compilation, smaller AV footprint
+- **C2 channels:** Discord, Slack, Microsoft 365 Outlook, file.io — legitimate platform abuse
+- *Thousands of C2 messages extracted by researchers — sustained operational tempo confirmed*
+- **Targets:** Mongolian government entities, Indian banks
+- **Initial access vector:** spearphishing — consistent with China-nexus APT doctrine
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1566 — Phishing: spearphishing used to deliver Go-based malware to Mongolian government and Indian banking targets
+
+- **TA0002 — Execution**
+  - T1059 — Command and Scripting Interpreter: Go-based malware executes post-delivery on compromised systems
+
+- **TA0005 — Defense Evasion**
+  - T1102 — Web Service: legitimate collaboration platforms (Discord, Slack, Outlook, file.io) used as C2 channels to blend into normal network traffic
+
+- **TA0009 — Collection**
+  - T1114 — Email Collection: government and banking data collected from compromised environments
+  - T1005 — Data from Local System: sensitive data harvested from Mongolian government and Indian bank systems
+
+- **TA0010 — Exfiltration**
+  - T1567 — Exfiltration Over Web Service: data exfiltrated via file.io and collaboration platform channels
+
+- **TA0011 — Command & Control**
+  - T1102 — Web Service: Discord, Slack, Microsoft 365 Outlook used as C2 infrastructure
+  - T1071 — Application Layer Protocol: C2 communication via application layer protocols on legitimate platforms
+
+---
+
+## Strategic Context
+
+India is directly in GopherWhisper's targeting scope — Indian banks specifically. Combined with SHADOW-EARTH-053 (#004) targeting Indian government and defense entities, this is the second China-aligned APT documented in this log this month with confirmed Indian targets. Two separate Chinese APT clusters, different tooling, overlapping target geography — that's not coincidence, it's a consistent intelligence collection priority against India.
+
+The platform abuse model is worth watching. GopherWhisper is not the first group to use Discord or Slack for C2 but the combination of four separate legitimate platforms — Discord, Slack, Outlook, and file.io — with Go malware suggests a deliberate architecture designed for long-term operational resilience. Taking down one platform doesn't kill the campaign.
