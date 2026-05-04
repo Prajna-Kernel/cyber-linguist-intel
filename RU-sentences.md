@@ -529,3 +529,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣2️⃣9️⃣. Если нагрузка высокая, система начинает балансировать ресурсы.** If the load is high, the system starts balancing resources.
 
 **2️⃣3️⃣0️⃣. Система едва справляется с нагрузкой при ошибке.** | The system barely handles the load under error conditions.
+
+**2️⃣3️⃣1️⃣. Система создаёт жёсткую ссылку на файл.** | The system creates a hard link to the file.
+
+**2️⃣3️⃣2️⃣. Мягкая ссылка перенаправляет доступ к другому файлу.** | A symbolic link redirects access to another file.
+
+**2️⃣3️⃣3️⃣. Система связывает файлы через ссылки.** | The system links files through links.
+
+**2️⃣3️⃣4️⃣. Разница между жёсткой и мягкой ссылкой важна.** | The difference between a hard and symbolic link is important.
