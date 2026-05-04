@@ -166,6 +166,9 @@
 | **буфер обмена** | [BOO-fer ab-MYE-na] | clipboard / buffer | **буфер обмена** |
 | **порог нагрузки** | [PO-rog na-GRUZ-ki] | load threshold | **порог нагрузки** |
 | **выравнивание нагрузки** | [vy-rav-NI-va-ni-ye na-GRUZ-ki] | load balancing | **выравнивание нагрузки** |
+| **жёсткая ссылка** | [ZHYOS-ta-ya SSYL-ka] | hard link | **жёсткую ссылку** |
+| **мягкая ссылка** | [MYAG-ka-ya SSYL-ka] | symbolic link | **мягкую ссылку** |
+
 
 
 ---
@@ -300,6 +303,8 @@
 | **вроде** | [VRO-de] | kind of / like |
 | **снова** | [SNO-va] | again |
 | **едва** | [yed-VA] | barely / hardly |
+| **разница** | [RAZ-ni-tsa] | difference |
+| **вдвоём** | [vdva-YOM] | together (two entities acting) |
 
 ---
 
@@ -392,3 +397,5 @@
 | **вставлять** | [vstav-LYATʹ] |to paste / insert |
 | **балансировать** | [ba-lan-si-RO-vatʹ] | to balance |
 | **распараллеливать** | [ras-pa-ra-LYE-li-vatʹ] | to parallelize |
+| **связывать** | [svya-ZY-vatʹ] | to link / bind |
+| **перенаправлять** | [pe-re-na-prav-LYATʹ] | to redirect |
