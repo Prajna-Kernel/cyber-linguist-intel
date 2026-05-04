@@ -389,3 +389,154 @@ Targeting Mongolian government entities and Indian banks simultaneously reflects
 India is directly in GopherWhisper's targeting scope — Indian banks specifically. Combined with SHADOW-EARTH-053 (#004) targeting Indian government and defense entities, this is the second China-aligned APT documented in this log this month with confirmed Indian targets. Two separate Chinese APT clusters, different tooling, overlapping target geography — that's not coincidence, it's a consistent intelligence collection priority against India.
 
 The platform abuse model is worth watching. GopherWhisper is not the first group to use Discord or Slack for C2 but the combination of four separate legitimate platforms — Discord, Slack, Outlook, and file.io — with Go malware suggests a deliberate architecture designed for long-term operational resilience. Taking down one platform doesn't kill the campaign.
+
+---
+
+# Incident #006 — May 5, 2026
+
+**Target:** Organizations in India and Russia — industrial, consulting, retail, and transportation sectors
+
+**Sector:** Industry / Consulting / Retail / Transportation
+
+**Threat Actor:** Silver Fox — China-based cybercrime group, dual-track espionage and financial operations
+
+**Origin:** China — assessed
+
+**Source:** The Hacker News — May 4, 2026 | Kaspersky (Securelist) | CloudSEK | S2W
+
+**Attack Type:** Tax-Themed Phishing → RustSL Loader → ValleyRAT → ABCDoor Python Backdoor
+
+**Labels:** Silver Fox | ABCDoor | ValleyRAT | RustSL | Phantom Persistence | India | Russia | Tax Phishing | Rust Loader | Python Backdoor | Geofencing | China-Nexus
+
+---
+
+## Analysis
+
+Silver Fox — a China-based cybercrime group operating a dual-track model of financial crime and espionage since 2024 — ran two consecutive tax-themed phishing waves against India and Russia between December 2025 and February 2026. Over 1,600 phishing emails were flagged across the campaign window. Both waves used nearly identical structure: emails impersonating the Income Tax Department of India or Russian tax authority equivalents, containing PDF files with two clickable links pointing to ZIP or RAR archives hosted on abc.haijing88[.]com.
+
+The archive contains an executable masquerading as a PDF — actually a modified version of RustSL, an open-source Rust-based shellcode loader and AV bypass framework pulled from GitHub and customized by Silver Fox. The customized version adds country-based geofencing — targeting India, Indonesia, South Africa, Russia, and Cambodia — and sandbox/VM detection checks before unpacking the encrypted payload. One variant uses Phantom Persistence, a novel technique documented in June 2025 that abuses the Windows shutdown and reboot update sequence: the loader intercepts the system shutdown signal, halts normal shutdown, and forces execution at OS startup under the guise of a system update.
+
+The encrypted payload is ValleyRAT (aka Winos 4.0), with its core component login-module.dll_bin handling C2, command execution, and module retrieval. One of the custom modules deployed after a second geofencing check is ABCDoor — a previously undocumented Python-based backdoor in Silver Fox's arsenal since at least December 19, 2024, deployed in attacks from February or March 2025 onward. ABCDoor contacts an external server via HTTPS and handles persistence, backdoor updates, screenshot capture, remote mouse and keyboard control, file system operations, process management, and clipboard exfiltration. A JavaScript loader variant of ABCDoor has also been observed, distributed via self-extracting SFX archives inside ZIP files.
+
+The highest attack volumes were detected in India, Russia, and Indonesia, with South Africa and Japan also in scope. Newer RustSL variants have expanded targeting to Japan. S2W assessed Silver Fox as having evolved into a dual-track operation running extensive opportunistic financial campaigns alongside targeted espionage — using highly customized spearphishing tailored to the seasonal issues of each target country.
+
+---
+
+## Key Technical Indicators:
+- **Threat actor:** Silver Fox — China-based, dual-track financial crime and espionage
+- **Phishing volume:** 1,600+ emails, January–February 2026
+- **Delivery:** PDF with clickable links → ZIP/RAR archive at abc.haijing88[.]com
+- **Loader:** RustSL — modified Rust-based shellcode loader; custom geofencing (India, Indonesia, South Africa, Russia, Cambodia); VM/sandbox detection
+- **Persistence technique:** Phantom Persistence — abuses Windows shutdown/reboot update sequence to execute at OS startup
+- **Core payload:** ValleyRAT (Winos 4.0) — login-module.dll_bin handles C2, command execution, module retrieval
+- **Final payload:** ABCDoor — Python-based backdoor; HTTPS C2; screenshot, keyboard/mouse control, file ops, clipboard exfil
+- **ABCDoor JS variant:** delivered via SFX archives inside ZIP files
+- *Second geofencing check before ABCDoor deployment*
+- **Highest volume targets:** India, Russia, Indonesia; secondary: South Africa, Japan
+- *Campaign active since December 2024; RustSL first Silver Fox use December 2025*
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1566.001 — Phishing: Spearphishing Attachment: tax-themed PDF delivered via phishing email impersonating Income Tax Department of India and Russian tax authority
+
+- **TA0002 — Execution**
+  - T1059.006 — Command and Scripting Interpreter: Python: ABCDoor Python backdoor executes commands on compromised host
+  - T1059.007 — Command and Scripting Interpreter: JavaScript: JavaScript loader variant of ABCDoor executes via SFX archive
+
+- **TA0003 — Persistence**
+  - T1547.001 — Boot or Logon Autostart Execution: Registry Run Keys: Phantom Persistence abuses Windows shutdown/reboot sequence to force loader execution at OS startup
+
+- **TA0005 — Defense Evasion**
+  - T1027 — Obfuscated Files or Information: RustSL unpacks encrypted payload; ABCDoor delivered inside SFX archives inside ZIP archives
+  - T1497 — Virtualization/Sandbox Evasion: RustSL performs VM and sandbox detection before payload execution
+  - T1036 — Masquerading: archive executable mimics PDF file; loader masquerades as system update during Phantom Persistence execution
+  - T1014 — Rootkit: geofencing check filters non-target systems before ABCDoor deployment
+
+- **TA0006 — Credential Access**
+  - T1115 — Clipboard Data: ABCDoor exfiltrates clipboard contents
+
+- **TA0009 — Collection**
+  - T1113 — Screen Capture: ABCDoor captures screenshots
+  - T1005 — Data from Local System: file system operations conducted via ABCDoor
+  - T1115 — Clipboard Data: clipboard contents collected and exfiltrated
+
+- **TA0011 — Command & Control**
+  - T1071.001 — Application Layer Protocol: Web Protocols: ABCDoor contacts external C2 server via HTTPS
+  - T1105 — Ingress Tool Transfer: ValleyRAT retrieves and executes additional modules including ABCDoor post-compromise
+
+- **TA0040 — Impact**
+  - T1496 — Resource Hijacking: remote mouse and keyboard control via ABCDoor enables full interactive access to compromised systems
+
+---
+
+## Strategic Context
+
+India is the primary target. The campaign impersonated the Income Tax Department of India specifically — a tax lure timed to India's filing season, tailored to provoke urgency in Indian corporate and industrial recipients. Silver Fox's model of adapting phishing themes to the seasonal calendar of each target country shows a level of operational planning that goes beyond opportunistic cybercrime.
+
+The dual-track nature of Silver Fox matters here. Financial crime and espionage running simultaneously from the same infrastructure means victim organizations face both data theft and potential financial loss from the same campaign. The industrial and consulting sector targeting in India suggests Silver Fox is after business intelligence, supply chain data, and potentially defense-adjacent information given India's current security environment.
+
+ABCDoor's full remote control capability — keyboard, mouse, screenshots, file operations — makes it a complete espionage platform, not just an infostealer. Combined with ValleyRAT's modular architecture, Silver Fox has a framework that can be repurposed for any collection objective depending on what the victim environment contains.
+
+---
+
+# Incident #007 — May 5, 2026
+
+**Target:** Philippine government and military domains (*.mil.ph, *.ph); Laotian government (*.gov.la); MSPs and hosting providers in Philippines, Laos, Canada, South Africa, and the US
+
+**Sector:** Government / Military / Managed Service Providers / Hosting Infrastructure
+
+**Threat Actor:** Unknown — unattributed; single confirmed attacker IP 95.111.250[.]175
+
+**Origin:** Unattributed
+
+**Source:** The Hacker News — May 3, 2026 | Ctrl-Alt-Intel — May 2, 2026
+
+**Attack Type:** cPanel CVE-2026-41940 Exploitation → Authentication Bypass → Government and Military Infrastructure Targeting
+
+**Labels:** CVE-2026-41940 | cPanel | WHM | Authentication Bypass | Philippines | Laos | Government | Military | MSP | Active Exploitation | Southeast Asia
+
+---
+
+## Analysis
+
+Ctrl-Alt-Intel detected active exploitation of CVE-2026-41940 — the critical cPanel/WHM authentication bypass — against government and military infrastructure on May 2, 2026, two days after the public PoC was released. The attacks originated from a single IP address — 95.111.250[.]175 — primarily targeting Philippine military domains (*.mil.ph), Philippine government domains (*.ph), and Laotian government domains (*.gov.la), with a secondary cluster targeting managed service providers and hosting providers in the Philippines, Laos, Canada, South Africa, and the US.
+
+The targeting pattern is deliberately chosen. Philippine and Laotian government and military infrastructure running cPanel-based hosting is a specific and narrow target set — this is not mass opportunistic scanning. The actor went straight for government and military domains, then MSPs and hosting providers that likely serve additional government clients. Compromising an MSP or hosting provider that manages government accounts is a force multiplier — one entry point, many downstream victims.
+
+CVE-2026-41940 was already being exploited as a zero-day since February 23, with CISA adding it to the KEV catalog and Sorry ransomware operators confirmed using it for mass attacks. This Southeast Asian government targeting represents a distinct campaign track running parallel to the ransomware exploitation — same CVE, different actor, different objective. The ransomware operators want money; this actor appears to want access.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-41940 — cPanel/WHM CVSS 9.8 authentication bypass
+- **Attacker IP:** 95.111.250[.]175
+- **Detection date:** May 2, 2026 — two days post-PoC release
+- **Primary targets:** *.mil.ph (Philippine military), *.ph (Philippine government), *.gov.la (Laotian government)
+- **Secondary targets:** MSPs and hosting providers — Philippines, Laos, Canada, South Africa, US
+- **Attack method:** publicly available PoC used directly
+- **Objective assessed:** government/military access, not ransomware
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: CVE-2026-41940 exploited against internet-facing cPanel/WHM instances serving government and military domains
+
+- **TA0004 — Privilege Escalation**
+  - T1068 — Exploitation for Privilege Escalation: authentication bypass yields root-level WHM access without valid credentials
+
+- **TA0007 — Discovery**
+  - T1595.002 — Active Scanning: Vulnerability Scanning: targeted scanning of government and military domains for cPanel/WHM exposure
+
+- **TA0008 — Lateral Movement**
+  - T1199 — Trusted Relationship: MSP and hosting provider targeting enables pivot into downstream government client infrastructure
+
+---
+
+## Strategic Context
+
+Philippine and Laotian military domains being the primary targets is significant regional context. The Philippines has been at the center of ongoing South China Sea tensions with China, and Laos sits within China's direct sphere of influence while maintaining complex relationships with Western-aligned partners. An unknown actor targeting both simultaneously — along with their MSP infrastructure — suggests intelligence collection objectives aligned with regional power competition rather than ransomware or financial crime.
+
+This entry connects directly to Global-Watch #002 — the original cPanel CVE-2026-41940 disclosure. What started as a mass-exploitation zero-day being used by Sorry ransomware operators has now also been picked up by a separate actor running targeted government and military campaigns against Southeast Asian infrastructure. The same CVE, within days of the PoC going public, is now serving two completely different threat actor objectives simultaneously. That's the exploitation lifecycle in 2026 — critical CVEs get absorbed into multiple actor toolsets within days of public disclosure.
