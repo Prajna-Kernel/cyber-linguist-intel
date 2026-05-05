@@ -168,7 +168,8 @@
 | **выравнивание нагрузки** | [vy-rav-NI-va-ni-ye na-GRUZ-ki] | load balancing | **выравнивание нагрузки** |
 | **жёсткая ссылка** | [ZHYOS-ta-ya SSYL-ka] | hard link | **жёсткую ссылку** |
 | **мягкая ссылка** | [MYAG-ka-ya SSYL-ka] | symbolic link | **мягкую ссылку** |
-
+| **контрольная сумма** | [kan-TROLʹ-na-ya SUM-ma] | checksum | **контрольную сумму** |
+| **сбой питания** | [sboy pi-TA-ni-ya] | power failure | **сбой питания** |
 
 
 ---
@@ -305,6 +306,9 @@
 | **едва** | [yed-VA] | barely / hardly |
 | **разница** | [RAZ-ni-tsa] | difference |
 | **вдвоём** | [vdva-YOM] | together (two entities acting) |
+| **целостность** | [tse-LOST-nostʹ] | integrity |
+| **к тому же** | [k ta-MU zhe] | moreover / additionally |
+
 
 ---
 
@@ -399,3 +403,5 @@
 | **распараллеливать** | [ras-pa-ra-LYE-li-vatʹ] | to parallelize |
 | **связывать** | [svya-ZY-vatʹ] | to link / bind |
 | **перенаправлять** | [pe-re-na-prav-LYATʹ] | to redirect |
+| **проверяться** | [pra-ve-RYAT-sa] | to be verified / checked |
+| **питаться** | [pi-TAT-sa] | to be powered (receive power) |
