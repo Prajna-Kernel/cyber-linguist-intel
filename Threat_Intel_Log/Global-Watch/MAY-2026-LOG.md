@@ -540,3 +540,112 @@ CVE-2026-41940 was already being exploited as a zero-day since February 23, with
 Philippine and Laotian military domains being the primary targets is significant regional context. The Philippines has been at the center of ongoing South China Sea tensions with China, and Laos sits within China's direct sphere of influence while maintaining complex relationships with Western-aligned partners. An unknown actor targeting both simultaneously — along with their MSP infrastructure — suggests intelligence collection objectives aligned with regional power competition rather than ransomware or financial crime.
 
 This entry connects directly to Global-Watch #002 — the original cPanel CVE-2026-41940 disclosure. What started as a mass-exploitation zero-day being used by Sorry ransomware operators has now also been picked up by a separate actor running targeted government and military campaigns against Southeast Asian infrastructure. The same CVE, within days of the PoC going public, is now serving two completely different threat actor objectives simultaneously. That's the exploitation lifecycle in 2026 — critical CVEs get absorbed into multiple actor toolsets within days of public disclosure.
+
+---
+
+# Incident #008 — May 6, 2026
+
+**Target:** Enterprise organizations globally using Weaver E-cology OA platform — primarily Chinese enterprise deployments
+
+**Sector:** Enterprise / Office Automation / Collaboration Platforms
+
+**Threat Actor:** Unknown — unattributed; single campaign tracked by Vega Research Team
+
+**Origin:** Unattributed
+
+**Source:** The Hacker News — May 5, 2026 | Vega Research Team | Shadowserver | QiAnXin
+
+**Attack Type:** Unauthenticated RCE via Exposed Debug API Endpoint — Active Exploitation Since March 17
+
+**Labels:** CVE-2026-22679 | CVSS 9.8 | Weaver E-cology | Fanwei | OA Platform | Debug API | Unauthenticated RCE | Active Exploitation | MSI Implant | Enterprise
+
+---
+
+## Analysis
+
+CVE-2026-22679 is a CVSS 9.8 unauthenticated RCE in Weaver E-cology 10.0 — a widely deployed Chinese enterprise office automation and collaboration platform. The vulnerable endpoint is /papi/esearch/data/devops/dubboApi/debug/method, a debug API left exposed in production. Attackers craft POST requests with attacker-controlled interfaceName and methodName parameters to reach command-execution helpers and run arbitrary commands on the system with no authentication required.
+
+Weaver shipped patches on March 12, 2026. QiAnXin reproduced the RCE on March 17 — the same day Vega Research Team identified the earliest evidence of active exploitation. That's a five-day patch-to-exploit window, with Shadowserver observing first signs of exploitation on March 31. The exploiting actor ran a week of operator activity: initial RCE verification, three failed payload drops, an attempted pivot to an MSI implant named fanwei0324.msi — using the romanized Chinese name for Weaver to disguise the malicious installer — followed by attempts to pull PowerShell payloads from attacker-controlled infrastructure. **Standard discovery commands were run throughout:** whoami, ipconfig, tasklist.
+
+A Python-based detection script is now publicly available, identifying vulnerable instances by checking if the susceptible API endpoint is accessible — lowering the bar for both defenders and attackers.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-22679, CVSS 9.8
+- **Vulnerable endpoint:** /papi/esearch/data/devops/dubboApi/debug/method — exposed debug API in production
+- **Attack method:** POST request with attacker-controlled interfaceName and methodName parameters → arbitrary command execution
+- **Affected versions:** Weaver E-cology 10.0 prior to 20260312
+- **Patch released:** March 12, 2026
+- **First exploitation:** March 17, 2026 — five days post-patch
+- **Shadowserver first observed exploitation:** March 31, 2026
+- **MSI implant name:** fanwei0324.msi — masquerading as legitimate Weaver software
+- **Discovery commands observed:** whoami, ipconfig, tasklist
+- *PowerShell payload retrieval attempted from attacker-controlled infrastructure*
+- **Detection script:** Python-based, publicly available — checks for accessible vulnerable endpoint
+
+---
+
+> **Entry Type:** Active exploitation confirmed — unattributed threat actor. No MITRE ATT&CK tags applied.
+
+---
+
+## Strategic Context
+
+A debug endpoint left exposed in a production enterprise platform is a fundamental security hygiene failure. Weaver E-cology is used across Chinese enterprise and government environments — a platform that processes internal communications, workflows, and approvals. RCE on that surface isn't just a server compromise, it's access to internal business operations data.
+
+The MSI naming convention — using the romanized company name plus a date — is a low-effort but effective social engineering layer. An IT admin seeing fanwei0324.msi in a process list might assume it's a legitimate Weaver update rather than a malicious implant. Small detail, deliberate choice.
+
+The public detection script is a double-edged tool. Defenders can use it to identify exposure. So can attackers scanning for targets at scale.
+
+---
+
+# Incident #009 — May 6, 2026
+
+**Target:** MetInfo CMS deployments globally — primarily China and Hong Kong
+
+**Sector:** Web Infrastructure / Content Management
+
+**Threat Actor:** Unknown — opportunistic, automated scanning confirmed; surge activity from China and Hong Kong IP addresses
+
+**Origin:** Unattributed
+
+**Source:** The Hacker News — May 5, 2026 | VulnCheck (Caitlin Condon) | Egidio Romano (KarmaInsecurity)
+
+**Attack Type:** Unauthenticated PHP Code Injection → Remote Code Execution
+
+**Labels:** CVE-2026-29014 | CVSS 9.8 | MetInfo CMS | PHP Code Injection | WeChat API | Unauthenticated RCE | Active Exploitation | China | Hong Kong | Honeypot
+
+---
+
+## Analysis
+
+CVE-2026-29014 is a CVSS 9.8 unauthenticated PHP code injection flaw in MetInfo CMS versions 7.9, 8.0, and 8.1 — an open-source CMS with approximately 2,000 internet-exposed instances, most in China. The vulnerability is in /app/system/weixin/include/class/weixinreply.class.php, the script handling WeChat API requests. Insufficient sanitization of user-supplied input allows remote unauthenticated attackers to inject and execute arbitrary PHP code. On non-Windows servers, one prerequisite applies — the /cache/weixin/ directory must exist, which is created automatically when the official WeChat plugin is installed.
+
+MetInfo patched on April 7, 2026. Exploitation began April 25 — an 18-day window — initially as sparse automated honeypot probing in the US and Singapore. On May 1 activity surged, with attack traffic focusing on China and Hong Kong IP addresses. The narrow geographic focus of the surge suggests either targeted scanning of Chinese-language CMS deployments or actors operating from within China's network space probing domestic targets.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-29014, CVSS 9.8
+- **Vulnerable component:** /app/system/weixin/include/class/weixinreply.class.php — WeChat API request handler
+- **Attack method:** unsanitized user input in WeChat API flow → arbitrary PHP code injection and execution
+- **Prerequisite (non-Windows):** /cache/weixin/ directory must exist — created by WeChat plugin installation
+- **Affected versions:** MetInfo CMS 7.9, 8.0, 8.1
+- **Patch released:** April 7, 2026
+- **First exploitation:** April 25, 2026 — 18 days post-patch
+- **Surge activity:** May 1, 2026 — China and Hong Kong IP addresses
+- **Exposed instances:** ~2,000 globally — majority in China
+- **Initial activity:** sparse automated honeypot probing in US and Singapore
+
+---
+
+> **Entry Type:** Active exploitation confirmed — unattributed opportunistic actor. No MITRE ATT&CK tags applied.
+
+---
+
+## Strategic Context
+
+2,000 exposed instances is a small attack surface by global standards but the geographic concentration matters. MetInfo is a Chinese-language CMS — most of its deployments are Chinese businesses and organizations. A surge in exploitation traffic from China and Hong Kong IP addresses against a Chinese CMS suggests domestic targeting, whether for defacement, data theft, or establishing footholds in Chinese business infrastructure.
+
+The WeChat plugin dependency as a prerequisite is worth noting. It narrows the exploitable pool slightly but the WeChat plugin is standard for Chinese business websites — any MetInfo deployment operating in China's digital ecosystem almost certainly has it installed.
