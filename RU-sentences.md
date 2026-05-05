@@ -537,3 +537,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣3️⃣3️⃣. Система связывает файлы через ссылки.** | The system links files through links.
 
 **2️⃣3️⃣4️⃣. Разница между жёсткой и мягкой ссылкой важна.** | The difference between a hard and symbolic link is important.
+
+**2️⃣3️⃣5️⃣. Система проверяет контрольную сумму файла.** | The system checks the file checksum.
+
+**2️⃣3️⃣6️⃣. Контрольная сумма проверяется после передачи данных.** | The checksum is verified after data transmission.
+
+**2️⃣3️⃣7️⃣. При сбое питания система теряет данные.** | During a power failure, the system loses data.
+
+**2️⃣3️⃣8️⃣. Целостность данных важна при обработке.** | Data integrity is important during processing.
