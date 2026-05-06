@@ -649,3 +649,157 @@ MetInfo patched on April 7, 2026. Exploitation began April 25 — an 18-day wind
 2,000 exposed instances is a small attack surface by global standards but the geographic concentration matters. MetInfo is a Chinese-language CMS — most of its deployments are Chinese businesses and organizations. A surge in exploitation traffic from China and Hong Kong IP addresses against a Chinese CMS suggests domestic targeting, whether for defacement, data theft, or establishing footholds in Chinese business infrastructure.
 
 The WeChat plugin dependency as a prerequisite is worth noting. It narrows the exploitable pool slightly but the WeChat plugin is standard for Chinese business websites — any MetInfo deployment operating in China's digital ecosystem almost certainly has it installed.
+
+---
+
+# Incident #010 — May 7, 2026
+
+**Target:** Apache HTTP Server deployments globally — any server running mod_http2 with multi-threaded MPM; Debian-derived systems and official Docker images at higher RCE risk
+
+**Sector:** Web Infrastructure / Server Security
+
+**Threat Actor:** N/A — Vulnerability Disclosure
+
+**Origin:** Discovered by Bartlomiej Dmitruk (Striga.ai) and Stanislaw Strzalkowski (ISEC.pl)
+
+**Source:** The Hacker News — May 5, 2026 | Apache Software Foundation Advisory
+
+**Vulnerability Class:** Double-Free in HTTP/2 Stream Cleanup → DoS and Potential RCE — No Exploitation Confirmed
+
+**Labels:** CVE-2026-23918 | CVSS 8.8 | Apache HTTP Server | HTTP/2 | Double-Free | DoS | RCE | mod_http2 | Debian | Docker | Working PoC
+
+---
+
+## Analysis
+
+CVE-2026-23918 is a double-free vulnerability in Apache HTTP Server 2.4.66's mod_http2 module, specifically in the stream cleanup path of h2_mplx.c. The trigger is precise: a client sends an HTTP/2 HEADERS frame immediately followed by RST_STREAM with a non-zero error code on the same stream, before the multiplexer has registered the stream. Two nghttp2 callbacks fire in sequence — on_frame_recv_cb for the RST and on_stream_close_cb for the close — and both call h2_mplx_c1_client_rst → m_stream_cleanup, pushing the same h2_stream pointer onto the spurge cleanup array twice. When c1_purge_streams iterates and calls h2_stream_destroy → apr_pool_destroy on each entry, the second call hits already-freed memory.
+
+The DoS outcome is trivial — one TCP connection, two frames, no authentication, no special headers, no specific URL, and the worker crashes. Apache respawns the worker but every request on the crashed worker is dropped, and the pattern can be sustained indefinitely. MPM prefork is not affected; any multi-threaded MPM is.
+
+The RCE path is more constrained but demonstrated in lab conditions. The chain places a fake h2_stream struct at the freed virtual address via mmap reuse, points its pool cleanup function to system(), and uses Apache's scoreboard memory as a stable container for the fake structures and the command string. The scoreboard sits at a fixed address for the lifetime of the server even with ASLR — that fixed address is what makes the RCE path practical. The RCE path requires an Apache Portable Runtime with the mmap allocator, which is the default on Debian-derived systems and the official Apache Docker image. Practical exploitation also requires an info leak for system() and scoreboard offsets, and the heap spray is probabilistic — but researchers achieved execution in minutes in lab conditions.
+
+Fixed in Apache HTTP Server 2.4.67. No exploitation confirmed in the wild.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-23918, CVSS 8.8
+- **Affected version:** Apache HTTP Server 2.4.66 with mod_http2
+- **Root cause:** double-free in h2_mplx.c stream cleanup path — same h2_stream pointer pushed to spurge array twice via two sequential nghttp2 callbacks
+- **Trigger:** HEADERS frame followed immediately by RST_STREAM with non-zero error code before multiplexer stream registration
+- **DoS:** trivial — one TCP connection, two frames, no authentication required; sustained crash pattern possible
+- **RCE path:** requires APR mmap allocator (default on Debian and official Docker image); scoreboard fixed address bypasses ASLR; heap spray probabilistic; execution in minutes in lab
+- **MPM prefork:** not affected
+- **Fixed:** Apache HTTP Server 2.4.67
+- *No confirmed exploitation in the wild*
+
+---
+
+> **Entry Type:** Vulnerability Disclosure — Striga.ai / ISEC.pl research. DoS trivial, RCE demonstrated in lab. No confirmed exploitation. MITRE ATT&CK tags not applicable.
+
+---
+
+## Strategic Context
+
+Apache HTTP Server is one of the most widely deployed web servers in the world. mod_http2 ships in default builds and HTTP/2 is widely enabled in production. The DoS path requiring no authentication and just two frames means any internet-facing Apache 2.4.66 deployment is a trivial crash target. The RCE path is more complex but the scoreboard ASLR bypass is the key detail — it's a stable primitive that survives server restarts, which makes it a reliable building block for a full exploit chain once an info leak is available.
+
+Debian-derived systems and Docker deployments are at elevated risk for RCE specifically due to the mmap allocator default. Organizations running Apache in containers should treat this as urgent — Docker images are often left unpatched longer than bare-metal deployments.
+
+---
+
+# Incident #011 — May 7, 2026
+
+**Target:** Organizations globally running Palo Alto Networks PA-Series and VM-Series firewalls with User-ID Authentication Portal exposed to internet or untrusted networks
+
+**Sector:** Network Security / Firewall Infrastructure
+
+**Threat Actor:** Unknown — limited exploitation confirmed
+
+**Origin:** Unattributed
+
+**Source:** SecurityWeek — May 6, 2026 | Palo Alto Networks Advisory
+
+**Vulnerability Class:** Buffer Overflow in PAN-OS Captive Portal → Unauthenticated RCE as Root — Limited Active Exploitation
+
+**Labels:** CVE-2026-0300 | CVSS 9.3 | PAN-OS | Palo Alto | Captive Portal | Buffer Overflow | Unauthenticated RCE | Active Exploitation | Firewall | PA-Series | VM-Series
+
+---
+
+## Analysis
+
+CVE-2026-0300 is a buffer overflow in the User-ID Authentication Portal (Captive Portal) service of Palo Alto Networks PAN-OS software, affecting PA-Series and VM-Series firewalls. Specially crafted packets sent to the Captive Portal service allow an unauthenticated attacker to execute arbitrary code with root privileges. CVSS scores at 9.3 when the portal is accessible from the internet or untrusted networks, dropping to 8.7 when access is restricted to trusted internal IPs only.
+
+Palo Alto Networks confirmed limited exploitation in the wild in its advisory. No threat actor has been identified. The vulnerability sits on the network perimeter — the same layer as the Cisco ASA FIRESTARTER campaign documented in Global-Watch #039. Firewall and VPN appliances as an attack surface have been a consistent APT priority throughout 2025 and into 2026, with state-sponsored actors specifically targeting perimeter devices for persistent access and traffic interception.
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-0300, CVSS 9.3 (internet-exposed) / 8.7 (restricted access)
+- **Vulnerable component:** User-ID Authentication Portal (Captive Portal) service — PAN-OS on PA-Series and VM-Series firewalls
+- **Attack method:** specially crafted packets to Captive Portal → buffer overflow → unauthenticated RCE as root
+- **Active exploitation:** confirmed — described as "limited" by Palo Alto Networks
+- *No threat actor identified at time of disclosure*
+- **Mitigation:** restrict Captive Portal access to trusted internal IPs only if immediate patching is not possible
+
+---
+
+> **Entry Type:** Active exploitation confirmed — unattributed. MITRE ATT&CK tags not applicable.
+
+---
+
+## Strategic Context
+
+Network perimeter devices getting hit with unauthenticated RCE is a pattern this log has documented repeatedly — Cisco ASA FIRESTARTER (#039), cPanel (#002, #007), and now PAN-OS. Firewalls and VPN appliances are high-value targets because they sit at the boundary between external and internal networks. Root access on a Palo Alto firewall means full visibility into all traffic passing through it and a natural pivot point into the internal network behind it.
+
+The "limited exploitation" qualifier from Palo Alto is worth reading carefully. Vendors typically use that language when they have confirmed evidence of exploitation but don't yet have full visibility into campaign scope. It doesn't mean low-risk — it means early stage.
+
+---
+
+# Incident #012 — May 7, 2026
+
+**Target:** DAEMON Tools users globally — Windows disk image mounting software; backdoor selectively deployed to approximately a dozen systems
+
+**Sector:** Software Supply Chain / Consumer and Enterprise Software
+
+**Threat Actor:** Unknown — Chinese-speaking artifacts identified in malicious implants
+
+**Origin:** China-speaking — assessed from artifact analysis; not confirmed state-sponsored
+
+**Source:** SecurityWeek — May 6, 2026 | Securelist (Kaspersky) | AVB Disc Soft notification
+
+**Attack Type:** Trojanized Software Installer — Supply Chain Compromise / Selective Backdoor Deployment
+
+**Labels:** DAEMON Tools | Supply Chain | Trojanized Installer | Chinese-Speaking | Signed Certificate | Selective Deployment | AVB Disc Soft | Backdoor | Windows
+
+---
+
+## Analysis
+
+Kaspersky researchers identified that DAEMON Tools installers distributed from the official AVB Disc Soft website were trojanized with a malicious payload starting April 8, 2026 — a supply chain compromise that remained active at time of reporting. Versions 12.5.0.2421 through 12.5.0.2434 are confirmed affected. The installers are signed with legitimate digital certificates belonging to DAEMON Tools developers, meaning standard certificate-based trust checks pass without flagging.
+
+Despite worldwide distribution of the trojanized installers, the full backdoor payload was dropped on only approximately a dozen systems. The selective deployment is the most operationally significant detail — it indicates the actor is not conducting mass exploitation but rather triaging downloads for specific targets of interest before deploying the implant. That triage process suggests either automated victim profiling or manual review of incoming infections before committing to the full backdoor.
+
+Chinese-speaking artifacts were identified in the malicious implants. AVB Disc Soft was notified by Kaspersky to take remediation steps. No confirmed attribution beyond the language artifacts.
+
+---
+
+## Key Technical Indicators:
+- **Compromised software:** DAEMON Tools versions 12.5.0.2421 – 12.5.0.2434
+- **Distribution:** official AVB Disc Soft website — legitimate installer delivery channel
+- **Signed:** valid DAEMON Tools developer digital certificates — passes certificate trust checks
+- **Active since:** April 8, 2026 — ongoing at time of reporting
+- **Backdoor deployment:** worldwide trojanized installer distribution; full backdoor dropped on ~12 systems only — selective targeting confirmed
+- **Attribution artifacts:** Chinese-speaking strings identified in malicious implants
+- *AVB Disc Soft notified by Kaspersky for remediation*
+
+---
+
+> **Entry Type:** Active supply chain compromise — unattributed beyond Chinese-speaking artifact assessment. MITRE ATT&CK tags not applicable — no confirmed threat actor.
+
+---
+
+## Strategic Context
+
+Signed installers from a legitimate vendor website is a supply chain attack that bypasses the most common user-facing security advice — only download from official sources, verify the signature. Both checks pass here. That's why software supply chain attacks are particularly dangerous: the trust model that protects against most malware is the delivery mechanism.
+
+The selective backdoor deployment is the pattern worth watching. Mass trojanization with targeted payload delivery is an increasingly common operational pattern — cast a wide net through a trusted software channel, then surgically deploy to victims of actual intelligence value. It's resource-efficient and keeps the implant footprint small, which extends operational life before detection.
+
+The Chinese-speaking artifact is insufficient for firm attribution but consistent with the pattern of China-aligned actors using supply chain vectors seen in SHADOW-EARTH-053 (#004) and GopherWhisper (#005) this month.
