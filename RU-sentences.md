@@ -545,3 +545,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣3️⃣7️⃣. При сбое питания система теряет данные.** | During a power failure, the system loses data.
 
 **2️⃣3️⃣8️⃣. Целостность данных важна при обработке.** | Data integrity is important during processing.
+
+**2️⃣3️⃣9️⃣. Система передаёт пакет данных через сеть.** | The system transmits a data packet through the network.
+
+**2️⃣4️⃣0️⃣. При потере связи данные не передаются.** | During connection loss, data is not transmitted.
+
+**2️⃣4️⃣1️⃣. Сеть разрывает соединение при ошибке.** | The network breaks the connection on error.
+
+**2️⃣4️⃣2️⃣. Даже при сбое система пытается передавать данные.** | Even during a failure, the system tries to transmit data.
