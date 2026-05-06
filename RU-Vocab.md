@@ -170,6 +170,8 @@
 | **мягкая ссылка** | [MYAG-ka-ya SSYL-ka] | symbolic link | **мягкую ссылку** |
 | **контрольная сумма** | [kan-TROLʹ-na-ya SUM-ma] | checksum | **контрольную сумму** |
 | **сбой питания** | [sboy pi-TA-ni-ya] | power failure | **сбой питания** |
+| **пакет данных** | [pa-KET DA-nïkh] | data packet | **пакет данных** |
+| **потеря связи** | [pa-TYE-rya SVYA-zi] | loss of connection | **потерю связи** |
 
 
 ---
@@ -308,6 +310,7 @@
 | **вдвоём** | [vdva-YOM] | together (two entities acting) |
 | **целостность** | [tse-LOST-nostʹ] | integrity |
 | **к тому же** | [k ta-MU zhe] | moreover / additionally |
+| **даже** | [DA-zhe] | even |
 
 
 ---
@@ -405,3 +408,5 @@
 | **перенаправлять** | [pe-re-na-prav-LYATʹ] | to redirect |
 | **проверяться** | [pra-ve-RYAT-sa] | to be verified / checked |
 | **питаться** | [pi-TAT-sa] | to be powered (receive power) |
+| **передавать** | [pe-re-da-VATʹ] | to transmit / send |
+| **разрывать** | [raz-ry-VATʹ] | to break / disconnect |
