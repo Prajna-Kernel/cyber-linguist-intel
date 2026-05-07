@@ -751,6 +751,10 @@ Network perimeter devices getting hit with unauthenticated RCE is a pattern this
 
 The "limited exploitation" qualifier from Palo Alto is worth reading carefully. Vendors typically use that language when they have confirmed evidence of exploitation but don't yet have full visibility into campaign scope. It doesn't mean low-risk — it means early stage.
 
+## Update — May 8, 2026:
+
+BleepingComputer and CISA confirmed exploitation of CVE-2026-0300 began as early as April 9, 2026 — 28 days before public disclosure, making this a confirmed zero-day window. CISA added it to the KEV catalog. Official patches are expected May 13, 2026. Until then Palo Alto recommends restricting Captive Portal access to trusted zones only and disabling Response Pages in the Interface Management Profile for L3 interfaces where untrusted traffic can ingress.
+
 ---
 
 # Incident #012 — May 7, 2026
@@ -803,3 +807,110 @@ Signed installers from a legitimate vendor website is a supply chain attack that
 The selective backdoor deployment is the pattern worth watching. Mass trojanization with targeted payload delivery is an increasingly common operational pattern — cast a wide net through a trusted software channel, then surgically deploy to victims of actual intelligence value. It's resource-efficient and keeps the implant footprint small, which extends operational life before detection.
 
 The Chinese-speaking artifact is insufficient for firm attribution but consistent with the pattern of China-aligned actors using supply chain vectors seen in SHADOW-EARTH-053 (#004) and GopherWhisper (#005) this month.
+
+---
+
+# Incident #013 — May 8, 2026
+
+**Target:** Enterprise organizations globally running on-premises Ivanti Endpoint Manager Mobile (EPMM)
+
+**Sector:** Enterprise / Mobile Device Management / Endpoint Security
+
+**Threat Actor:** Unknown — very limited exploitation confirmed at time of disclosure
+
+**Origin:** Unattributed
+
+**Source:** The Hacker News — May 7, 2026 | BleepingComputer — May 7, 2026 | Ivanti Security Advisory
+
+**Vulnerability Class:** Improper Input Validation → Authenticated RCE — Zero-Day Active Exploitation
+
+**Labels:** CVE-2026-6973 | CVSS 7.2 | Ivanti EPMM | MDM | RCE | Zero-Day | Active Exploitation | Enterprise | MobileIron | CISA KEV
+
+---
+
+## Analysis
+
+Ivanti disclosed CVE-2026-6973 on May 7, 2026 — a high-severity improper input validation flaw in Endpoint Manager Mobile (EPMM) versions 12.8.0.0 and earlier that allows a remotely authenticated attacker with administrative access to execute arbitrary code. Exploitation was confirmed at time of disclosure, with Ivanti describing it as affecting a very limited number of customers. No threat actor has been identified and the end goals of confirmed attacks are unknown.
+
+The authentication requirement is the key differentiator from prior Ivanti EPMM zero-days. CVE-2026-1281 and CVE-2026-1340 — disclosed in January 2026 and exploited in zero-day attacks — were unauthenticated. CVE-2026-6973 requires admin credentials, which is why Ivanti's mitigation advice specifically ties back to the January incidents: customers who rotated credentials after the January compromise have significantly reduced risk. That link between January and May exploitation suggests the actor behind CVE-2026-6973 may be reusing admin credentials harvested in the January campaign — a credential reuse chain across two separate zero-day windows.
+
+Ivanti simultaneously patched four additional high-severity EPMM flaws — CVE-2026-5786 (improper access control, admin access), CVE-2026-5787 (improper certificate validation, Sentry host impersonation and CA-signed cert theft), CVE-2026-5788 (improper access control, unauthenticated arbitrary method invocation), and CVE-2026-7821 (improper certificate validation, restricted device enrollment bypass, information disclosure). None of the four additional CVEs have confirmed exploitation. CVE-2026-5787 and CVE-2026-7821 are particularly notable — unauthenticated certificate impersonation and device enrollment bypass are high-value capabilities for any actor targeting MDM infrastructure.
+
+Shadowserver tracks over 850 internet-exposed EPMM IP addresses — 508 in Europe, 182 in North America. CISA has now listed 33 Ivanti vulnerabilities as exploited in the wild, with 12 linked to ransomware operations.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-6973, CVSS 7.2 — improper input validation, authenticated RCE with admin privileges
+- **Affected versions:** EPMM 12.8.0.0 and earlier
+- **Fixed versions:** 12.6.1.1, 12.7.0.1, 12.8.0.1
+- *Exploitation confirmed at disclosure — very limited number of customers*
+- *Credential reuse suspected from January 2026 CVE-2026-1281/CVE-2026-1340 compromise*
+- **Additional CVEs patched:** CVE-2026-5786 (admin access), CVE-2026-5787 (Sentry impersonation/cert theft), CVE-2026-5788 (unauthenticated method invocation), CVE-2026-7821 (device enrollment bypass)
+- **Exposed instances:** 850+ per Shadowserver — 508 Europe, 182 North America
+- **CISA KEV:** 33 Ivanti CVEs listed exploited; 12 linked to ransomware
+- **Scope:** on-premises EPMM only — cloud Neurons for MDM not affected
+
+---
+
+> **Entry Type:** Active exploitation confirmed — unattributed. MITRE ATT&CK tags not applicable.
+
+---
+
+## Strategic Context
+
+This is the third Ivanti EPMM zero-day exploitation window in 2026 — January's unauthenticated pair, April's CISA KEV order, and now May's authenticated RCE. The pattern is consistent enough that Ivanti EPMM should be treated as a persistently targeted platform, not an occasional victim. Previous zero-day campaigns against EPMM have been attributed to Chinese state-sponsored groups, though no attribution has been confirmed for the current exploitation.
+
+The credential reuse angle is the most operationally significant detail. If the actor behind CVE-2026-6973 is operating on admin credentials harvested in January, then patching CVE-2026-6973 alone doesn't close the access. Organizations that were compromised in January and didn't rotate credentials are potentially facing a persistent threat actor who has been inside their MDM infrastructure for months.
+
+MDM platforms are high-value targets because they manage every mobile device in an organization — certificates, email profiles, VPN configurations, app deployment. Root access to EPMM is effectively administrative access to the entire mobile fleet.
+
+---
+
+# Incident #014 — May 8, 2026
+
+**Target:** Applications and platforms using vm2 Node.js sandbox library — any environment running untrusted JavaScript in vm2
+
+**Sector:** Developer Infrastructure / JavaScript Runtime Security
+
+**Threat Actor:** N/A — Vulnerability Disclosure
+
+**Origin:** Discovered by multiple researchers
+
+**Source:** The Hacker News — May 7, 2026
+
+**Vulnerability Class:** Sandbox Escape via JavaScript Prototype Abuse → Arbitrary Code Execution on Host — No Exploitation Confirmed
+
+**Labels:** CVE-2026-24118 | CVE-2026-24120 | CVSS 9.8 | vm2 | Node.js | Sandbox Escape | JavaScript | RCE | Developer Infrastructure
+
+---
+
+## Analysis
+
+Twelve critical security vulnerabilities were disclosed in vm2 — an open-source Node.js library used to run untrusted JavaScript code inside a secure sandbox by intercepting and proxying JavaScript objects to prevent sandboxed code from accessing the host environment. The two most critical are CVE-2026-24118 and CVE-2026-24120, both CVSS 9.8.
+
+CVE-2026-24118 allows sandbox escape via the __lookupGetter__ method, enabling arbitrary code execution on the underlying host. CVE-2026-24120 is a patch bypass for CVE-2023-37466 — a prior critical sandbox escape — exploiting the species property of promise objects to escape the sandbox and execute arbitrary commands. The fact that CVE-2026-24120 directly bypasses a prior patch signals that the sandbox boundary in vm2 has a structural weakness that point fixes are not fully addressing.
+
+vm2 is used anywhere developers need to safely run untrusted or user-supplied JavaScript — serverless platforms, online code execution environments, plugin systems, CI/CD sandboxes. A sandbox escape in vm2 means code running inside what should be an isolated environment can break out and execute commands on the host system. Fixes are available in vm2 version 3.11.0 for CVE-2026-24118 (affects versions ≤ 3.10.4) and a corresponding patch for CVE-2026-24120.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-24118, CVSS 9.8 — sandbox escape via __lookupGetter__; affects vm2 ≤ 3.10.4; fixed in 3.11.0
+- **CVE:** CVE-2026-24120, CVSS 9.8 — patch bypass for CVE-2023-37466 via promise species property; sandbox escape to arbitrary command execution
+- *12 total vulnerabilities disclosed across vm2*
+- **Vulnerability class:** JavaScript prototype abuse enabling sandbox boundary bypass
+- **Affected:** any application using vm2 to run untrusted JavaScript
+- No exploitation confirmed in the wild
+
+---
+
+> **Entry Type:** Vulnerability Disclosure. No confirmed threat actor, no confirmed exploitation. MITRE ATT&CK tags not applicable.
+
+---
+
+## Strategic Context
+
+vm2 being the sandbox library for untrusted JavaScript execution means this isn't just a developer tool bug — it's a foundational trust boundary failure. Applications that use vm2 to safely isolate user-supplied or third-party code are depending on it to hold that boundary. If vm2 can be escaped, the entire security model of those applications collapses.
+
+CVE-2026-24120 being a bypass of a prior patch for CVE-2023-37466 is the detail worth watching. Three years after the original bypass, the same structural weakness in vm2's promise handling is still exploitable via a different property. That's not a patching failure — it's an architectural problem with how the sandbox handles JavaScript prototype chains. Organizations relying on vm2 for security-critical isolation should evaluate whether the library can provide the trust boundary they need or whether a more fundamental architectural change is required.
