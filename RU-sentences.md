@@ -553,3 +553,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣4️⃣1️⃣. Сеть разрывает соединение при ошибке.** | The network breaks the connection on error.
 
 **2️⃣4️⃣2️⃣. Даже при сбое система пытается передавать данные.** | Even during a failure, the system tries to transmit data.
+
+**2️⃣4️⃣3️⃣. Система выделяет раздел памяти для обработки данных.** | The system allocates a memory partition for data processing.
+
+**2️⃣4️⃣4️⃣. Точка подключения используется для соединения устройств.** | The connection point is used for connecting devices.
+
+**2️⃣4️⃣5️⃣. Система подключает устройство через локальную сеть.** | The system connects the device through the local network.
+
+**2️⃣4️⃣6️⃣. Иначе система не сможет выполнить обработку.** | Otherwise the system will not be able to perform processing.
