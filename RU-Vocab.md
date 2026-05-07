@@ -172,6 +172,8 @@
 | **сбой питания** | [sboy pi-TA-ni-ya] | power failure | **сбой питания** |
 | **пакет данных** | [pa-KET DA-nïkh] | data packet | **пакет данных** |
 | **потеря связи** | [pa-TYE-rya SVYA-zi] | loss of connection | **потерю связи** |
+| **точка подключения** | TOCH-ka pat-klyu-CHYE-ni-ya] | connection point | **точку подключения** |
+| **раздел памяти** | [raz-DYEL PA-mya-ti] | memory partition | **раздел памяти** |
 
 
 ---
@@ -311,6 +313,8 @@
 | **целостность** | [tse-LOST-nostʹ] | integrity |
 | **к тому же** | [k ta-MU zhe] | moreover / additionally |
 | **даже** | [DA-zhe] | even |
+| **словно** | [SLOV-na] | as if / like |
+| **иначе** | [i-NA-che] | otherwise |
 
 
 ---
@@ -410,3 +414,5 @@
 | **питаться** | [pi-TAT-sa] | to be powered (receive power) |
 | **передавать** | [pe-re-da-VATʹ] | to transmit / send |
 | **разрывать** | [raz-ry-VATʹ] | to break / disconnect |
+| **выделять** | [vy-de-LYATʹ] | to allocate |
+| **подключать** | [pat-klyu-CHATʹ] | to connect |
