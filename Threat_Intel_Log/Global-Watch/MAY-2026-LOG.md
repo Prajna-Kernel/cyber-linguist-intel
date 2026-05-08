@@ -914,3 +914,97 @@ vm2 is used anywhere developers need to safely run untrusted or user-supplied Ja
 vm2 being the sandbox library for untrusted JavaScript execution means this isn't just a developer tool bug — it's a foundational trust boundary failure. Applications that use vm2 to safely isolate user-supplied or third-party code are depending on it to hold that boundary. If vm2 can be escaped, the entire security model of those applications collapses.
 
 CVE-2026-24120 being a bypass of a prior patch for CVE-2023-37466 is the detail worth watching. Three years after the original bypass, the same structural weakness in vm2's promise handling is still exploitable via a different property. That's not a patching failure — it's an architectural problem with how the sandbox handles JavaScript prototype chains. Organizations relying on vm2 for security-critical isolation should evaluate whether the library can provide the trust boundary they need or whether a more fundamental architectural change is required.
+
+---
+
+# Incident #015 — May 9, 2026
+
+**Target:** Organizations globally running Dell RecoverPoint for Virtual Machines — VMware virtual infrastructure operators
+
+**Sector:** Enterprise / Virtualization / Data Protection Infrastructure
+
+**Threat Actor:** UNC6201 — suspected PRC-nexus threat cluster; overlaps with UNC5221 / Silk Typhoon (not confirmed same cluster)
+
+**Origin:** China — assessed, PRC-nexus
+
+**Source:** Mandiant / Google Threat Intelligence Group — February 17, 2026
+
+**Attack Type:** Hard-Coded Default Credential Exploitation → WAR File Deployment → SLAYSTYLE/BRICKSTORM/GRIMBOLT Backdoor Chain → VMware Ghost NIC Pivoting
+
+**Labels:** CVE-2026-22769 | CVSS 10.0 | UNC6201 | Dell RecoverPoint | GRIMBOLT | BRICKSTORM | SLAYSTYLE | VMware | Ghost NIC | SPA | iptables | China-Nexus | Espionage | Edge Appliance
+
+---
+
+## Analysis
+
+Mandiant and Google Threat Intelligence Group disclosed zero-day exploitation of CVE-2026-22769 — a CVSS 10.0 flaw in Dell RecoverPoint for Virtual Machines — by UNC6201, a suspected PRC-nexus threat cluster with notable overlaps with UNC5221 (Silk Typhoon), though GTIG does not currently consider the two the same cluster. Active exploitation dates to at least mid-2024 - over 18 months of undetected access before disclosure.
+
+The root cause is hard-coded default credentials for the admin user stored in plaintext in /home/kos/tomcat9/tomcat-users.xml on the Dell RecoverPoint appliance. Any actor who discovers these credentials can authenticate to the Apache Tomcat Manager, upload a malicious WAR file via the /manager/text/deploy endpoint, and execute arbitrary commands as root. No vulnerability exploitation in the traditional sense — the appliance ships with a known password and a management interface that accepts file uploads from anyone who has it.
+
+UNC6201 used this access to deploy SLAYSTYLE — a Java-based web shell embedded in the malicious WAR file — followed by BRICKSTORM, a previously documented backdoor used in UNC6201 espionage campaigns. In September 2025 the group replaced BRICKSTORM binaries with GRIMBOLT — a new C# backdoor compiled using native ahead-of-time (AOT) compilation and packed with UPX. Native AOT removes the common intermediate language metadata typically present in .NET binaries, complicating static analysis and stripping the artifacts that most C# malware detection signatures rely on. GRIMBOLT provides a remote shell and uses the same C2 infrastructure as BRICKSTORM, suggesting the replacement was either a planned lifecycle rotation or a reaction to Mandiant's prior BRICKSTORM detection work.
+
+Both BRICKSTORM and GRIMBOLT persist via modification of /home/kos/kbox/src/installation/distribution/convert_hosts.sh - a legitimate shell script executed at boot time via rc.local. The backdoor path is injected into this script, ensuring execution survives reboots.
+
+The VMware activity is the most novel finding. UNC6201 created Ghost NICs — temporary virtual network ports on existing VMs running on ESXi — to pivot stealthily to internal and SaaS infrastructure without generating the network anomalies a new VM would create. Separately, iptables Single Packet Authorization was used on **compromised vCenter appliances:** incoming traffic on port 443 is monitored for a specific hex string, the source IP is whitelisted, and for the next 300 seconds any traffic from that IP to port 443 is silently redirected to port 10443 where the C2 listener operates. This SPA mechanism makes the backdoor invisible to port scanners and passive network monitors — the port appears closed until the correct knock sequence arrives.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-22769, CVSS 10.0 — hard-coded default admin credentials in /home/kos/tomcat9/tomcat-users.xml
+- **Attack vector:** Tomcat Manager /manager/text/deploy endpoint — malicious WAR file upload as root
+- **Web shell:** SLAYSTYLE — Java-based, deployed via WAR file
+- **Backdoor chain:** BRICKSTORM → replaced by GRIMBOLT (September 2025)
+- **GRIMBOLT:** C# backdoor, Native AOT compiled, UPX packed — complicates static analysis; remote shell capability
+- **GRIMBOLT C2:** wss://149.248.11.71/rest/apisession (WebSocket)
+- **Persistence:** convert_hosts.sh modification — executed at boot via rc.local
+- **Ghost NICs:** temporary virtual network ports created on existing ESXi VMs for stealthy lateral movement
+- **iptables SPA:** port 443 monitors for hex string → whitelists source IP → redirects to port 10443 for 300 seconds
+- **Exploitation active since:** mid-2024 — 18+ months before disclosure
+- **Attribution:** UNC6201 — PRC-nexus; overlaps with UNC5221/Silk Typhoon, not confirmed same cluster
+- *YARA rules and IOCs published by GTIG — available in GTI Collection*
+- **File hashes:** GRIMBOLT (24a11a26...), SLAYSTYLE (92fb4ad6...), BRICKSTORM (aa688682... and others)
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1078.001 — Valid Accounts: Default Accounts: hard-coded default admin credentials in tomcat-users.xml used to authenticate to Tomcat Manager
+
+- **TA0002 — Execution**
+  - T1505.003 — Server Software Component: Web Shell: SLAYSTYLE web shell deployed via malicious WAR file upload to Tomcat Manager
+  - T1059.004 — Command and Scripting Interpreter: Unix Shell: arbitrary commands executed as root via SLAYSTYLE web shell
+
+- **TA0003 — Persistence**
+  - T1037 — Boot or Logon Initialization Scripts: BRICKSTORM and GRIMBOLT paths injected into convert_hosts.sh — executed at boot via rc.local
+  - T1505.003 — Server Software Component: Web Shell: SLAYSTYLE maintains persistent web shell access on appliance
+
+- **TA0005 — Defense Evasion**
+  - T1027.002 — Obfuscated Files or Information: Software Packing: GRIMBOLT packed with UPX; Native AOT compilation removes CIL metadata to complicate static analysis
+  - T1205 — Traffic Signaling: iptables Single Packet Authorization used to keep C2 port invisible — only responds after correct hex knock sequence
+  - T1564.006 — Hide Artifacts: Run Virtual Instance: Ghost NICs created as temporary virtual network ports on existing VMs to avoid detection from new VM creation
+
+- **TA0006 — Credential Access**
+  - T1552.001 — Unsecured Credentials: Credentials in Files: hard-coded default credentials discovered in plaintext tomcat-users.xml configuration file
+
+- **TA0008 — Lateral Movement**
+  - T1021.001 — Remote Services: Remote Desktop Protocol: Ghost NICs used to pivot to internal and SaaS infrastructure via VMware virtual network layer
+  - T1090.002 — Proxy: External Proxy: iptables redirects traffic through port 10443 after SPA knock — C2 traffic routed through appliance
+
+- **TA0011 — Command & Control**
+  - T1071.001 — Application Layer Protocol: Web Protocols: GRIMBOLT C2 via WebSocket (wss://) to 149.248.11.71
+  - T1205 — Traffic Signaling: SPA iptables mechanism gates C2 access — port appears closed to scanners until correct packet received
+
+- **TA0009 — Collection**
+  - T1005 — Data from Local System: data collected from compromised Dell RecoverPoint and VMware infrastructure via SLAYSTYLE and GRIMBOLT
+
+---
+
+## Strategic Context
+
+A CVSS 10.0 flaw caused by hard-coded default credentials is not a sophisticated zero-day — it's a fundamental product security failure. Dell shipped an appliance with a known admin password and an accessible management interface that accepts arbitrary code uploads. UNC6201 didn't need to find a memory corruption bug or chain multiple CVEs. They needed to know one password that was the same on every installation.
+
+The Ghost NIC technique is the most operationally significant finding here. Creating temporary virtual NICs on existing VMs to pivot through VMware infrastructure is a novel evasion approach that leaves minimal artifacts — no new VM creation event, no new MAC address registration at the network layer, no anomalous process on the host. Defenders looking for lateral movement via new VM creation would miss this entirely. Expect this technique to appear in future VMware-focused intrusion reports as other groups adopt it.
+
+The BRICKSTORM to GRIMBOLT replacement in September 2025 — after Mandiant's prior BRICKSTORM disclosure — shows UNC6201 actively monitoring defensive research and rotating tooling in response. **Native AOT compilation as an evasion choice is deliberate:** it directly addresses the detection signatures that C# malware typically generates. This is an actor that reads threat intelligence reports and adapts.
+
+18 months of undetected access on Dell RecoverPoint appliances at multiple victim organizations is the operational headline. Edge appliances — VPN concentrators, backup infrastructure, storage controllers — continue to be the preferred entry and persistence layer for China-nexus APTs. They sit outside the EDR coverage of most enterprise environments, run embedded Linux with limited logging, and are rarely reimaged even after incidents.
