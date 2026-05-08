@@ -174,6 +174,8 @@
 | **потеря связи** | [pa-TYE-rya SVYA-zi] | loss of connection | **потерю связи** |
 | **точка подключения** | TOCH-ka pat-klyu-CHYE-ni-ya] | connection point | **точку подключения** |
 | **раздел памяти** | [raz-DYEL PA-mya-ti] | memory partition | **раздел памяти** |
+| **пропускная очередь** | [pra-pus-KNA-ya O-che-redʹ] | throughput queue | **пропускную очередь** |
+| **журнал ошибок** | [zhoor-NAL a-SHI-bak] | error log | **журнал ошибок** |
 
 
 ---
@@ -315,6 +317,9 @@
 | **даже** | [DA-zhe] | even |
 | **словно** | [SLOV-na] | as if / like |
 | **иначе** | [i-NA-che] | otherwise |
+| **вдоль** | [vdolʹ] | along | 
+| **свыше** | [SVY-she] | above / exceeding |
+
 
 
 ---
@@ -416,3 +421,5 @@
 | **разрывать** | [raz-ry-VATʹ] | to break / disconnect |
 | **выделять** | [vy-de-LYATʹ] | to allocate |
 | **подключать** | [pat-klyu-CHATʹ] | to connect |
+| **переназначать** | [pe-re-na-zna-CHATʹ] | to reassign |
+| **откатываться** | [at-KA-ty-vat-sa] | to roll back |
