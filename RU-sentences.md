@@ -561,3 +561,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣4️⃣5️⃣. Система подключает устройство через локальную сеть.** | The system connects the device through the local network.
 
 **2️⃣4️⃣6️⃣. Иначе система не сможет выполнить обработку.** | Otherwise the system will not be able to perform processing.
+
+**2️⃣4️⃣7️⃣. Система сохраняет журнал ошибок после сбоя.** | The system saves the error log after a failure.
+
+**2️⃣4️⃣8️⃣. Пропускная очередь перегружается при высокой нагрузке.** | The throughput queue becomes overloaded under high load.
+
+**2️⃣4️⃣9️⃣. Система переназначает задачи между узлами.** | The system reassigns tasks between nodes.
+
+**2️⃣5️⃣0️⃣. При ошибке система откатывается автоматически.** | In case of an error, the system rolls back automatically.
