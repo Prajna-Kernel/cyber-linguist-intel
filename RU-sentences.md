@@ -5,7 +5,8 @@
 - [Sentences 51–100](#sentences-51100)
 - [Sentences 101-150](#sentences-101150)
 - [Sentences 151-200](#sentences-151200)
-- [Sentences 201+](#sentences-201)
+- [Sentences 201-250](#sentences-201250)
+- [Sentences 251+](#sentences-251)
 
 ---
 
@@ -468,7 +469,7 @@ If there is load, the system slows down, then there is a frame drop.
 
 ---
 
-# sentences 201+
+# sentences 201250
 
 **2️⃣0️⃣1️⃣. Система ставит в очередь задачи и выполняет обработку данных.** | The system queues tasks and performs data processing.
 
@@ -569,3 +570,15 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣4️⃣9️⃣. Система переназначает задачи между узлами.** | The system reassigns tasks between nodes.
 
 **2️⃣5️⃣0️⃣. При ошибке система откатывается автоматически.** | In case of an error, the system rolls back automatically.
+
+---
+
+# sentences 251+
+
+**2️⃣5️⃣1️⃣. Система проверяет таблицу разделов перед загрузкой.** | The system checks the partition table before loading.
+
+**2️⃣5️⃣2️⃣. Резервный узел подключается при сбое сервера.** | The backup node connects during a server failure.
+
+**2️⃣5️⃣3️⃣. Система переназагружает модуль после ошибки.** | The system reloads the module repeatedly after an error.
+
+**2️⃣5️⃣4️⃣. Система согласовывает параметры между узлами.** | The system coordinates parameters between nodes.
