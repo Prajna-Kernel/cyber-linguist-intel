@@ -176,6 +176,9 @@
 | **раздел памяти** | [raz-DYEL PA-mya-ti] | memory partition | **раздел памяти** |
 | **пропускная очередь** | [pra-pus-KNA-ya O-che-redʹ] | throughput queue | **пропускную очередь** |
 | **журнал ошибок** | [zhoor-NAL a-SHI-bak] | error log | **журнал ошибок** |
+| **таблица разделов** | [ta-BLEE-tsa raz-DYE-lov] | partition table | **таблицу разделов** | 
+| **резервный узел** | [re-ZYERV-nyy OO-zel] | backup node | **резервный узел** |
+
 
 
 ---
@@ -319,6 +322,8 @@
 | **иначе** | [i-NA-che] | otherwise |
 | **вдоль** | [vdolʹ] | along | 
 | **свыше** | [SVY-she] | above / exceeding |
+| **вплоть до** | [fplotʹ do] | up to / as far as |
+| **преимущественно** | [pre-i-moo-SHCHES-tven-na] | predominantly / mainly |
 
 
 
@@ -423,3 +428,5 @@
 | **подключать** | [pat-klyu-CHATʹ] | to connect |
 | **переназначать** | [pe-re-na-zna-CHATʹ] | to reassign |
 | **откатываться** | [at-KA-ty-vat-sa] | to roll back |
+| **переназагружать** | [pe-re-na-za-gru-ZHATʹ] | to reload repeatedly |
+| **согласовывать** |[sa-gla-SO-vy-vatʹ] | to coordinate / synchronize |
