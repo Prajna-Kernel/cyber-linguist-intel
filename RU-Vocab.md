@@ -178,7 +178,8 @@
 | **журнал ошибок** | [zhoor-NAL a-SHI-bak] | error log | **журнал ошибок** |
 | **таблица разделов** | [ta-BLEE-tsa raz-DYE-lov] | partition table | **таблицу разделов** | 
 | **резервный узел** | [re-ZYERV-nyy OO-zel] | backup node | **резервный узел** |
-
+| **таблица маршрутов** | [ta-BLEE-tsa mar-SHROO-tov] | routing table | **таблицу маршрутов** |
+| **резервирование данных** | [re-zer-vee-RO-va-ni-ye DA-nïkh] | data redundancy / data reservation | **резервирование данных** |
 
 
 ---
@@ -324,7 +325,8 @@
 | **свыше** | [SVY-she] | above / exceeding |
 | **вплоть до** | [fplotʹ do] | up to / as far as |
 | **преимущественно** | [pre-i-moo-SHCHES-tven-na] | predominantly / mainly |
-
+| **одновременно** | [ad-na-vre-MEN-na] | simultaneously |
+| **косвенно** | [kas-VEN-na] | indirectly |
 
 
 ---
@@ -430,3 +432,5 @@
 | **откатываться** | [at-KA-ty-vat-sa] | to roll back |
 | **переназагружать** | [pe-re-na-za-gru-ZHATʹ] | to reload repeatedly |
 | **согласовывать** |[sa-gla-SO-vy-vatʹ] | to coordinate / synchronize |
+| **дублировать** | [doo-blee-RO-vatʹ] | to duplicate |
+| **перенастраивать** | [pe-re-na-STRA-i-vatʹ] | to reconfigure |
