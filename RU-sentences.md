@@ -582,3 +582,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣5️⃣3️⃣. Система переназагружает модуль после ошибки.** | The system reloads the module repeatedly after an error.
 
 **2️⃣5️⃣4️⃣. Система согласовывает параметры между узлами.** | The system coordinates parameters between nodes.
+
+**2️⃣5️⃣9️⃣. Система дублирует данные между серверами.** | The system duplicates data between servers.
+
+**2️⃣6️⃣0️⃣. Администратор перенастраивает сеть при ошибке.** | The administrator reconfigures the network during an error.
+
+**2️⃣6️⃣1️⃣. Система одновременно проверяет несколько параметров.** | The system simultaneously checks several parameters.
+
+**2️⃣6️⃣2️⃣. Ошибка косвенно влияет на обработку данных.** | The error indirectly affects data processing.
