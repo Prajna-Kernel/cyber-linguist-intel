@@ -1011,7 +1011,7 @@ The BRICKSTORM to GRIMBOLT replacement in September 2025 — after Mandiant's pr
 
 ---
 
-# Incident #016 — May 10, 2026
+# Incident #016 — May 12, 2026
 
 **Target:** Government entities in South America — active since late 2024; government agencies in southeastern Europe — 2025
 
