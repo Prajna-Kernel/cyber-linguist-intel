@@ -180,7 +180,8 @@
 | **резервный узел** | [re-ZYERV-nyy OO-zel] | backup node | **резервный узел** |
 | **таблица маршрутов** | [ta-BLEE-tsa mar-SHROO-tov] | routing table | **таблицу маршрутов** |
 | **резервирование данных** | [re-zer-vee-RO-va-ni-ye DA-nïkh] | data redundancy / data reservation | **резервирование данных** |
-
+| **журнал доступа** | [zhoor-NAL DO-stu-pa] | access log | **журнал доступа** |
+| **вычислительный узел** |[vy-chis-lee-TELʹ-nyy OO-zel] | compute node | **вычислительный узел** |
 
 ---
 
@@ -327,6 +328,9 @@
 | **преимущественно** | [pre-i-moo-SHCHES-tven-na] | predominantly / mainly |
 | **одновременно** | [ad-na-vre-MEN-na] | simultaneously |
 | **косвенно** | [kas-VEN-na] | indirectly |
+| **поочерёдно** | [pa-a-che-RYOD-na] | one after another / sequentially |
+| **вдали** | [vda-LEE] | at a distance / remotely |
+
 
 
 ---
@@ -434,3 +438,5 @@
 | **согласовывать** |[sa-gla-SO-vy-vatʹ] | to coordinate / synchronize |
 | **дублировать** | [doo-blee-RO-vatʹ] | to duplicate |
 | **перенастраивать** | [pe-re-na-STRA-i-vatʹ] | to reconfigure |
+| **перенаправляться** | [pe-re-na-prav-LYAT-sa] | to be redirected |
+| **масштабировать** | [mash-ta-BEE-ro-vatʹ] | to scale |
