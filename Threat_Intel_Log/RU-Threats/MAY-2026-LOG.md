@@ -151,3 +151,94 @@ This is the second APT28 entry in RU-Threats this month alongside #001 (Signal/G
 ## Russian Language Context
 
 APT28 is assessed as GRU Войсковая часть 26165 (Voyskavaya chast 26165) — Military Unit 26165, 85th Main Special Service Centre. The FrostArmada campaign's router exploitation methodology reflects устойчивый доступ (ustoychivy dostup) — persistent access — as a core GRU operational priority, consistent with long-term intelligence collection rather than disruptive operations.
+
+
+---
+
+# Incident #003 — May 10, 2026
+
+**Target:** Western critical infrastructure — energy sector organizations, North American and European critical infrastructure providers, telecom companies, organizations with cloud-hosted network infrastructure
+
+**Sector:** Critical Infrastructure / Energy / Telecommunications / Cloud
+
+**Threat Actor:** APT44 (Sandworm / FROZENBARENTS / Seashell Blizzard / Voodoo Bear) — GRU Military Unit 74455, Russian state-sponsored
+
+**Origin:** Russia — GRU MU74455, high confidence
+
+**Source:** Amazon Web Services / Amazon Threat Intelligence — December 15, 2025 | The Hacker News — December 17, 2025
+
+**Attack Type:** Misconfigured Edge Device Exploitation → Passive Traffic Interception → Credential Harvesting → Credential Replay
+
+**Labels:** APT44 | Sandworm | Seashell Blizzard | GRU | Critical Infrastructure | Energy | Edge Device | Credential Theft | Credential Replay | AWS | North America | Europe | 2021-2025
+
+---
+
+## Analysis
+
+Amazon Threat Intelligence disclosed a years-long APT44/Sandworm campaign targeting Western critical infrastructure that ran from 2021 through at least the end of 2025. The campaign is attributed to GRU Military Unit 74455 with high confidence based on infrastructure overlaps with known Sandworm operations in Amazon's telemetry. Targets included energy sector organizations across Western nations, critical infrastructure providers in North America and Europe, telecom companies, and organizations with cloud-hosted network infrastructure.
+
+The tactical evolution is what makes this disclosure significant. Early in the campaign APT44 exploited known vulnerabilities — WatchGuard Firebox/XTM (CVE-2022-26318), Atlassian Confluence (CVE-2021-26084, CVE-2023-22518), and Veeam backup software. Over time, and particularly through 2024-2025, N-day and zero-day exploitation declined. The group shifted to targeting misconfigured customer network edge devices with exposed management interfaces — a simpler, lower-risk approach that achieves the same operational outcomes with less exposure. As Amazon's CISO CJ Moses noted, the compromises were not due to AWS weaknesses but to customers failing to properly secure their own network edge devices and virtual appliances.
+
+The mechanism is straightforward. APT44 identifies internet-exposed network appliances with weak or default configurations and establishes persistent connections to compromised EC2 instances running customers' network appliance software. From that position — sitting on the network edge — the group conducts passive traffic interception to collect credentials in transit without ever touching individual endpoints. Those harvested credentials are then replayed against victim organizations' online services — cloud platforms, collaboration tools, backup systems — enabling lateral movement across the broader organization.
+
+Amazon's telemetry showed actor-controlled IP addresses maintaining persistent connections to compromised EC2 instances, consistent with long-term interactive access and data retrieval across multiple affected instances. The scale and duration — five years, multiple sectors, North America and Europe — reflects a sustained strategic intelligence collection operation consistent with GRU doctrine, not opportunistic exploitation.
+
+---
+
+## Key Technical Indicators:
+- **Campaign duration:** 2021–2025 — confirmed ongoing at time of disclosure
+- **Attribution:** APT44 / Sandworm / GRU MU74455 — high confidence via infrastructure overlaps in Amazon telemetry
+- **Early phase CVEs:** CVE-2022-26318 (WatchGuard Firebox/XTM), CVE-2021-26084 / CVE-2023-22518 (Atlassian Confluence), Veeam backup software vulnerabilities
+- **Tactical shift:** N-day/zero-day exploitation declined 2024-2025; pivot to misconfigured network edge device exploitation
+- **Attack surface:** customer-deployed network appliances with exposed management interfaces — routers, VPNs, management appliances
+- **Method:** passive traffic interception from edge device position → credential harvesting in transit
+- **Post-harvest:** credential replay against cloud services, collaboration platforms, backup systems
+- **AWS telemetry:** actor-controlled IPs establishing persistent connections to compromised EC2 instances running customer network appliance software
+- **Target sectors:** energy (primary), telecom, cloud-hosted infrastructure, North America and Europe
+- **Disruption:** Amazon took steps to disrupt ongoing activity and notified affected customers
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: early phase exploitation of WatchGuard, Confluence, Veeam CVEs; pivot to misconfigured edge device management interfaces
+  - T1078.001 — Valid Accounts: Default Accounts: misconfigured network appliances with exposed management interfaces exploited via weak or default credentials
+
+- **TA0003 — Persistence**
+  - T1133 — External Remote Services: persistent connections maintained to compromised EC2 instances running customer network appliance software
+
+- **TA0005 — Defense Evasion**
+  - T1090 — Proxy: compromised edge devices used as passive interception points — no direct endpoint access required; activity blends into legitimate network traffic
+
+- **TA0006 — Credential Access**
+  - T1557 — Adversary-in-the-Middle: passive traffic interception from edge device position captures credentials in transit
+  - T1110.004 — Brute Force: Credential Stuffing: harvested credentials replayed against victim organizations' online services
+
+- **TA0007 — Discovery**
+  - T1595.002 — Active Scanning: Vulnerability Scanning: identification of internet-exposed network appliances with weak configurations
+
+- **TA0008 — Lateral Movement**
+  - T1078 — Valid Accounts: replayed credentials used to access cloud platforms, collaboration tools, and backup systems across victim organizations
+
+- **TA0009 — Collection**
+  - T1040 — Network Sniffing: passive traffic interception on compromised edge devices captures authentication traffic and credentials in transit
+
+- **TA0011 — Command & Control**
+  - T1071 — Application Layer Protocol: persistent connections to compromised EC2 instances via application layer protocols
+
+---
+
+## Strategic Context
+
+APT44 shifting away from CVE exploitation toward misconfigured edge device abuse is a deliberate tactical evolution. Patching fixes CVEs. It doesn't fix misconfigured management interfaces that have been exposed to the internet for years. By moving to that attack surface, Sandworm reduced its operational exposure — no need to develop or purchase exploits, no patch cycle to race against — while maintaining the same access outcomes. That's a mature threat actor adapting to a defensive environment that got better at patching.
+
+The edge device positioning for passive credential interception is the most operationally elegant aspect of this campaign. Sitting on the network edge means every authentication attempt that passes through the device is visible. No malware on endpoints, no lateral movement needed to find credentials — the credentials come to you. Then credential replay against cloud services completes the access chain without ever touching the internal network directly.
+
+This connects directly to RU-Threats #002 — APT28 FrostArmada running a parallel router DNS hijacking campaign during the same period. Two separate GRU-affiliated operations targeting network edge infrastructure simultaneously — APT44 for credential interception at scale, APT28 for AiTM credential theft via DNS poisoning. Edge devices are the GRU's preferred persistent access layer in 2025-2026.
+
+---
+
+## Russian Language Context
+
+APT44 operates as Войсковая часть 74455 (Voyskavaya chast 74455) — GRU Military Unit 74455, 85th Main Special Service Centre's subordinate unit. The campaign's focus on Western энергетическая инфраструктура (energeticheskaya infrastruktura) — energy infrastructure — is consistent with GRU strategic priorities around understanding and potentially disrupting Western energy supply chains, particularly in the context of ongoing geopolitical pressure related to Ukraine support.
