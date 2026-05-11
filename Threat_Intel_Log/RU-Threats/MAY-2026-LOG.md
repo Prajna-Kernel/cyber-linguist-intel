@@ -155,7 +155,7 @@ APT28 is assessed as GRU Войсковая часть 26165 (Voyskavaya chast 2
 
 ---
 
-# Incident #003 — May 10, 2026
+# Incident #003 — May 12,  2026
 
 **Target:** Western critical infrastructure — energy sector organizations, North American and European critical infrastructure providers, telecom companies, organizations with cloud-hosted network infrastructure
 
