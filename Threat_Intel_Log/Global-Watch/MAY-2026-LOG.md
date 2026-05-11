@@ -1008,3 +1008,95 @@ The Ghost NIC technique is the most operationally significant finding here. Crea
 The BRICKSTORM to GRIMBOLT replacement in September 2025 — after Mandiant's prior BRICKSTORM disclosure — shows UNC6201 actively monitoring defensive research and rotating tooling in response. **Native AOT compilation as an evasion choice is deliberate:** it directly addresses the detection signatures that C# malware typically generates. This is an actor that reads threat intelligence reports and adapts.
 
 18 months of undetected access on Dell RecoverPoint appliances at multiple victim organizations is the operational headline. Edge appliances — VPN concentrators, backup infrastructure, storage controllers — continue to be the preferred entry and persistence layer for China-nexus APTs. They sit outside the EDR coverage of most enterprise environments, run embedded Linux with limited logging, and are rarely reimaged even after incidents.
+
+---
+
+# Incident #016 — May 10, 2026
+
+**Target:** Government entities in South America — active since late 2024; government agencies in southeastern Europe — 2025
+
+**Sector:** Government / Diplomatic
+
+**Threat Actor:** UAT-8302 — China-nexus APT cluster; tooling shared with CL-STA-0049, Earth Alux, Earth Estries, Ink Dragon, Jewelbug, UNC5174, UNC6586, UAT-6382
+
+**Origin:** China — assessed, China-nexus
+
+**Source:** The Hacker News — May 5, 2026 | Cisco Talos (Jungsoo An, Asheer Malhotra, Brandon White)
+
+**Attack Type:** Web Application Exploitation → Network Reconnaissance → Multi-Backdoor Deployment
+
+**Labels:** UAT-8302 | NetDraft | NosyDoor | CloudSorcerer | SNOWRUST | VShell | Deed RAT | Draculoader | Stowaway | SoftEther | China-Nexus | South America | Southeast Europe | Shared Tooling | Premier Pass-as-a-Service
+
+---
+
+## Analysis
+
+Cisco Talos disclosed UAT-8302 — a China-nexus APT cluster active since at least late 2024, targeting government entities in South America and southeastern Europe. The group's most defining characteristic is its toolset: nearly every malware family UAT-8302 deploys has been previously attributed to other China-aligned groups, indicating either shared infrastructure, a common upstream supplier, or a deliberate tool-sharing arrangement between clusters.
+
+Initial access is suspected to involve zero-day and N-day exploitation of web applications — consistent with the broader China-nexus APT doctrine of targeting internet-facing services. Once inside, the group conducts extensive reconnaissance using open-source tools including gogo for automated network scanning, then moves laterally before deploying its final payloads.
+
+The primary backdoor is NetDraft (aka NosyDoor) — a .NET-based backdoor that is a C# variant of FINALDRAFT/Squidoor, previously linked to Ink Dragon, CL-STA-0049, Earth Alux, Jewelbug, and REF7707. ESET tracks NosyDoor deployment to a group it calls LongNosedGoblin. The same malware has also been deployed against Russian IT organizations by Erudite Mogwai (Space Pirates/Webworm) under the name LuckyStrike Agent — meaning this single backdoor family has been used by at least five distinct China-aligned clusters and at least one Russia-adjacent group.
+
+**Additional tools in UAT-8302's arsenal:** CloudSorcerer version 3.0 — a backdoor previously observed against Russian entities since May 2024; SNOWRUST — a Rust-based variant of SNOWLIGHT used by UNC5174, UNC6586, and UAT-6382 to download VShell; Deed RAT (Snappybee) — a ShadowPad successor used by Earth Estries; Zingdoor — also Earth Estries; and Draculoader — a shellcode loader delivering Crowdoor and HemiGate. For persistent alternative access, the group uses Stowaway and SoftEther VPN as proxy and tunneling tools.
+
+The Premier Pass-as-a-Service model — disclosed by Trend Micro in October 2025 — provides context for the shared tooling. Earth Estries sells initial access to Earth Naga for follow-on exploitation, with the partnership assessed to have existed since at least late 2023. UAT-8302's broad tool overlap with multiple clusters is consistent with operating within or adjacent to this kind of access-sharing ecosystem.
+
+---
+
+## Key Technical Indicators:
+- **Threat cluster:** UAT-8302 — active since late 2024; South America and southeastern Europe government targeting
+- **Primary backdoor:** NetDraft/NosyDoor — .NET C# variant of FINALDRAFT/Squidoor; shared with Ink Dragon, CL-STA-0049, Earth Alux, Jewelbug, REF7707, LongNosedGoblin, Erudite Mogwai
+- CloudSorcerer v3.0 — previously used against Russian entities since May 2024
+- SNOWRUST — Rust-based SNOWLIGHT variant; downloads VShell payload from remote server
+- Deed RAT (Snappybee) — ShadowPad successor; Earth Estries tooling
+- Zingdoor — Earth Estries tooling
+- Draculoader — shellcode loader delivering Crowdoor and HemiGate
+- **Tunneling/proxy:** Stowaway, SoftEther VPN
+- **Recon:** gogo open-source network scanner
+- **Initial access:** suspected web application exploitation — zero-day and N-day
+- **Premier Pass-as-a-Service context:** Earth Estries → Earth Naga access-sharing partnership since late 2023
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: zero-day and N-day exploitation of web applications suspected as primary initial access method
+
+- **TA0002 — Execution**
+  - T1059.001 — Command and Scripting Interpreter: PowerShell: post-exploitation commands executed via deployed backdoors
+  - T1072 — Software Deployment Tools: VShell executed via SNOWRUST stager download
+
+- **TA0003 — Persistence**
+  - T1505 — Server Software Component: NetDraft/NosyDoor maintains persistent backdoor access on compromised government systems
+  - T1133 — External Remote Services: SoftEther VPN and Stowaway used as alternative persistent access channels
+
+- **TA0005 — Defense Evasion**
+  - T1090 — Proxy: Stowaway and SoftEther VPN used to tunnel C2 traffic through legitimate-looking connections
+  - T1036 — Masquerading: shared tooling across multiple clusters complicates attribution and analysis
+
+- **TA0007 — Discovery**
+  - T1046 — Network Service Discovery: gogo open-source scanner used for automated network reconnaissance post-compromise
+  - T1083 — File and Directory Discovery: extensive network mapping conducted before final payload deployment
+
+- **TA0008 — Lateral Movement**
+  - T1021 — Remote Services: lateral movement conducted across government network environments before backdoor staging
+
+- **TA0009 — Collection**
+  - T1005 — Data from Local System: government data collected via NetDraft/NosyDoor and CloudSorcerer backdoors
+
+- **TA0011 — Command & Control**
+  - T1071 — Application Layer Protocol: NetDraft/NosyDoor C2 via application layer protocols
+  - T1090 — Proxy: Stowaway proxy and SoftEther VPN tunnel C2 communications
+
+---
+
+## Strategic Context
+
+UAT-8302's toolset reads like a catalogue of China-nexus APT malware from the past two years. NetDraft alone connects this cluster to at least five other documented groups. That level of overlap doesn't happen by accident — it reflects either a shared development infrastructure, a tool-lending arrangement, or participation in something like the Premier Pass-as-a-Service model where access and capabilities flow between clusters.
+
+This connects directly to SHADOW-EARTH-053 documented in Global-Watch #004. Both are China-nexus APT clusters active in 2024-2026 using overlapping tooling — SHADOW-EARTH-053 uses ShadowPad and Godzilla while UAT-8302 uses Deed RAT (ShadowPad's successor) and NosyDoor which is shared with Earth Alux and CL-STA-0049 — both clusters documented in #003. The China APT ecosystem is operating as a networked infrastructure, not isolated actors.
+
+South America as a targeting geography for China-nexus APTs is worth flagging. Government entities in South America are not a traditional China APT priority — the expansion into that region alongside the established southeastern Europe targeting suggests either specific intelligence requirements driving new geographic priorities or the maturation of the Premier Pass-as-a-Service model enabling broader targeting.
+
+---
+
