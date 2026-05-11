@@ -590,3 +590,13 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣6️⃣1️⃣. Система одновременно проверяет несколько параметров.** | The system simultaneously checks several parameters.
 
 **2️⃣6️⃣2️⃣. Ошибка косвенно влияет на обработку данных.** | The error indirectly affects data processing.
+
+**2️⃣6️⃣3️⃣. Система сохраняет журнал доступа после проверки.** | The system saves the access log after verification.
+
+**2️⃣6️⃣4️⃣. Вычислительный узел обрабатывает данные удалённо.** | The compute node processes data remotely.
+
+**2️⃣6️⃣5️⃣. Запрос перенаправляется на резервный сервер.** | The request is redirected to the backup server.
+
+**2️⃣6️⃣6️⃣. Система масштабирует ресурсы при высокой нагрузке.** | The system scales resources under high load.
+
+**2️⃣6️⃣7️⃣. Узлы подключаются поочерёдно после запуска.** | The nodes connect one after another after startup.
