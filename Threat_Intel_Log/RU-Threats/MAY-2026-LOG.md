@@ -242,3 +242,12 @@ This connects directly to RU-Threats #002 — APT28 FrostArmada running a parall
 ## Russian Language Context
 
 APT44 operates as Войсковая часть 74455 (Voyskavaya chast 74455) — GRU Military Unit 74455, 85th Main Special Service Centre's subordinate unit. The campaign's focus on Western энергетическая инфраструктура (energeticheskaya infrastruktura) — energy infrastructure — is consistent with GRU strategic priorities around understanding and potentially disrupting Western energy supply chains, particularly in the context of ongoing geopolitical pressure related to Ukraine support.
+
+---
+
+# ⚠️ Cross-Sector Alert: TeamPCP — Persistent Russian Locale Evasion Pattern
+**Status:** Active — Mini Shai-Hulud latest wave, May 12, 2026
+**Target:** npm and PyPI developers globally — 170+ packages, 518M cumulative downloads
+**Note:** Every TeamPCP/Shai-Hulud wave consistently skips Russian-locale systems. Latest wave adds geofenced destructive branch targeting Israel and Iran. Russian-ecosystem origin assessed but **unconfirmed across six months of activity.**
+
+👉 **[Read Full Entry in Global-Watch](../Global-Watch/MAY-2026-LOG.md#incident-017)**
