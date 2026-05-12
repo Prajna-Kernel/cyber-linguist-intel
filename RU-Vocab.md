@@ -182,6 +182,11 @@
 | **резервирование данных** | [re-zer-vee-RO-va-ni-ye DA-nïkh] | data redundancy / data reservation | **резервирование данных** |
 | **журнал доступа** | [zhoor-NAL DO-stu-pa] | access log | **журнал доступа** |
 | **вычислительный узел** |[vy-chis-lee-TELʹ-nyy OO-zel] | compute node | **вычислительный узел** |
+| **очередь пакетов** |[O-che-redʹ pa-KYE-tov] | packet queue | **очередь пакетов** |
+| **контрольный узел** | [kan-TROLʹ-nyy OO-zel] | control node | **контрольный узел** |
+
+
+
 
 ---
 
@@ -330,7 +335,8 @@
 | **косвенно** | [kas-VEN-na] | indirectly |
 | **поочерёдно** | [pa-a-che-RYOD-na] | one after another / sequentially |
 | **вдали** | [vda-LEE] | at a distance / remotely |
-
+| **впоследствии** | [fpo-SLED-stvi-i] | subsequently |
+| **частично** | [chas-TEECH-na] | partially |
 
 
 ---
@@ -440,3 +446,5 @@
 | **перенастраивать** | [pe-re-na-STRA-i-vatʹ] | to reconfigure |
 | **перенаправляться** | [pe-re-na-prav-LYAT-sa] | to be redirected |
 | **масштабировать** | [mash-ta-BEE-ro-vatʹ] | to scale |
+| **синхронизироваться** | [sin-khra-ni-zee-RO-vat-sa] | to synchronize |
+| **перераспределять** | [pe-re-ras-pre-de-LYATʹ] | to redistribute |
