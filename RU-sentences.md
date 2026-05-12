@@ -600,3 +600,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣6️⃣6️⃣. Система масштабирует ресурсы при высокой нагрузке.** | The system scales resources under high load.
 
 **2️⃣6️⃣7️⃣. Узлы подключаются поочерёдно после запуска.** | The nodes connect one after another after startup.
+
+**2️⃣6️⃣8️⃣. Система проверяет очередь пакетов при высокой нагрузке.** | The system checks the packet queue under high load.
+
+**2️⃣6️⃣9️⃣. Контрольный узел синхронизируется с сервером.** | The control node synchronizes with the server.
+
+**2️⃣7️⃣0️⃣. Система перераспределяет ресурсы между процессами.** | The system redistributes resources between processes.
+
+**2️⃣7️⃣1️⃣. Данные частично повреждаются при сбое сети.** | The data becomes partially corrupted during a network failure.
