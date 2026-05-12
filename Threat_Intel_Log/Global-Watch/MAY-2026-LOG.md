@@ -1100,3 +1100,109 @@ South America as a targeting geography for China-nexus APTs is worth flagging. G
 
 ---
 
+# Incident #017 — May 13, 2026
+
+**Target:** Software developers globally — npm and PyPI ecosystem users; TanStack, Mistral AI, Guardrails AI, OpenSearch, UiPath, and 170+ package maintainers and their downstream users
+
+**Sector:** Software Supply Chain / Developer Infrastructure / AI Tooling
+
+**Threat Actor:** TeamPCP — Mini Shai-Hulud campaign, latest wave
+
+**Origin:** Unknown — Russian locale skip present; geofenced destructive branch targeting Israel/Iran
+
+**Source:** The Hacker News — May 12, 2026 | Aikido Security | Endor Labs |
+
+**Attack Type:** GitHub Actions OIDC Token Hijacking → npm Worm Propagation → Credential Theft + Dead-Man's Switch Wiper
+
+**Labels:** TeamPCP | Mini Shai-Hulud | TanStack | Mistral AI | Guardrails AI | OpenSearch | UiPath | npm | PyPI | OIDC | SLSA Bypass | GitHub Actions | Worm | Dead-Man's Switch | Wiper | Claude Code | VS Code | CI/CD | Supply Chain | CVE-2026-45321
+
+---
+
+## Analysis
+
+TeamPCP's Mini Shai-Hulud campaign has escalated significantly. The latest wave compromised packages from TanStack, Mistral AI, Guardrails AI, OpenSearch, UiPath, and dozens of other maintainers across npm and PyPI — over 170 packages and 518 million cumulative downloads affected. 400 attacker-controlled repositories have been created containing the string **"Shai-Hulud: Here We Go Again."**
+
+The TanStack compromise is the most technically significant entry point. Rather than stealing an npm token directly, TeamPCP exploited a chain of three GitHub Actions weaknesses: the pull_request_target trigger, GitHub Actions cache poisoning, and runtime memory extraction of an OIDC token from the GitHub Actions runner process. A malicious payload was staged in a GitHub fork via an orphaned commit, injected into published npm tarballs, then the legitimate TanStack/router workflow was hijacked to publish compromised versions with valid SLSA Build Level 3 provenance attestations. This is the first documented npm worm that produces validly attested malicious packages — meaning standard supply chain trust verification tools would pass these packages as legitimate.
+
+The worm's self-propagation mechanism is what makes this wave different from prior Shai-Hulud attacks. Once installed, the malware locates any publishable npm token with bypass_2fa set to true, enumerates every package published by the same maintainer, and exchanges a GitHub OIDC token for a per-package publish token — sidestepping authentication entirely. The worm then spreads itself to every package that maintainer owns. That's how UiPath, DraftLab, and others got hit without being directly targeted — the worm spread from TanStack through shared maintainer identity chains.
+
+The credential stealer targets cloud providers, cryptocurrency wallets, AI tools, messaging apps, and CI systems including GitHub Actions. Stolen data is exfiltrated to filev2.getsession[.]org — a Session Protocol infrastructure domain chosen specifically because decentralized privacy messaging services are unlikely to be blocked in enterprise environments. Fallback exfiltration commits encrypted data to attacker-controlled repositories using the author identity "claude@users.noreply.github.com" via the GitHub GraphQL API — the same Claude Code impersonation tactic used in the PyTorch Lightning wave documented in Global-Watch #001.
+
+The malware establishes persistence hooks in both Claude Code and VS Code to survive reboots and re-execute the stealer on every IDE launch. A gh-token-monitor service polls api.github.com/user every 60 seconds to check if the npm token created by the malware has been revoked. If it detects revocation, a dead-man's switch triggers rm -rf ~/ — wiping the developer's home directory. The token is labelled "IfYouRevokeThisTokenItWillWipeTheComputerOfTheOwner." Developers must not revoke the token before isolating and imaging the system.
+
+The Mistral AI and Guardrails AI PyPI compromises follow the earlier preinstall hook approach. The guardrails-ai package executes on import — not install — downloading a remote Python artifact from https://git-tanstack.com/transformers.pyz and executing it without integrity verification. Microsoft's analysis of the malicious mistralai package identified country-aware logic skipping Russian-language environments and a geofenced destructive branch with a 1-in-6 chance of executing rm -rf / when the system appears to be in Israel or Iran.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-45321, CVSS 9.6 — TanStack supply chain compromise
+- **Campaign string:** "Shai-Hulud: Here We Go Again" — 400 attacker-controlled repos created
+- **Attack chain:** pull_request_target trigger → GitHub Actions cache poisoning → OIDC token memory extraction from runner process
+- *Orphaned commit staged malicious payload in GitHub fork → injected into npm tarballs → legitimate TanStack/router workflow hijacked for publishing*
+- *SLSA Build Level 3 provenance bypass — first documented npm worm with valid provenance attestations*
+- **Worm propagation:** locates bypass_2fa npm tokens → enumerates maintainer packages → exchanges OIDC token for per-package publish token → spreads autonomously
+- **Malicious file:** router_init.js — obfuscated JS credential stealer
+- **Persistence:** hooks into Claude Code and VS Code — re-executes stealer on every IDE launch
+- Dead-man's switch: gh-token-monitor polls GitHub every 60 seconds; token revocation triggers rm -rf ~/
+- **Token label:** "IfYouRevokeThisTokenItWillWipeTheComputerOfTheOwner"
+- **Exfiltration:** filev2.getsession[.]org (Session Protocol infrastructure); fallback to attacker-controlled GitHub repos via GraphQL API
+- **Fallback commit author identity:** claude@users.noreply.github.com — Claude Code impersonation
+- **Malicious GitHub Actions workflows:** serialize repo secrets to JSON → upload to api.masscan[.]cloud
+- **Guardrails AI:** executes on import; downloads from git-tanstack.com/transformers.pyz
+- **Mistral AI (PyPI):** Russian locale skip; geofenced destructive branch — 1-in-6 rm -rf / on Israel/Iran systems
+- **Affected:** 170+ packages, 518M+ cumulative downloads, npm and PyPI
+- **Packages confirmed:** @tanstack/* (42 packages, 84 versions), guardrails-ai@0.10.1, mistralai@2.4.6, @opensearch-project/opensearch@3.5.3/3.6.2/3.7.0/3.8.0, @squawk/mcp@0.9.5, and others
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1195.001 — Supply Chain Compromise: Compromise Software Dependencies and Development Tools: GitHub Actions OIDC token hijacked via cache poisoning and memory extraction to publish malicious npm packages through legitimate TanStack workflow
+
+- **TA0002 — Execution**
+  - T1059.007 — Command and Scripting Interpreter: JavaScript: router_init.js obfuscated credential stealer executes via Bun runtime
+  - T1059.006 — Command and Scripting Interpreter: Python: guardrails-ai executes Python artifact on import without integrity verification
+
+- **TA0003 — Persistence**
+  - T1546 — Event Triggered Execution: persistence hooks installed in Claude Code and VS Code — stealer re-executes on every IDE launch
+  - T1053 — Scheduled Task/Job: gh-token-monitor service polls GitHub API every 60 seconds
+
+- **TA0005 — Defense Evasion**
+  - T1553.002 — Subvert Trust Controls: Code Signing: SLSA Build Level 3 provenance attestations forged — malicious packages appear legitimately signed
+  - T1027 — Obfuscated Files or Information: router_init.js heavily obfuscated; payload disguised as legitimate transformers.pyz
+  - T1036 — Masquerading: fallback commits use claude@users.noreply.github.com identity; token label disguised as warning
+  - T1497 — Virtualization/Sandbox Evasion: Russian locale skip; Israel/Iran geofencing logic
+
+- **TA0006 — Credential Access**
+  - T1552.001 — Unsecured Credentials: Credentials in Files: cloud credentials, crypto wallets, AI tool configs, CI/CD secrets harvested from developer environments
+  - T1528 — Steal Application Access Token: GitHub OIDC tokens extracted from Actions runner memory; npm publish tokens exchanged via OIDC
+
+- **TA0009 — Collection**
+  - T1005 — Data from Local System: comprehensive developer environment sweep — cloud creds, wallets, messaging apps, CI secrets
+  - T1113 — Screen Capture: credential stealer collects developer environment data
+
+- **TA0010 — Exfiltration**
+  - T1567.001 — Exfiltration Over Web Service: Code Repositories: encrypted data committed to attacker-controlled GitHub repos via GraphQL API
+  - T1071.001 — Application Layer Protocol: Web Protocols: exfiltration to filev2.getsession[.]org via Session Protocol infrastructure; api.masscan[.]cloud via injected Actions workflows
+
+- **TA0040 — Impact**
+  - T1485 — Data Destruction: dead-man's switch triggers rm -rf ~/ on token revocation — full home directory wipe
+  - T1496 — Resource Hijacking: malicious GitHub Actions workflows inject into victim repos to serialize and exfiltrate CI/CD secrets
+
+---
+
+## Strategic Context
+
+TeamPCP adding a dead-man's switch is the clearest signal yet that this group is escalating deliberately. Prior waves stole credentials and moved on. This wave threatens to destroy a developer's entire home directory if they try to remediate without following the correct procedure. That's coercive — it's designed to make defenders hesitate and to punish anyone who acts without knowing the wiper is there.
+
+The SLSA Build Level 3 bypass is the most operationally significant technical development. SLSA was designed specifically to provide provenance guarantees for software packages — the assurance that what you're installing was built by the pipeline it claims and wasn't tampered with. TeamPCP bypassed that guarantee by hijacking the legitimate pipeline itself. If the pipeline is compromised, provenance attestations mean nothing. This breaks a fundamental assumption in the current supply chain security model.
+
+This connects to Global-Watch #001 — the PyTorch Lightning/Intercom wave — as the same campaign. The Claude Code impersonation in fallback commits is consistent across both waves. TeamPCP is not just iterating tactically, they're building a durable worm infrastructure that spreads through maintainer identity chains autonomously. Each wave reaches a new set of ecosystems without requiring TeamPCP to manually target each one.
+
+The geofenced destructive branch targeting Israel and Iran in the Mistral AI package is a separate signal worth tracking. Combined with the Russian locale skip, TeamPCP is embedding geopolitical targeting logic directly into their payloads. That's not financially motivated — that's ideological or state-adjacent behavior.
+
+---
+
+## Russian Language Context
+
+The Mistral AI PyPI package contains country-aware logic that skips execution on Russian-locale systems — consistent across every documented Shai-Hulud wave. The string "Shai-Hulud: Here We Go Again" embedded across 400 attacker repositories continues the Dune-themed naming convention. The deliberate and consistent exclusion of Russian-language environments across six months of TeamPCP activity remains the strongest operational signal pointing toward Russian-ecosystem origin, though attribution is unconfirmed.
