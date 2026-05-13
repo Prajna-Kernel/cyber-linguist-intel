@@ -184,7 +184,8 @@
 | **вычислительный узел** |[vy-chis-lee-TELʹ-nyy OO-zel] | compute node | **вычислительный узел** |
 | **очередь пакетов** |[O-che-redʹ pa-KYE-tov] | packet queue | **очередь пакетов** |
 | **контрольный узел** | [kan-TROLʹ-nyy OO-zel] | control node | **контрольный узел** |
-
+| **резервный канал** | [re-ZYERV-nyy ka-NAL] | backup channel | **резервный канал** |
+| **область памяти** | [OB-lastʹ PA-mya-ti] | memory region | **область памяти** |
 
 
 
@@ -337,6 +338,9 @@
 | **вдали** | [vda-LEE] | at a distance / remotely |
 | **впоследствии** | [fpo-SLED-stvi-i] | subsequently |
 | **частично** | [chas-TEECH-na] | partially |
+| **предварительно** | [pred-va-REE-telʹ-na] | preliminarily / beforehand |
+| **независимо** | [ne-za-VI-si-ma] | independently |
+
 
 
 ---
@@ -448,3 +452,5 @@
 | **масштабировать** | [mash-ta-BEE-ro-vatʹ] | to scale |
 | **синхронизироваться** | [sin-khra-ni-zee-RO-vat-sa] | to synchronize |
 | **перераспределять** | [pe-re-ras-pre-de-LYATʹ] | to redistribute |
+| **искажаться** | [is-ka-ZHAT-sa] | to become distorted |
+| **перерабатывать** | [pe-re-ra-BA-ty-vatʹ] | to reprocess |
