@@ -608,3 +608,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣7️⃣0️⃣. Система перераспределяет ресурсы между процессами.** | The system redistributes resources between processes.
 
 **2️⃣7️⃣1️⃣. Данные частично повреждаются при сбое сети.** | The data becomes partially corrupted during a network failure.
+
+**2️⃣7️⃣2️⃣. Система использует резервный канал при сбое связи.** | The system uses the backup channel during a connection failure.
+
+**2️⃣7️⃣3️⃣. Область памяти очищается перед обработкой данных.** | The memory region is cleared before data processing.
+
+**2️⃣7️⃣4️⃣. Данные искажаются при высокой нагрузке сети.** | The data becomes distorted under high network load.
+
+**2️⃣7️⃣5️⃣. Система предварительно перерабатывает повреждённые данные.** | The system preliminarily reprocesses corrupted data.
