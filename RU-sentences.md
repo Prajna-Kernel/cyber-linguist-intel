@@ -616,3 +616,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣7️⃣4️⃣. Данные искажаются при высокой нагрузке сети.** | The data becomes distorted under high network load.
 
 **2️⃣7️⃣5️⃣. Система предварительно перерабатывает повреждённые данные.** | The system preliminarily reprocesses corrupted data.
+
+**2️⃣7️⃣6️⃣. Система выполняет системный вызов при запуске.** | The system performs a system call during startup.
+
+**2️⃣7️⃣7️⃣. Очередь потоков перегружается при высокой активности.** | The thread queue becomes overloaded under high activity.
+
+**2️⃣7️⃣8️⃣. Система задействует резервные ресурсы при ошибке.** | The system utilizes backup resources during an error.
+
+**2️⃣7️⃣9️⃣. Сервер временно блокирует внешний доступ.** | The server temporarily blocks external access.
