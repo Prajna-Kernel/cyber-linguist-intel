@@ -186,6 +186,8 @@
 | **контрольный узел** | [kan-TROLʹ-nyy OO-zel] | control node | **контрольный узел** |
 | **резервный канал** | [re-ZYERV-nyy ka-NAL] | backup channel | **резервный канал** |
 | **область памяти** | [OB-lastʹ PA-mya-ti] | memory region | **область памяти** |
+| **системный вызов** | [sis-TYEM-nyy vy-ZOV] | system call | **системный вызов** |
+| **очередь потоков** | [O-che-redʹ pa-TO-kov] | thread queue | **очередь потоков** |
 
 
 
@@ -340,6 +342,8 @@
 | **частично** | [chas-TEECH-na] | partially |
 | **предварительно** | [pred-va-REE-telʹ-na] | preliminarily / beforehand |
 | **независимо** | [ne-za-VI-si-ma] | independently |
+| **временно** | [vre-MEN-na] | temporarily 
+| **сравнительно** | [srav-NEE-telʹ-na] | comparatively |
 
 
 
@@ -454,3 +458,5 @@
 | **перераспределять** | [pe-re-ras-pre-de-LYATʹ] | to redistribute |
 | **искажаться** | [is-ka-ZHAT-sa] | to become distorted |
 | **перерабатывать** | [pe-re-ra-BA-ty-vatʹ] | to reprocess |
+| **перенаправляться** | [pe-re-na-prav-LYAT-sa] | to be redirected |
+| **блокировать** | [bla-kee-RO-vatʹ] | to block |
