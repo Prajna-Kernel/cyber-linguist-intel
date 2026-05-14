@@ -1206,3 +1206,72 @@ The geofenced destructive branch targeting Israel and Iran in the Mistral AI pac
 ## Russian Language Context
 
 The Mistral AI PyPI package contains country-aware logic that skips execution on Russian-locale systems — consistent across every documented Shai-Hulud wave. The string "Shai-Hulud: Here We Go Again" embedded across 400 attacker repositories continues the Dune-themed naming convention. The deliberate and consistent exclusion of Russian-language environments across six months of TeamPCP activity remains the strongest operational signal pointing toward Russian-ecosystem origin, though attribution is unconfirmed.
+
+---
+
+# Incident #018 — May 15, 2026
+
+**Target:** Organizations running Cisco Catalyst SD-WAN Controller and SD-WAN Manager exposed to the internet
+
+**Sector:** Network Infrastructure / Enterprise / Government
+
+**Threat Actor:** Unknown — no attribution as of writing
+
+**Origin:** Unknown
+
+**Source:** The Hacker News — May 14, 2026 | Rapid7 (Jonah Burgess, Stephen Fewer)
+
+**Attack Type:** Authentication Bypass → Privileged Access → Network Configuration Manipulation
+
+**Labels:** Cisco | SD-WAN | CVE-2026-20182 | CVSS 10.0 | Auth Bypass | NETCONF | vdaemon | DTLS | Active Exploitation | Critical
+
+---
+
+## Analysis
+
+Cisco disclosed CVE-2026-20182 on May 14, 2026 — a CVSS 10.0 authentication bypass in Cisco Catalyst SD-WAN Controller (formerly vSmart) and SD-WAN Manager (formerly vManage). Limited active exploitation was confirmed in May 2026. Cisco released patches and is urging immediate application.
+
+The flaw is in the peering authentication mechanism. An unauthenticated remote attacker can send crafted requests to the vdaemon service over DTLS on UDP port 12346 and bypass authentication entirely. Successful exploitation logs the attacker in as an internal high-privileged non-root user account. From there they can access NETCONF and directly manipulate SD-WAN fabric configuration — routing, tunnels, policies across the entire network.
+
+Rapid7, who discovered the vulnerability, noted this is not a patch bypass of CVE-2026-20127 — another CVSS 10.0 auth bypass in the same component that was exploited by UAT-8616 since at least 2023. Both hit the vdaemon service over the same DTLS port but are distinct issues in a similar part of the networking stack. The end result is identical though — unauthenticated remote attacker becomes an authenticated peer with privileged access.
+
+Affected deployments include on-premises, Cisco SD-WAN Cloud-Pro, Cisco SD-WAN Cloud (Cisco Managed), and Cisco SD-WAN for Government (FedRAMP). The FedRAMP deployment being in scope makes this relevant beyond enterprise — US government networks using this product are directly in the blast radius.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-20182 — CVSS 10.0
+- **Vulnerable service:** vdaemon over DTLS, UDP port 12346
+- **Attack vector:** crafted requests to peering authentication mechanism — no credentials required
+- **Post-exploitation access:** internal high-privileged non-root user account
+- **Post-exploitation capability:** NETCONF access — full SD-WAN fabric configuration manipulation
+- **Related CVE:** CVE-2026-20127 (CVSS 10.0) — same service, same port, different issue — exploited by UAT-8616 since 2023
+- **Affected deployments:** on-prem, SD-WAN Cloud-Pro, SD-WAN Cloud (Cisco Managed), SD-WAN for Government (FedRAMP)
+- **Detection:** audit /var/log/auth.log for accepted publickey entries from unknown IPs for vmanage-admin
+- **Detection:** check for unauthorized peer connections at unexpected times from unrecognized IPs
+- **Exploitation status:** limited active exploitation confirmed May 2026
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: crafted requests sent to vdaemon service over DTLS UDP port 12346, exploiting a flaw in the peering authentication mechanism to bypass authentication entirely
+
+- **TA0004 — Privilege Escalation**
+  - T1078.003 — Valid Accounts: Local Accounts: successful bypass logs attacker in as an internal high-privileged non-root local user account on the SD-WAN Controller
+
+- **TA0005 — Defense Evasion**
+  - T1078 — Valid Accounts: attacker is treated as a legitimate authenticated peer by the system after bypass — no anomalous authentication events generated
+
+- **TA0040 — Impact**
+  - T1565.003 — Data Manipulation: Runtime Data Manipulation: NETCONF access enables direct manipulation of SD-WAN fabric configuration — routing, tunnels, and network policies across the managed environment
+
+---
+
+## Strategic Context
+
+This is the second CVSS 10.0 auth bypass hitting the exact same service in Cisco's SD-WAN stack in a short period. CVE-2026-20127 was already being exploited by UAT-8616 since 2023 — and now a new, distinct issue in the same vdaemon networking stack is actively being exploited again. That pattern matters. When a specific component keeps producing critical flaws, it suggests either architectural weaknesses in that part of the codebase or that attackers are actively researching it.
+
+SD-WAN controllers are high-value targets. Compromising one doesn't just give you access to a single device — it gives you visibility and control over the entire network fabric it manages. Routing, tunnels, policies — all of it. That makes this a network-level compromise, not just a server compromise.
+
+The FedRAMP deployment being affected is worth noting. US government agencies using Cisco SD-WAN for Government are in scope. Combined with active exploitation already confirmed, this should have been patched the same day the advisory dropped.
