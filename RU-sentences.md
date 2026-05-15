@@ -624,3 +624,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣7️⃣8️⃣. Система задействует резервные ресурсы при ошибке.** | The system utilizes backup resources during an error.
 
 **2️⃣7️⃣9️⃣. Сервер временно блокирует внешний доступ.** | The server temporarily blocks external access.
+
+**2️⃣8️⃣0️⃣. Система использует точку синхронизации между процессами.** | The system uses a synchronization point between processes.
+
+**2️⃣8️⃣1️⃣. Сервер переходит в режим ожидания после обновления.** | The server enters standby mode after the update.
+
+**2️⃣8️⃣2️⃣. Система приостанавливает обработку при перегрузке.** | The system suspends processing during overload.
+
+**2️⃣8️⃣3️⃣. Нагрузка выравнивается после распределения ресурсов.** | The load levels out after resource distribution.
