@@ -632,3 +632,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣8️⃣2️⃣. Система приостанавливает обработку при перегрузке.** | The system suspends processing during overload.
 
 **2️⃣8️⃣3️⃣. Нагрузка выравнивается после распределения ресурсов.** | The load levels out after resource distribution.
+
+**2️⃣8️⃣4️⃣. Система считывает адрес памяти перед обработкой.** | The system reads the memory address before processing.
+
+**2️⃣8️⃣5️⃣. Журнал транзакций сохраняется после обновления данных.** | The transaction log is saved after the data update.
+
+**2️⃣8️⃣6️⃣. Система перехватывает повреждённые пакеты данных.** | The system intercepts corrupted data packets.
+
+**2️⃣8️⃣7️⃣. Сервер периодически проверяет состояние сети.** | The server periodically checks the network status.
