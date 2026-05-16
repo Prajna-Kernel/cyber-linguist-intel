@@ -190,6 +190,9 @@
 | **очередь потоков** | [O-che-redʹ pa-TO-kov] | thread queue | **очередь потоков** |
 | **точка синхронизации** | [TOCH-ka sin-khra-ni-ZA-tsi-i] | synchronization point | **точку синхронизации** |
 | **режим ожидания** | [re-ZHEEM a-zhi-DA-ni-ya] | standby mode |**режим ожидания** |
+| **адрес памяти** |[A-dres PA-mya-ti] | memory address | **адрес памяти** |
+| **журнал транзакций** | [zhoor-NAL tran-ZAK-tsi-y] | transaction log | **журнал транзакций** |
+
 
 
 ---
@@ -347,6 +350,9 @@
 | **сравнительно** | [srav-NEE-telʹ-na] | comparatively |
 | **последовательно** | [pa-sle-DA-va-telʹ-na] | sequentially |
 | **приблизительно** | [pri-bli-ZEE-telʹ-na] | approximately |
+| **периодически** | [pe-re-a-DEE-ches-ki] | periodically |
+| **независимо от** | [ne-za-VI-si-ma ot] | regardless of |
+
 
 
 ---
@@ -464,3 +470,5 @@
 | **блокировать** | [bla-kee-RO-vatʹ] | to block |
 | **приостанавливать** | [pri-a-sta-nav-LI-vatʹ] | to suspend |
 | **выравниваться** | [vy-rav-NI-vat-sa] | to become balanced / level out |
+| **считывать** | [schi-TY-vatʹ] | to read / retrieve |
+| **перенаправляться** | [pe-re-na-prav-LYAT-sa] | to be redirected |
