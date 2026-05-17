@@ -192,6 +192,10 @@
 | **режим ожидания** | [re-ZHEEM a-zhi-DA-ni-ya] | standby mode |**режим ожидания** |
 | **адрес памяти** |[A-dres PA-mya-ti] | memory address | **адрес памяти** |
 | **журнал транзакций** | [zhoor-NAL tran-ZAK-tsi-y] | transaction log | **журнал транзакций** |
+| **вычислительная нагрузка** | [vy-chis-lee-TELʹ-na-ya na-GRUZ-ka] | computational load | **вычислительную нагрузку** |
+| **узел обработки** | [OO-zel ab-ra-BOT-ki] | processing node | **узел обработки** |
+
+
 
 
 
@@ -352,6 +356,9 @@
 | **приблизительно** | [pri-bli-ZEE-telʹ-na] | approximately |
 | **периодически** | [pe-re-a-DEE-ches-ki] | periodically |
 | **независимо от** | [ne-za-VI-si-ma ot] | regardless of |
+| **одновременно с** | [ad-na-vre-MEN-na s] | simultaneously with |
+| **преимущественно** | [pre-i-moo-SHCHES-tven-na] | predominantly / mainly |
+
 
 
 
@@ -472,3 +479,5 @@
 | **выравниваться** | [vy-rav-NI-vat-sa] | to become balanced / level out |
 | **считывать** | [schi-TY-vatʹ] | to read / retrieve |
 | **перенаправляться** | [pe-re-na-prav-LYAT-sa] | to be redirected |
+| **резервироваться** | [re-zer-vee-RO-vat-sa] | to be reserved |
+| **упорядочивать** | [u-pa-RYA-da-chi-vatʹ] | to organize / order |
