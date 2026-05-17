@@ -1275,3 +1275,73 @@ This is the second CVSS 10.0 auth bypass hitting the exact same service in Cisco
 SD-WAN controllers are high-value targets. Compromising one doesn't just give you access to a single device — it gives you visibility and control over the entire network fabric it manages. Routing, tunnels, policies — all of it. That makes this a network-level compromise, not just a server compromise.
 
 The FedRAMP deployment being affected is worth noting. US government agencies using Cisco SD-WAN for Government are in scope. Combined with active exploitation already confirmed, this should have been patched the same day the advisory dropped.
+
+---
+
+# Incident #019 — May 18, 2026
+
+**Target:** Unnamed open-source web-based system administration tool — planned mass exploitation of its users
+
+**Sector:** Global / Cross-Sector / Open Source Infrastructure
+
+**Threat Actor:** Unnamed prominent cybercrime group — no attribution disclosed by Google
+
+**Origin:** Unknown — criminal, not state-sponsored
+
+**Source:** Google Threat Intelligence Group (GTIG) — May 11, 2026 | The Hacker News | The Register
+
+**Attack Type:** AI-Assisted Zero-Day Discovery — 2FA Bypass — Planned Mass Exploitation (Disrupted)
+
+**Labels:** GTIG | AI-Generated Exploit | Zero-Day | 2FA Bypass | Python | OpenClaw | Mass Exploitation | Disrupted | Criminal | Google | Mandiant
+
+---
+
+## Analysis
+
+On May 11, 2026, Google's Threat Intelligence Group published what is likely the most significant shift in the offensive threat landscape since the emergence of ransomware-as-a-service: **the first confirmed case of a criminal group using AI to develop a functional zero-day exploit**, intended for mass exploitation. Google disrupted the campaign by working with the affected vendor to patch the vulnerability before the attack launched.
+
+The target was a popular open-source, web-based system administration tool — not named by Google. The exploit was a Python script designed to bypass two-factor authentication by exploiting a hardcoded trust exception in the tool's authentication logic. The flaw itself was a high-level semantic logic error — the kind that appears functionally correct to traditional scanners but is strategically broken from a security standpoint. The developer had hard-coded a trust assumption into the authentication flow, and an AI model found it.
+
+GTIG assessed with high confidence that an AI model was used to both discover and weaponize the vulnerability. **The evidence is in the script itself:** an abundance of educational docstrings, a hallucinated CVSS score, and a structured textbook Python format consistent with LLM-generated code. The model used was not Gemini. OpenClaw is the working hypothesis. Google noted that the mistakes present in the exploit's implementation likely interfered with the attackers' plans even before GTIG intervened — the AI got them to a functional exploit but not a clean one.
+
+The broader GTIG report published alongside this finding documents an ecosystem of AI-assisted offensive operations across both criminal and state-sponsored actors. APT45 (North Korea) is sending thousands of repetitive prompts to AI models to analyze CVEs and validate proof-of-concept exploits at industrial scale. Chinese state-linked operators are experimenting with AI for vulnerability hunting and automated target probing. Russian actors are using AI to pad malware with junk code to confuse analysts and AI-generated audio to manipulate news footage. A separate Android backdoor called Promptspy integrates Gemini APIs directly into live malware to autonomously navigate infected devices and replay authentication gestures.
+
+The 2FA bypass case is one data point in a much larger pattern. The barrier to developing a functional zero-day just dropped. What previously required years of expertise in reverse engineering and exploit development can now be compressed into hours with the right model and the right target.
+
+---
+
+## Key Technical Indicators:
+- **Exploit type:** zero-day 2FA bypass — implemented as a Python script
+- **Target:** unnamed popular open-source web-based system administration tool
+- **Vulnerability class:** high-level semantic logic flaw — hardcoded trust assumption in authentication flow
+- **Exploitation requirement:** valid user credentials required before bypass applies
+- **AI involvement:** GTIG high-confidence assessment — educational docstrings, hallucinated CVSS score, structured LLM-style Python format
+- **AI model used:** not Gemini, not Anthropic Mythos — OpenClaw is working hypothesis
+- **Status:** patched before mass exploitation — Google coordinated responsible disclosure with vendor
+- **Related activity:** APT45 using AI for bulk CVE analysis; Chinese operators using AI for vulnerability hunting; Russian actors using AI for malware obfuscation and influence operations
+- **Additional finding:** Promptspy Android backdoor — integrates Gemini API for autonomous device navigation and authentication gesture replay
+- **Report date:** May 11, 2026
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: AI-generated Python exploit targeting a zero-day 2FA bypass in a public-facing open-source web administration tool
+- **TA0006 — Credential Access**
+  - T1111 — Multi-Factor Authentication Interception: exploit specifically designed to bypass two-factor authentication using a hardcoded trust flaw in the authentication logic
+- **TA0042 — Resource Development**
+  - T1587.001 — Develop Capabilities: Malware: AI model used to discover the vulnerability and generate a functional Python exploit — first confirmed AI-assisted zero-day development by a criminal actor
+- **TA0005 — Defense Evasion**
+  - T1027 — Obfuscated Files or Information: separate finding — Russian actors using AI-generated junk code inserted into malware to increase analyst evasion difficulty
+
+---
+
+## Strategic Context
+
+**John Hultquist, chief analyst at GTIG**, put it directly: "There's a misconception that the race to AI vulnerabilities is imminent. The reality is it has already started." This is not a future threat. It happened in May 2026 and was only stopped because Google caught it early and the exploit had implementation errors.
+
+The implications are straightforward. AI models are good at one specific thing that traditional scanners are not — reading code the way a developer does, understanding intent, and finding the gap between what a developer meant to do and what they actually implemented. Hardcoded trust assumptions, logic errors in authentication flows, subtle semantic mistakes — these are exactly what LLMs surface that fuzzing and static analysis miss.
+
+The CVSS score being hallucinated is actually useful information from a threat intelligence standpoint. It tells you the model was not fed a database of known vulnerabilities — it was analyzing source code or documentation cold, generating its own severity assessment, and getting it wrong in the way LLMs get things wrong. The rest of the exploit was functional enough that a mass exploitation campaign was planned around it.
+
+The broader GTIG report makes clear this is already an ecosystem, not an experiment. State actors and criminal groups are both in this space simultaneously, at different levels of sophistication. The compression of timelines between vulnerability discovery, weaponization, and exploitation is real and accelerating. Defenders who are not already integrating AI into their detection and response workflows are falling behind.
