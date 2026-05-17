@@ -640,3 +640,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣8️⃣6️⃣. Система перехватывает повреждённые пакеты данных.** | The system intercepts corrupted data packets.
 
 **2️⃣8️⃣7️⃣. Сервер периодически проверяет состояние сети.** | The server periodically checks the network status.
+
+**2️⃣8️⃣8️⃣. Вычислительная нагрузка увеличивается при обработке данных.** | Computational load increases during data processing.
+
+**2️⃣8️⃣9️⃣. Узел обработки подключается к основной системе.** | The processing node connects to the main system.
+
+**2️⃣9️⃣0️⃣. Ресурсы резервируются автоматически при запуске.** | Resources are reserved automatically during startup.
+
+**2️⃣9️⃣1️⃣. Система упорядочивает задачи поэтапно.** | The system organizes tasks step by step.
