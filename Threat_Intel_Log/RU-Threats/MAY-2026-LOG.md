@@ -251,3 +251,99 @@ APT44 operates as Войсковая часть 74455 (Voyskavaya chast 74455) �
 **Note:** Every TeamPCP/Shai-Hulud wave consistently skips Russian-locale systems. Latest wave adds geofenced destructive branch targeting Israel and Iran. Russian-ecosystem origin assessed but **unconfirmed across six months of activity.**
 
 👉 **[Read Full Entry in Global-Watch](../Global-Watch/MAY-2026-LOG.md#incident-017)**
+
+---
+
+# Incident #004 — May 18, 2026
+
+**Target:** Government, diplomatic, and defense organizations across Europe, Central Asia, and Ukraine
+
+**Sector:** Government / Defense / Diplomatic
+
+**Threat Actor:** Secret Blizzard (aka Turla, Venomous Bear, Uroburos, Snake, Blue Python, WRAITH, ATG26)
+
+**Origin:** Russia — FSB Center 16 — state-sponsored espionage
+
+**Source:** Microsoft Threat Intelligence — May 14, 2026
+
+**Attack Type:** Modular P2P Botnet — Long-Term Persistent Access — Intelligence Collection
+
+**Labels:** Secret Blizzard | Turla | Kazuar | FSB | P2P Botnet | Modular Malware | Pelmeni | ShadowLoader | Espionage | Europe | Ukraine | Long-Term Access
+
+---
+
+## Analysis
+
+Microsoft Threat Intelligence published a deep technical breakdown of Kazuar on May 14, 2026, documenting its evolution from a standard .NET backdoor into a fully modular peer-to-peer botnet. Kazuar has been in active development since at least 2017, with code lineage traced back to 2005. This is not a new tool — it is a continuously upgraded one, and that distinction matters. Secret Blizzard has been quietly rebuilding it for years while most defenders treated it as a known and understood threat.
+
+The architecture is now split across three distinct module types: Kernel, Bridge, and Worker. The Kernel acts as the central coordinator — it issues tasks, manages C2 communication through the Bridge, and handles internal logging. The Bridge is the external communications layer, proxying traffic between the Kernel and the C2 server using HTTP, WebSockets, or Exchange Web Services. The Worker handles actual collection — keylogging, screenshots, file harvesting, email content, browser data, running processes, USB devices, and more.
+
+The most significant design choice is the leader election mechanism. Out of all infected machines in a network, only one Kernel module is elected as the active leader at any given time. Only that elected leader communicates externally. Every other infected machine stays silent internally. The result is a botnet that generates almost no suspicious outbound traffic across a compromised network — a single machine talking to C2 while dozens of others collect quietly.
+
+Delivery happens through the Pelmeni dropper, which embeds an encrypted payload inside itself. In some cases the payload is bound to the target's specific hostname, meaning it will only decrypt and execute on the exact machine it was built for — making early detection much harder. ShadowLoader is used as an alternative delivery mechanism.
+
+Inter-module communication uses AES-encrypted messages serialized with Google Protocol Buffers over Windows Messaging, Mailslots, or Named Pipes. The configuration system supports 150 different options covering everything from exfiltration timing windows and file size filters to AMSI bypass, ETW bypass, and anti-dump protections. Communication blackout periods can be configured to blend with normal business hours — exfiltration defaults to 8AM–8PM to avoid standing out.
+
+**The targeting scope matches FSB strategic priorities:** ministries of foreign affairs, embassies, defense departments, and defense-related organizations across Europe and Central Asia. Ukraine is also explicitly in scope, with Secret Blizzard known to use endpoints already compromised by Aqua Blizzard as a stepping stone.
+
+---
+
+## Key Technical Indicators:
+- **Malware family:** Kazuar — .NET based, active since 2017, code lineage to 2005
+- **Module types:** Kernel (coordinator), Bridge (external C2 proxy), Worker (collection)
+- **Delivery:** Pelmeni dropper with encrypted embedded payload — sometimes hostname-bound; ShadowLoader used as alternate
+- **Leader election:** single elected Kernel leader handles all external C2 — all other nodes stay silent
+- **IPC mechanisms:** Windows Messaging (default), Mailslots, Named Pipes — AES encrypted, serialized via Protobuf
+- **External C2 protocols:** HTTP (default), WebSockets, Exchange Web Services (EWS)
+- **Configuration:** 150 options — covers exfiltration timing, security bypasses, task management, file harvesting, surveillance
+- **Security bypasses:** AMSI bypass, ETW bypass, WLDP bypass, anti-dump protections
+- **Collection scope:** keystrokes, screenshots, email content, browser data, running processes, USB devices, network info, user accounts, installed software
+- **Exfiltration window:** 8AM–8PM default — configurable blackout periods
+- **SHA-256 (Kernel):** c1f278f88275e07cc03bd390fe1cbeedd55933110c6fd16de4187f4c4aaf42b9
+- **SHA-256 (Bridge):** 6eb31006ca318a21eb619d008226f08e287f753aec9042269203290462eaa00d
+- **SHA-256 (Worker):** 436cfce71290c2fc2f2c362541db68ced6847c66a73b55487e5e5c73b0636c85
+- **SHA-256 (Loader):** 69908f05b436bd97baae56296bf9b9e734486516f9bb9938c2b8752e152315d4
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1195 — Supply Chain Compromise: Pelmeni dropper used to deliver encrypted Kazuar payload, sometimes bound to target hostname
+- **TA0002 — Execution**
+  - T1106 — Native API: modules communicate via Windows Messaging and Mailslots using native Windows IPC mechanisms
+- **TA0003 — Persistence**
+  - T1547 — Boot or Logon Autostart Execution: Kazuar maintains persistent access across reboots through working directory state and leader re-election on restart
+- **TA0005 — Defense Evasion**
+  - T1562.001 — Impair Defenses: Disable or Modify Tools: AMSI bypass, ETW bypass, WLDP bypass, and anti-dump protections configurable per deployment
+  - T1027 — Obfuscated Files or Information: payload encrypted inside Pelmeni dropper; sometimes bound to target hostname to resist analysis
+  - T1070 — Indicator Removal: leader election keeps all non-leader nodes silent — minimizes observable network footprint across compromised environment
+- **TA0006 — Credential Access**
+  - T1056.001 — Input Capture: Keylogging: Worker module runs dedicated keylogging thread with configurable buffer size and flush intervals
+- **TA0009 — Collection**
+  - T1113 — Screen Capture: Worker module captures screenshots automatically based on configuration or on-demand via task
+  - T1114 — Email Collection: Worker collects MAPI email data from compromised hosts
+  - T1005 — Data from Local System: Worker harvests files, recent documents, browser data, running processes, USB devices, and full system info
+- **TA0011 — Command and Control**
+  - T1071.001 — Application Layer Protocol: Web Protocols: HTTP and WebSocket used for external C2 communication via Bridge module
+  - T1071.003 — Application Layer Protocol: Mail Protocols: Exchange Web Services used as alternate C2 channel
+  - T1090 — Proxy: Bridge module proxies all external C2 traffic on behalf of the elected Kernel leader
+- **TA0010 — Exfiltration**
+  - T1029 — Scheduled Transfer: exfiltration configured to occur within defined time windows — default 8AM to 8PM — with chunk size and rate limiting controls
+
+---
+
+## Strategic Context
+
+What makes this worth documenting is not that Kazuar exists — it has been known for years. What matters is the architectural direction Secret Blizzard chose. Most Russian threat actors are moving toward living-off-the-land techniques, using built-in Windows tools to blend in. Secret Blizzard went the opposite way and built stealth directly into the malware itself.
+
+The leader election design is the clearest example of that thinking. A botnet where only one machine generates outbound traffic at any given time is not something traditional network monitoring is set up to catch. If you are only looking for anomalous traffic patterns, you will miss this completely. The rest of the infected machines are just sitting quietly, collecting.
+
+The 150-configuration option system is also significant. This is not a tool built for a single campaign. It is a platform designed for long-term, flexible operations across many different target environments. The ability to set exfiltration blackout periods, bind payloads to specific hostnames, and swap C2 protocols on the fly suggests an actor that expects to be inside target networks for months or years, not days.
+
+The Ukraine angle connects this to the broader Russo-Ukrainian conflict cyber dimension. Secret Blizzard is documented to use endpoints already compromised by Aqua Blizzard as an entry point — one Russian APT piggybacking on another's access. That level of coordination between FSB-linked groups is a recurring pattern worth tracking.
+
+---
+
+## Russian Language Context
+
+Secret Blizzard operates under the FSB's Федеральная служба безопасности (Federal'naya sluzhba bezopasnosti) — Federal Security Service — specifically Centre 16, responsible for electronic intelligence and technical penetration of foreign targets. Kazuar's architecture is designed around скрытность (skrytnost') — stealth — with the leader election mechanism ensuring minimal внешний трафик (veshniy trafik) — external traffic — across compromised networks. The targeting of дипломатические организации (diplomaticheskiye organizatsii) — diplomatic organizations — and министерства иностранных дел (ministerstva inostrannykh del) — ministries of foreign affairs — across Europe and Central Asia reflects long-standing FSB intelligence collection priorities tied to Russian внешняя политика (vneshnyaya politika) — foreign policy objectives.
