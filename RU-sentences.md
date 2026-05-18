@@ -648,3 +648,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣9️⃣0️⃣. Ресурсы резервируются автоматически при запуске.** | Resources are reserved automatically during startup.
 
 **2️⃣9️⃣1️⃣. Система упорядочивает задачи поэтапно.** | The system organizes tasks step by step.
+
+**2️⃣9️⃣2️⃣. Система обновляет карту памяти после перезапуска.** | The system updates the memory map after restart.
+
+**2️⃣9️⃣3️⃣. Точка маршрутизации перенаправляет пакеты данных.** | The routing point reroutes data packets.
+
+**2️⃣9️⃣4️⃣. Система выравнивает нагрузку между серверами.** | The system balances the load between servers.
+
+**2️⃣9️⃣5️⃣. Узлы работают независимо друг от друга.** | The nodes operate independently from each other.
