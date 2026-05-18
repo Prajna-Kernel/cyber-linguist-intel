@@ -194,7 +194,8 @@
 | **журнал транзакций** | [zhoor-NAL tran-ZAK-tsi-y] | transaction log | **журнал транзакций** |
 | **вычислительная нагрузка** | [vy-chis-lee-TELʹ-na-ya na-GRUZ-ka] | computational load | **вычислительную нагрузку** |
 | **узел обработки** | [OO-zel ab-ra-BOT-ki] | processing node | **узел обработки** |
-
+| **карта памяти** | [KAR-ta PA-mya-ti] | memory map | **карту памяти** |
+| **точка маршрутизации** | [TOCH-ka mar-shroo-tee-ZA-tsi-i] | routing point | **точку маршрутизации** |
 
 
 
@@ -358,7 +359,8 @@
 | **независимо от** | [ne-za-VI-si-ma ot] | regardless of |
 | **одновременно с** | [ad-na-vre-MEN-na s] | simultaneously with |
 | **преимущественно** | [pre-i-moo-SHCHES-tven-na] | predominantly / mainly |
-
+| **дополнительно** | [da-pal-NI-telʹ-na] | additionally |
+| **независимо друг от друга** | [ne-za-VI-si-ma droog ot DROO-ga] | independently from each other |
 
 
 
@@ -481,3 +483,6 @@
 | **перенаправляться** | [pe-re-na-prav-LYAT-sa] | to be redirected |
 | **резервироваться** | [re-zer-vee-RO-vat-sa] | to be reserved |
 | **упорядочивать** | [u-pa-RYA-da-chi-vatʹ] | to organize / order |
+| **переадресовывать** | [pe-re-a-dre-sa-VY-vatʹ] | to forward / reroute |
+| **выравнивать** | [vy-rav-NI-vatʹ] | to level / balance |
+
