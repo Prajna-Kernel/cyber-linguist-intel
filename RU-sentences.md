@@ -656,3 +656,11 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣9️⃣4️⃣. Система выравнивает нагрузку между серверами.** | The system balances the load between servers.
 
 **2️⃣9️⃣5️⃣. Узлы работают независимо друг от друга.** | The nodes operate independently from each other.
+
+**2️⃣9️⃣6️⃣. Система проверяет очередь команд перед запуском.** | The system checks the command queue before startup.
+
+**2️⃣9️⃣7️⃣. Сетевой интерфейс подключается к локальной сети.** | The network interface connects to the local network.
+
+**2️⃣9️⃣8️⃣. Система инициализирует резервный модуль при сбое.** | The system initializes the backup module during failure.
+
+**2️⃣9️⃣9️⃣. Сервер практически не использует дополнительную память.** | The server practically does not use additional memory.
