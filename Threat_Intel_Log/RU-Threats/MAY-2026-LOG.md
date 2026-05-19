@@ -347,3 +347,78 @@ The Ukraine angle connects this to the broader Russo-Ukrainian conflict cyber di
 ## Russian Language Context
 
 Secret Blizzard operates under the FSB's Федеральная служба безопасности (Federal'naya sluzhba bezopasnosti) — Federal Security Service — specifically Centre 16, responsible for electronic intelligence and technical penetration of foreign targets. Kazuar's architecture is designed around скрытность (skrytnost') — stealth — with the leader election mechanism ensuring minimal внешний трафик (veshniy trafik) — external traffic — across compromised networks. The targeting of дипломатические организации (diplomaticheskiye organizatsii) — diplomatic organizations — and министерства иностранных дел (ministerstva inostrannykh del) — ministries of foreign affairs — across Europe and Central Asia reflects long-standing FSB intelligence collection priorities tied to Russian внешняя политика (vneshnyaya politika) — foreign policy objectives.
+
+---
+
+# Incident #005 — May 20, 2026
+
+**Target:** Government agencies, ministries of foreign affairs, law enforcement, email and cloud service providers across North Africa, Central America, Southeast Asia, and Europe
+
+**Sector:** Government / Diplomatic / Critical Infrastructure
+
+**Threat Actor:** APT28 / Storm-2754 (aka Forest Blizzard, Fancy Bear, Sednit, Sofacy)
+
+**Origin:** Russia — GRU Military Unit 26165, 85th Main Special Service Centre (GTsSS) — state-sponsored espionage
+
+**Source:** The Hacker News — April 7, 2026 | Microsoft Threat Intelligence 
+
+**Attack Type:** SOHO Router Compromise — DNS Hijacking — Adversary-in-the-Middle — Credential Theft
+
+**Labels:** APT28 | Forest Blizzard | GRU | FrostArmada | Operation Masquerade | DNS Hijacking | AitM | TP-Link | MikroTik | CVE-2023-50224 | SOHO Routers | Credential Theft | Disrupted
+
+---
+
+## Analysis
+
+Since at least May 2025, APT28 has been running a large-scale DNS hijacking campaign targeting SOHO routers — primarily TP-Link and MikroTik devices — across more than 120 countries. Lumen's Black Lotus Labs named the campaign FrostArmada. The US DoJ coordinated a court-authorized takedown, Operation Masquerade, to disrupt the US portion of the network in April 2026.
+
+The attack chain is straightforward but effective. APT28 gains remote admin access to vulnerable SOHO routers and rewrites their DHCP/DNS settings to point to actor-controlled DNS resolvers. Every device connected to that router — laptops, phones, anything — inherits the new settings. From that point, APT28 has visibility into all DNS lookups on the network. For targets of intelligence value, the actor serves fraudulent DNS records, redirecting traffic to AitM nodes that intercept and harvest credentials before forwarding the connection normally.
+
+The entry vector for TP-Link WR841N routers was CVE-2023-50224 (CVSS 6.5), an authentication bypass that allows credential extraction via crafted HTTP GET requests. At peak activity in December 2025, over 18,000 unique IPs across 120+ countries were communicating with APT28 infrastructure. Microsoft identified more than 200 organizations and 5,000 consumer devices compromised. Targets included ministries of foreign affairs, law enforcement agencies, and cloud and email providers across North Africa, Central America, Southeast Asia, and Europe. A second cluster of servers was identified conducting interactive operations against a small number of MikroTik routers in Ukraine.
+
+The approach is described as opportunistic first, then filtered. APT28 casts a wide net across vulnerable routers, gains passive DNS visibility over a large pool of users, then filters down to targets of actual intelligence value before conducting active AitM interception. This keeps the noise low and the targeting precise.
+
+---
+
+## Key Technical Indicators:
+- **Campaign name:** FrostArmada (Lumen Black Lotus Labs) | Takedown: Operation Masquerade (FBI/DoJ)
+- **Active since:** May 2025 — widespread exploitation from August 2025 — peak December 2025 (18,000+ IPs, 120+ countries)
+- **Entry vector:** CVE-2023-50224 (CVSS 6.5) — TP-Link WR841N authentication bypass via crafted HTTP GET requests
+- **Target devices:** TP-Link WR841N and MikroTik SOHO routers
+- **Attack method:** DHCP/DNS settings overwritten to point to actor-controlled resolvers
+- **AitM targets:** Microsoft Outlook Web Access and non-Microsoft government servers (at least 3 in Africa confirmed)
+- **Credentials harvested:** passwords, OAuth tokens, web and email service credentials
+- **Scale:** 200+ organizations, 5,000+ consumer devices (Microsoft assessment)
+- **Ukraine cluster:** second server cluster conducting interactive operations against MikroTik routers in Ukraine
+- **Attribution:** GRU Military Unit 26165 — confirmed by DoJ, NCSC-UK, Microsoft, Lumen
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: CVE-2023-50224 exploited to gain remote administrative access to TP-Link WR841N routers
+- **TA0005 — Defense Evasion**
+  - T1599.001 — Network Boundary Bridging: Router firmware and settings modified at the network edge — upstream of enterprise targets and less closely monitored than endpoint devices
+- **TA0006 — Credential Access**
+  - T1557 — Adversary-in-the-Middle: DNS redirected to actor-controlled resolvers — fraudulent DNS records served for specific domains to intercept TLS-encrypted traffic and harvest credentials
+  - T1040 — Network Sniffing: actor-controlled DNS infrastructure provides passive visibility into all DNS lookups across compromised networks before active AitM targeting
+- **TA0009 — Collection**
+  - T1114 — Email Collection: Microsoft Outlook Web Access specifically targeted via fraudulent DNS records — credentials for email access harvested via AitM interception
+- **TA0011 — Command and Control**
+  - T1583.002 — Acquire Infrastructure: Virtual Private Servers: actor-configured VPS infrastructure operated as malicious DNS resolvers receiving requests from compromised routers
+
+---
+
+## Strategic Context
+
+This campaign is a good example of how GRU operations work at scale. Rather than going after high-value targets directly and risking detection, APT28 compromised thousands of cheap, poorly maintained home and small office routers and turned them into a passive global surveillance network. The routers are upstream of larger targets, less monitored, and often running outdated firmware with no patching cycle.
+
+The filtering approach is operationally smart. Gaining DNS visibility over 18,000 IPs and then triaging for intelligence value is much quieter than directly probing government networks. By the time active AitM interception begins against a specific target, the initial access vector is already invisible in the noise.
+
+The Ukraine cluster is consistent with APT28's ongoing tasking in the context of the war. A separate server cluster conducting interactive operations against Ukrainian MikroTik routers is exactly the kind of persistent tactical intelligence collection the GRU needs for military operations.
+
+---
+
+## Russian Language Context
+
+APT28 operates under the ГРУ (GRU) — Главное разведывательное управление (Glavnoye razvedyvatel'noye upravleniye) — Main Intelligence Directorate of the General Staff, specifically Войсковая часть 26165 (Voyskavaya chast' 26165) — Military Unit 26165. The campaign's core technique, перехват DNS (perekhvat DNS) — DNS interception — enabled пассивный сбор данных (passivnyy sbor dannykh) — passive data collection — across compromised networks. Targeting of министерства иностранных дел (ministerstva inostrannykh del) — ministries of foreign affairs — is consistent with GRU's long-standing focus on дипломатическая разведка (diplomaticheskaya razvedka) — diplomatic intelligence collection.
