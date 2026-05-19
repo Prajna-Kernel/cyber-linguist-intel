@@ -196,7 +196,8 @@
 | **узел обработки** | [OO-zel ab-ra-BOT-ki] | processing node | **узел обработки** |
 | **карта памяти** | [KAR-ta PA-mya-ti] | memory map | **карту памяти** |
 | **точка маршрутизации** | [TOCH-ka mar-shroo-tee-ZA-tsi-i] | routing point | **точку маршрутизации** |
-
+| **очередь команд** | [O-che-redʹ ka-MAND] | command queue | **очередь команд** |
+| **сетевой интерфейс** | [se-te-VOY in-ter-FEYS] | network interface | **сетевой интерфейс** |
 
 
 
@@ -361,7 +362,8 @@
 | **преимущественно** | [pre-i-moo-SHCHES-tven-na] | predominantly / mainly |
 | **дополнительно** | [da-pal-NI-telʹ-na] | additionally |
 | **независимо друг от друга** | [ne-za-VI-si-ma droog ot DROO-ga] | independently from each other |
-
+| **впоследствии** | [fpo-SLED-stvi-i] | subsequently |
+| **предположительно** | [pred-pa-la-ZHI-telʹ-na] | presumably |
 
 
 ---
@@ -485,4 +487,5 @@
 | **упорядочивать** | [u-pa-RYA-da-chi-vatʹ] | to organize / order |
 | **переадресовывать** | [pe-re-a-dre-sa-VY-vatʹ] | to forward / reroute |
 | **выравнивать** | [vy-rav-NI-vatʹ] | to level / balance |
-
+| **инициализировать** | [i-ni-tsi-a-li-ZI-ro-vatʹ] | to initialize |
+| **перенаправлять** |[pe-re-na-prav-LYATʹ] | to redirect |
