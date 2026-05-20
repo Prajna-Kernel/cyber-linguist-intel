@@ -6,7 +6,8 @@
 - [Sentences 101-150](#sentences-101150)
 - [Sentences 151-200](#sentences-151200)
 - [Sentences 201-250](#sentences-201250)
-- [Sentences 251+](#sentences-251)
+- [Sentences 251-300](#sentences-251300)
+- [Sentences 301+](#sentences-301)
 
 ---
 
@@ -573,7 +574,7 @@ If there is load, the system slows down, then there is a frame drop.
 
 ---
 
-# sentences 251+
+# sentences 251300
 
 **2️⃣5️⃣1️⃣. Система проверяет таблицу разделов перед загрузкой.** | The system checks the partition table before loading.
 
@@ -664,3 +665,13 @@ If there is load, the system slows down, then there is a frame drop.
 **2️⃣9️⃣8️⃣. Система инициализирует резервный модуль при сбое.** | The system initializes the backup module during failure.
 
 **2️⃣9️⃣9️⃣. Сервер практически не использует дополнительную память.** | The server practically does not use additional memory.
+
+**3️⃣0️⃣0️⃣. Система подключает модуль обработки после обновления.** | The system connects the processing module after the update.
+
+# sentences 301+
+
+**3️⃣0️⃣1️⃣. Резервная таблица сохраняется автоматически.** | The backup table is saved automatically.
+
+**3️⃣0️⃣2️⃣. Система постепенно уплотняет данные при передаче.** | The system gradually compacts data during transmission.
+
+**3️⃣0️⃣3️⃣. Сервер переопределяет параметры при ошибке.** | The server overrides parameters during an error.
