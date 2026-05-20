@@ -198,6 +198,10 @@
 | **точка маршрутизации** | [TOCH-ka mar-shroo-tee-ZA-tsi-i] | routing point | **точку маршрутизации** |
 | **очередь команд** | [O-che-redʹ ka-MAND] | command queue | **очередь команд** |
 | **сетевой интерфейс** | [se-te-VOY in-ter-FEYS] | network interface | **сетевой интерфейс** |
+| **модуль обработки** | [MO-doolʹ ab-ra-BOT-ki] | processing module | **модуль обработки** |
+| **резервная таблица** | [re-ZYERV-na-ya ta-BLEE-tsa] | backup table | **резервную таблицу** |
+
+
 
 
 
@@ -364,6 +368,10 @@
 | **независимо друг от друга** | [ne-za-VI-si-ma droog ot DROO-ga] | independently from each other |
 | **впоследствии** | [fpo-SLED-stvi-i] | subsequently |
 | **предположительно** | [pred-pa-la-ZHI-telʹ-na] | presumably |
+| **постепенно** | [pa-ste-PEN-na] | gradually |
+| **косвенно** | [kas-VEN-na] | indirectly |
+
+
 
 
 ---
@@ -489,3 +497,7 @@
 | **выравнивать** | [vy-rav-NI-vatʹ] | to level / balance |
 | **инициализировать** | [i-ni-tsi-a-li-ZI-ro-vatʹ] | to initialize |
 | **перенаправлять** |[pe-re-na-prav-LYATʹ] | to redirect |
+| **уплотнять** | [u-plat-NYATʹ] | to compact / densify |
+| **переопределять** | [pe-re-a-pre-de-LYATʹ] | to override / redefine |
+
+
