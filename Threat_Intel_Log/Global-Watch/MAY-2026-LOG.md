@@ -1345,3 +1345,84 @@ The implications are straightforward. AI models are good at one specific thing t
 The CVSS score being hallucinated is actually useful information from a threat intelligence standpoint. It tells you the model was not fed a database of known vulnerabilities — it was analyzing source code or documentation cold, generating its own severity assessment, and getting it wrong in the way LLMs get things wrong. The rest of the exploit was functional enough that a mass exploitation campaign was planned around it.
 
 The broader GTIG report makes clear this is already an ecosystem, not an experiment. State actors and criminal groups are both in this space simultaneously, at different levels of sophistication. The compression of timelines between vulnerability discovery, weaponization, and exploitation is real and accelerating. Defenders who are not already integrating AI into their detection and response workflows are falling behind.
+
+---
+
+# Incident #020 — May 21, 2026
+
+**Target:** Government agencies, IT services, aerospace, and electric power sector organizations across Russia, Georgia, Mongolia, Central Asia, and European government entities in Belgium, Italy, Serbia, Poland, and Spain
+
+**Sector:** Government / IT Services / Aerospace / Energy / Education
+
+**Threat Actor:** Webworm (overlaps with FishMonger/Aquatic Panda, SixLittleMonkeys, Space Pirates) — China-aligned
+
+**Origin:** China-aligned — espionage motivated, active since at least 2022
+
+**Source:** The Hacker News — May 20, 2026 
+
+**Attack Type:** Custom Backdoor Deployment — Living-off-the-Land C2 via Discord and Microsoft Graph API
+
+**Labels:** Webworm | EchoCreep | GraphWorm | China-aligned | Discord C2 | MS Graph API | SoftEther VPN | BadIIS | FishMonger | Space Pirates | Custom Backdoors | Espionage
+
+---
+
+## Analysis
+
+ESET published research on May 20, 2026 documenting fresh Webworm activity from 2025, where the group added two new custom backdoors — EchoCreep and GraphWorm — to an already evolving toolkit. Both backdoors use legitimate **third-party platforms for C2:** EchoCreep routes commands through Discord, while GraphWorm uses Microsoft Graph API and OneDrive for file transfer and command execution. The earliest recorded EchoCreep C2 command dates to March 21, 2024, with 433 Discord messages sent via the channel to date.
+
+EchoCreep handles basic operations — file upload and download, command execution via cmd.exe. **GraphWorm is more capable:** it can spawn new cmd.exe sessions, create and execute processes, transfer files through OneDrive, and terminate itself on operator signal. Both backdoors are a deliberate shift away from the older RATs Webworm previously relied on — Trochilus, Gh0st RAT, and 9002 RAT appear to have been abandoned.
+
+The group stages malware through a GitHub repository disguised as a WordPress fork (github[.]com/anjsdgasdf/WordPress), and uses SoftEther VPN alongside custom proxy tools — WormFrp, ChainWorm, SmuxProxy, and WormSocket — to tunnel traffic and cover lateral movement. WormFrp retrieves its configuration from a compromised Amazon S3 bucket. These proxy tools encrypt communications and support chaining across multiple internal and external hosts. Initial access vectors are still unknown, but Webworm uses dirsearch and nuclei for web server enumeration and vulnerability scanning post-access.
+
+The article also covers a separate but related development: Cisco Talos documented a BadIIS variant being sold under a MaaS model by a threat actor using the alias "lwxat," active since at least September 2021. BadIIS is shared across multiple Chinese-speaking cybercrime groups and supports traffic redirection, reverse proxying, content hijacking, and SEO fraud via a dedicated builder tool.
+
+---
+
+## Key Technical Indicators:
+- **New backdoors:** EchoCreep (Discord C2), GraphWorm (Microsoft Graph API / OneDrive C2)
+- **EchoCreep capabilities:** file upload/download, cmd.exe command execution
+- **GraphWorm capabilities:** spawn cmd.exe sessions, process creation/execution, OneDrive file transfer, self-termination on operator signal
+- **First EchoCreep C2 activity:** March 21, 2024 — 433 Discord messages sent via C2 channel
+- **Malware staging:** GitHub repo impersonating WordPress fork — github[.]com/anjsdgasdf/WordPress
+- **VPN tool:** SoftEther VPN — used across multiple Chinese threat actor clusters
+- **Custom proxy tools:** WormFrp (S3 config retrieval), ChainWorm, SmuxProxy, WormSocket
+- **Reconnaissance tools:** dirsearch, nuclei — web server file brute-forcing and vulnerability scanning
+- **Abandoned tools:** Trochilus RAT, 9002 RAT (Hydraq/McRat)
+- **Actor overlaps:** FishMonger/Aquatic Panda, SixLittleMonkeys, Space Pirates
+- **BadIIS MaaS operator alias:** lwxat — builder tool active since September 2021
+- **Initial access vector:** unknown as of report date
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: dirsearch and nuclei used to brute-force web server directories and scan for exploitable vulnerabilities as likely precursor to access
+- **TA0002 — Execution**
+  - T1059.003 — Command and Scripting Interpreter: Windows Command Shell: both EchoCreep and GraphWorm execute commands via cmd.exe sessions on compromised hosts
+- **TA0003 — Persistence**
+  - T1505.003 — Server Software Component: Web Shell: BadIIS deployed as a persistent IIS server component with service-based installers surviving server restarts
+- **TA0005 — Defense Evasion**
+  - T1102.002 — Web Service: Bidirectional Communication: EchoCreep routes C2 through Discord; GraphWorm routes C2 through Microsoft Graph API — both blend into legitimate cloud traffic
+  - T1036.005 — Masquerading: Match Legitimate Name or Location: malware staged on GitHub repository disguised as a WordPress fork
+  - T1090.003 — Proxy: Multi-hop Proxy: WormFrp, ChainWorm, SmuxProxy, and WormSocket chain traffic across multiple internal and external hosts to obscure operator infrastructure
+- **TA0009 — Collection**
+  - T1005 — Data from Local System: GraphWorm uploads files from compromised hosts to OneDrive via Microsoft Graph API
+- **TA0011 — Command and Control**
+  - T1071.001 — Application Layer Protocol: Web Protocols: GraphWorm uses Microsoft Graph API over HTTPS as C2 channel
+  - T1219 — Remote Access Software: SoftEther VPN used alongside proxy tools to tunnel operator traffic and maintain persistent remote access
+
+---
+
+## Strategic Context
+
+The shift to Discord and Microsoft Graph API for C2 is becoming a pattern across Chinese APT clusters — it's not unique to Webworm. Legitimate cloud services generate massive volumes of traffic, blend into normal enterprise activity, and are rarely blocked at the network boundary. Traditional C2 detection based on known malicious IPs or domains becomes much less effective when the traffic looks identical to an employee using OneDrive or a developer using Discord.
+
+The abandonment of Trochilus and 9002 RAT in favour of custom tools is worth noting. Older RATs have known signatures and detection rules. Building new tooling specifically designed around legitimate API abuse is a deliberate evasion investment.
+
+Russia appearing in the target scope alongside European government entities reflects Webworm's broad tasking — this isn't a single-campaign actor. The Space Pirates overlap is particularly relevant here given Space Pirates' documented focus on Russian IT firms and aerospace. The targeting profile across both clusters suggests consistent Chinese intelligence collection priorities against Russian strategic sectors, which is a notable dynamic in the context of the Sino-Russian relationship.
+
+---
+
+## Russian Language Context
+
+Webworm's targeting of российские государственные организации (rossiyskiye gosudarstvennyye organizatsii) — Russian government organizations — and аэрокосмический сектор (aerokosmicheskiy sektor) — the aerospace sector — reflects persistent Chinese intelligence collection against стратегические отрасли (strategicheskiye otrasli) — strategic industries. The use of легитимные облачные сервисы (legitimnyye oblachnyye servisy) — legitimate cloud services — such as Discord and Microsoft Graph API for управление и контроль (upravleniye i kontrol') — command and control — represents a growing evasion trend observed across several Chinese-nexus clusters operating against Russian targets.
