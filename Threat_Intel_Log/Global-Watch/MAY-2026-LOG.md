@@ -1426,3 +1426,89 @@ Russia appearing in the target scope alongside European government entities refl
 ## Russian Language Context
 
 Webworm's targeting of российские государственные организации (rossiyskiye gosudarstvennyye organizatsii) — Russian government organizations — and аэрокосмический сектор (aerokosmicheskiy sektor) — the aerospace sector — reflects persistent Chinese intelligence collection against стратегические отрасли (strategicheskiye otrasli) — strategic industries. The use of легитимные облачные сервисы (legitimnyye oblachnyye servisy) — legitimate cloud services — such as Discord and Microsoft Graph API for управление и контроль (upravleniye i kontrol') — command and control — represents a growing evasion trend observed across several Chinese-nexus clusters operating against Russian targets.
+
+---
+
+# Incident #021 — May 22, 2026
+
+**Target:** Telecommunications provider in the Middle East; ISP in Afghanistan; unknown entity in Azerbaijan; possible compromises in the US and Ukraine
+
+**Sector:** Telecommunications / ISP / Critical Infrastructure
+
+**Threat Actor:** Calypso (aka Bronze Medley, Red Lamassu) — China-aligned, active since at least September 2016
+
+**Origin:** China — C2 infrastructure geolocated to Chengdu, Sichuan — state-sponsored espionage
+
+**Source:** The Hacker News — May 21, 2026 | Lumen Technologies Black Lotus Labs (Danny Adamitis) | PwC
+
+**Attack Type:** Linux Modular Backdoor — SOCKS5 Proxy — LAN Pivoting — Long-Term Persistent Access
+
+**Labels:** Calypso | Red Lamassu | Showboat | JFMBackdoor | EvaRAT | Linux | SOCKS5 | DLL Side-Loading | PlugX | Chengdu | Telecom | Afghanistan | Middle East | China-aligned
+
+---
+
+## Analysis
+
+Lumen Technologies Black Lotus Labs published research on May 21, 2026 documenting Showboat, a previously undisclosed Linux malware family used by Calypso against a telecommunications provider in the Middle East since at least mid-2022. The initial discovery came from an ELF binary uploaded to VirusTotal in May 2025 — Kaspersky tracks the same artifact as EvaRAT.
+
+Showboat is a modular post-exploitation framework built for Linux systems. It contacts a C2 server, collects system information, and sends it back encoded as a Base64 and encrypted string inside a PNG field. From there it supports remote shell access, file upload and download, SOCKS5 proxy functionality, and the ability to scan for and connect to other LAN-accessible devices. It hides itself from the process list by retrieving a code snippet hosted on Pastebin — the paste was created January 11, 2022. The SOCKS5 proxy capability is the key design choice: it lets attackers reach internal machines that have no direct internet exposure.
+
+Alongside Showboat, Calypso deployed JFMBackdoor — a Windows implant delivered via DLL side-loading — against the Afghanistan telecom target. A batch script launches a legitimate executable which loads the rogue DLL. JFMBackdoor supports remote shell, file operations, network proxying, screenshots, and self-removal.
+
+Infrastructure analysis linked C2 nodes to IP addresses geolocated in Chengdu. A secondary C2 cluster using similar X.509 certificates pointed to compromises in Afghanistan and Azerbaijan, with two possible US victims and one in Ukraine. Initial access vector for Showboat is currently unknown, though Calypso has historically used ASPX web shells after exploiting public-facing vulnerabilities or default credentials.
+
+Calypso shares tooling overlap with SixLittleMonkeys and Webworm — both documented in recent entries — and sits within the broader Chinese digital quartermaster ecosystem alongside PlugX, ShadowPad, and NosyDoor.
+
+---
+
+## Key Technical Indicators:
+- **Malware:** Showboat (Linux) — also tracked as EvaRAT by Kaspersky
+- **First VirusTotal upload:** May 2025 — active since at least mid-2022
+- **Showboat capabilities:** remote shell, file upload/download, SOCKS5 proxy, LAN device scanning, process list concealment
+- **Stealth mechanism:** retrieves concealment code from Pastebin paste created January 11, 2022
+- **C2 data format:** system info encrypted and Base64-encoded, exfiltrated inside PNG field
+- **Windows implant:** JFMBackdoor — delivered via DLL side-loading via batch script + legitimate executable
+- **JFMBackdoor capabilities:** remote shell, file ops, network proxying, screenshots, self-removal
+- **C2 geolocation:** Chengdu, Sichuan, China
+- **Confirmed victims:** Middle East telecom (primary), Afghanistan ISP, Azerbaijan (unknown entity)
+- **Secondary cluster victims:** 2 possible US, 1 Ukraine
+- **ELF SHA-256:** d6a4fad5448838dbc8cc6b33f1dbfbdc7a2fad36de58ff6a66dce96f729f7011
+- **Actor overlaps:** SixLittleMonkeys, Webworm, Mikroceen cluster — shared digital quartermaster assessed
+- **Initial access:** unknown — historically ASPX web shell via CVE exploitation or default credential abuse
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: Calypso historically exploits public-facing vulnerabilities (CVE-2021-26855 ProxyLogon) and default remote access credentials to deploy web shells as initial foothold
+- **TA0002 — Execution**
+  - T1574.002 — Hijack Execution Flow: DLL Side-Loading: JFMBackdoor delivered via batch script loading a rogue DLL through a legitimate executable
+- **TA0003 — Persistence**
+  - T1505.003 — Server Software Component: Web Shell: ASPX web shell used historically as persistent access mechanism following initial exploitation
+- **TA0005 — Defense Evasion**
+  - T1564.001 — Hide Artifacts: Hidden Files and Directories: Showboat conceals itself from the process list using a Pastebin-hosted code snippet
+  - T1027 — Obfuscated Files or Information: C2 exfiltration data encrypted and Base64-encoded inside a PNG field to blend with normal traffic
+- **TA0009 — Collection**
+  - T1082 — System Information Discovery: Showboat collects and transmits full system information to C2 on initial contact
+  - T1113 — Screen Capture: JFMBackdoor captures screenshots on compromised Windows hosts
+- **TA0011 — Command and Control**
+  - T1090.001 — Proxy: Internal Proxy: SOCKS5 proxy functionality enables C2 routing through compromised hosts to reach LAN-internal machines with no internet exposure
+  - T1102 — Web Service: Showboat retrieves concealment code from a Pastebin paste as part of its evasion routine
+- **TA0008 — Lateral Movement**
+  - T1021 — Remote Services: Showboat scans for and connects to other LAN-accessible devices via SOCKS5 proxy, enabling movement to non-internet-exposed internal systems
+
+---
+
+## Strategic Context
+
+Calypso has been quietly running Showboat against telecom infrastructure since mid-2022 — over three years of undetected access before public disclosure. Telecom providers are prime targets for this kind of long-term persistence because they sit at the centre of communications infrastructure. Compromising the network rather than individual endpoints gives access to traffic flows, subscriber data, and internal systems that would otherwise be completely out of reach.
+
+The Ukraine victim in the secondary C2 cluster is worth flagging. Calypso's documented targeting includes Russia, which combined with the Ukraine compromise puts this actor in a position of collecting intelligence on both sides of the conflict. That is consistent with Chinese intelligence priorities — Beijing has strong interest in understanding how the war develops regardless of the outcome.
+
+The Chengdu geolocation is also notable in context — Chengdu is home to documented Chinese state cyber operations infrastructure, and this isn't the first time C2 nodes have been traced there.
+
+---
+
+## Russian Language Context
+
+Calypso's documented targeting of российские государственные учреждения (rossiyskiye gosudarstvennyye uchrezhdeniya) — Russian state institutions — alongside confirmed infrastructure in Украина (Ukraina) — Ukraine — places this actor in direct overlap with the Russo-Ukrainian conflict intelligence landscape. The use of прокси-сервер (proksi-server) — proxy server — specifically SOCKS5, for доступ к внутренней сети (dostup k vnutrenney seti) — access to the internal network — reflects a consistent Chinese operational pattern of deep, quiet persistence inside телекоммуникационная инфраструктура (telekommunikatsionnaya infrastruktura) — telecommunications infrastructure.
