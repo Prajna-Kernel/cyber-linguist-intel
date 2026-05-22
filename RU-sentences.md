@@ -675,3 +675,11 @@ If there is load, the system slows down, then there is a frame drop.
 **3️⃣0️⃣2️⃣. Система постепенно уплотняет данные при передаче.** | The system gradually compacts data during transmission.
 
 **3️⃣0️⃣3️⃣. Сервер переопределяет параметры при ошибке.** | The server overrides parameters during an error.
+
+**3️⃣0️⃣4️⃣. Система обновляет таблицу откликов после обработки.** | The system updates the response table after processing.
+
+**3️⃣0️⃣5️⃣. Распределённая система работает через несколько узлов.** | The distributed system operates through several nodes.
+
+**3️⃣0️⃣6️⃣. Сервер кэширует данные для ускорения обработки.** | The server caches data to speed up processing.
+
+**3️⃣0️⃣7️⃣. Система изолирует повреждённый модуль локально.** | The system isolates the corrupted module locally.
