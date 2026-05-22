@@ -200,7 +200,8 @@
 | **сетевой интерфейс** | [se-te-VOY in-ter-FEYS] | network interface | **сетевой интерфейс** |
 | **модуль обработки** | [MO-doolʹ ab-ra-BOT-ki] | processing module | **модуль обработки** |
 | **резервная таблица** | [re-ZYERV-na-ya ta-BLEE-tsa] | backup table | **резервную таблицу** |
-
+| **таблица откликов** | [ta-BLEE-tsa at-KLEE-kov] | response table | **таблицу откликов** |
+| **распределённая система** | [ras-pre-de-LYON-na-ya sis-TYE-ma] | distributed system | **распределённую систему** |
 
 
 
@@ -370,7 +371,8 @@
 | **предположительно** | [pred-pa-la-ZHI-telʹ-na] | presumably |
 | **постепенно** | [pa-ste-PEN-na] | gradually |
 | **косвенно** | [kas-VEN-na] | indirectly |
-
+| **преимущественно** | [pre-i-moo-SHCHES-tven-na] | predominantly |
+| **параллельно** | [pa-ra-LYELʹ-na] | in parallel |
 
 
 
@@ -499,5 +501,6 @@
 | **перенаправлять** |[pe-re-na-prav-LYATʹ] | to redirect |
 | **уплотнять** | [u-plat-NYATʹ] | to compact / densify |
 | **переопределять** | [pe-re-a-pre-de-LYATʹ] | to override / redefine |
-
+| **кэшировать** | [ke-shi-RO-vatʹ] | to cache |
+| **восстанавливаться** | [vas-sta-nav-LEE-vat-sa] | to recover / restore itself |
 
