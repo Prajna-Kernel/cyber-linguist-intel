@@ -683,3 +683,11 @@ If there is load, the system slows down, then there is a frame drop.
 **3️⃣0️⃣6️⃣. Сервер кэширует данные для ускорения обработки.** | The server caches data to speed up processing.
 
 **3️⃣0️⃣7️⃣. Система изолирует повреждённый модуль локально.** | The system isolates the corrupted module locally.
+
+**3️⃣0️⃣8️⃣. Система проверяет очередь синхронизации перед запуском.** | The system checks the synchronization queue before startup.
+
+**3️⃣0️⃣9️⃣. Администратор изменяет уровень доступа пользователя.** | The administrator changes the user's access level.
+
+**3️⃣1️⃣0️⃣. Система фильтрует повреждённые пакеты данных.** | The system filters corrupted data packets.
+
+**3️⃣1️⃣1️⃣. Сервер намеренно упрощает обработку запросов.** | The server intentionally simplifies request processing.
