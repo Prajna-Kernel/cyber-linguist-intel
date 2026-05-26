@@ -651,3 +651,74 @@ The use of RMS is a recurring signature. It's legitimate software, it's Russian,
 ## Russian Language Context
 
 UAC-0050 is assessed by CERT-UA as affiliated with российские правоохранительные органы (rossiyskiye pravookhranitelnyye organy) — Russian law enforcement agencies. The use of подделка судебного домена (poddelka sudebnogo domena) — judicial domain spoofing — and легитимное программное обеспечение для удалённого доступа (legitimnoye programmnoye obespecheniye dlya udalyonnogo dostupa) — legitimate remote access software — reflects a consistent preference for правдоподобное отрицание (pravdopodobnoye otritsaniye) — plausible deniability — in UAC-0050 operations.
+
+---
+
+# Incident #009 — May 27, 2026
+
+**Target:** Ukrainian defense, military, government, and energy organizations at regional and national level; secondary probing of Romanian and Moldovan entities; aerospace and drone manufacturers, nuclear research groups, and Ukraine-tied humanitarian organizations
+
+**Sector:** Government / Defense / Energy / Aerospace / Humanitarian
+
+**Threat Actor: **Unnamed Russia-linked APT — suspected Russian intelligence services affiliation, unattributed as of report date
+
+**Origin:** Russia-linked — assessed by Google GTIG, moderate confidence; related activity linked to PhantomCaptcha campaign (SentinelLABS)
+
+**Source:** Security Affairs — February 14, 2026 | Google Threat Intelligence Group | SentinelLABS | Digital Security Lab of Ukraine
+
+**Attack Type:** LLM-Assisted Phishing → CANFAIL JavaScript Loader → Memory-Only PowerShell Dropper
+
+**Labels:** CANFAIL | Russia-linked | Ukraine | LLM-Assisted | Google Drive | PowerShell | Memory-Only | PhantomCaptcha | ClickFix | Drone Lures | Defense | Energy | Unattributed APT
+
+---
+
+## Analysis
+
+Google GTIG published research in February 2026 documenting a previously undocumented Russia-linked threat actor targeting Ukrainian defense, government, and energy organizations with a malware family called CANFAIL. The group is assessed as less sophisticated than established Russian APTs but has begun compensating for technical limitations by using LLMs to write phishing lures, conduct reconnaissance, and resolve basic post-exploitation and C2 setup questions.
+
+Phishing emails contain Google Drive links hosting RAR archives with CANFAIL malware, often disguised using a double extension like .pdf.js. CANFAIL is obfuscated JavaScript that executes a PowerShell script to download and run a second-stage payload — typically a memory-only PowerShell dropper — while displaying a fake error popup to keep the victim unsuspecting. The LLM-generated phishing lures use formal language and official-looking templates, making them more convincing than what the group could produce independently. SentinelLABS and Ukraine's Digital Security Lab linked related activity to the October 2025 PhantomCaptcha campaign, which briefly used ClickFix delivery tactics before pivoting.
+
+GTIG's broader report documented multiple Russia-linked groups simultaneously targeting Ukrainian military communications. APT44 (Sandworm/GRU Unit 74455) extracted Signal and Telegram data using WAVESIGN and INFAMOUSCHISEL. UNC5792 and UNC4221 abused Signal and WhatsApp device-linking features to hijack accounts and deploy STALECOOKIE and TINYWHALE. UNC5976 ran phishing campaigns with malicious RDP files and drone-themed decoys. The targeting of secure messaging apps used by Ukrainian frontline forces is a documented GRU tactical priority — capturing locally stored message databases from devices recovered during the invasion.
+
+---
+
+## Key Technical Indicators:
+- **Malware:** CANFAIL — obfuscated JavaScript loader
+- **Delivery:** phishing emails with Google Drive links hosting RAR archives — .pdf.js double extension
+- **Stage 1:** CANFAIL executes PowerShell script — downloads and runs second-stage payload
+- **Stage 2:** memory-only PowerShell dropper — no disk artifact
+- **Social engineering:** fake error popup displayed to victim post-execution
+- **LLM use:** phishing lure generation, reconnaissance, C2 setup assistance
+- **Related campaign:** PhantomCaptcha (SentinelLABS / Digital Security Lab of Ukraine) — October 2025 — ClickFix delivery
+- **Secondary targeting:** Romanian and Moldovan entities probed
+- **Adjacent actors in same report:** APT44, TEMP.Vermin, UNC5125, UNC5792, UNC4221, UNC5976, UNC6096, UNC5114
+- **Attribution confidence:** Russia-linked — moderate; specific intelligence service affiliation unconfirmed
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1566.002 — Phishing: Spear-phishing Link: LLM-generated phishing emails deliver Google Drive links hosting RAR archives containing CANFAIL malware
+- **TA0002 — Execution**
+  - T1059.001 — Command and Scripting Interpreter: PowerShell: CANFAIL triggers a PowerShell script that downloads and executes the second-stage memory-only dropper
+  - T1059.007 — Command and Scripting Interpreter: JavaScript: CANFAIL itself is obfuscated JavaScript executing the initial infection chain
+- **TA0005 — Defense Evasion**
+  - T1036.007 — Masquerading: Double File Extension: CANFAIL payload disguised with .pdf.js double extension inside RAR archive
+  - T1027.002 — Obfuscated Files or Information: Software Packing: CANFAIL is obfuscated JavaScript designed to resist static analysis
+  - T1055 — Process Injection / Memory-Only Execution: second-stage payload runs entirely in memory — no disk artifact left behind
+- **TA0042 — Resource Development**
+  - T1585.003 — Establish Accounts: LLM used to generate convincing phishing lures, conduct target reconnaissance, and resolve technical C2 setup questions
+
+---
+
+## Strategic Context
+
+The use of LLMs to write phishing lures is the most significant detail here. This group is not technically advanced — GTIG explicitly noted it is less sophisticated than established Russian APTs. But LLMs are closing that gap. Convincing, formal, template-accurate phishing emails no longer require skilled operators to write them. The barrier for effective social engineering just dropped significantly.
+
+The targeting scope reflects GRU tactical priorities during the ongoing war. Drone manufacturers, frontline military units, nuclear research groups, and humanitarian organizations tied to Ukraine are all in scope. The reach into Romanian and Moldovan entities suggests the group is also tracking the broader support network around Ukraine, not just Ukrainian organizations directly.
+
+---
+
+## Russian Language Context
+
+Группа (gruppa) — group — targets Ukrainian оборонные организации (oboronnyye organizatsii) — defense organizations — using фишинговые письма (fishingovyye pisma) — phishing emails — crafted with assistance from языковые модели (yazykovyye modeli) — language models. The use of памяти (pamyati) — memory-only — execution reflects a growing trend of бесфайловые атаки (besfilovyye ataki) — fileless attacks — across Russian-linked операции (operatsii) — operations — against Ukrainian targets.
