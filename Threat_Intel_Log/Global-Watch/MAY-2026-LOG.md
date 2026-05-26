@@ -1512,3 +1512,71 @@ The Chengdu geolocation is also notable in context — Chengdu is home to docume
 ## Russian Language Context
 
 Calypso's documented targeting of российские государственные учреждения (rossiyskiye gosudarstvennyye uchrezhdeniya) — Russian state institutions — alongside confirmed infrastructure in Украина (Ukraina) — Ukraine — places this actor in direct overlap with the Russo-Ukrainian conflict intelligence landscape. The use of прокси-сервер (proksi-server) — proxy server — specifically SOCKS5, for доступ к внутренней сети (dostup k vnutrenney seti) — access to the internal network — reflects a consistent Chinese operational pattern of deep, quiet persistence inside телекоммуникационная инфраструктура (telekommunikatsionnaya infrastruktura) — telecommunications infrastructure.
+
+---
+
+# Incident #022 — May 27, 2026
+
+**Target:** Defense, aviation, and telecommunications organizations across the United States, Europe, and the Middle East; specific confirmed targeting of aerospace and software sector personnel
+
+**Sector:** Defense / Aviation / Telecommunications / Software
+
+**Threat Actor:** Nimbus Manticore (aka UNC1549, Screening Serpens, Smoke Sandstorm) — IRGC-affiliated Iranian state-sponsored APT
+
+**Origin:** Iran — Islamic Revolutionary Guard Corps (IRGC) — state-sponsored espionage, wartime intelligence collection
+
+**Source:** The Hacker News — May 26, 2026 | Check Point Research | Palo Alto Networks Unit 42 | Security Affairs
+
+**Attack Type:** Three-Wave Campaign — Phishing + SEO Poisoning + Trojanized Installer → MiniFast/MiniJunk V2 Backdoor Deployment
+
+**Labels:** Nimbus Manticore | UNC1549 | IRGC | MiniFast | MiniJunk | SEO Poisoning | AppDomain Hijacking | Trojanized Zoom | AI-Assisted Malware | Operation Epic Fury | Aviation | Defense | Wartime | Iran
+
+---
+
+## Analysis
+
+Check Point Research published analysis on May 22-26, 2026 documenting three waves of Nimbus Manticore activity between February and April 2026, all coinciding with Operation Epic Fury — the US-Israeli military campaign against Iran launched on February 28, 2026. The group accelerated operations immediately following the strikes, introducing new techniques and tooling not previously observed.
+
+The February wave used career-themed phishing emails delivering ZIP archives hosted on legitimate platforms like OnlyOffice, consistent with prior Nimbus Manticore tradecraft. The March wave introduced a trojanized Zoom installer as a delivery vehicle — victims were likely targeted via fake meeting invitations — which used AppDomain hijacking to deploy MiniFast, a previously undocumented backdoor. April marked the most significant shift: the group abandoned phishing entirely for a counterfeit Oracle SQL Developer download page, using SEO poisoning to push it into search results — the first time this technique has been observed from this actor. Check Point assessed that MiniFast shows signs of AI-assisted development based on excessive error handling, verbose and repetitive function naming, detailed debug-style status messages, and modular code structure inconsistent with the malware's overall simplicity.
+
+MiniJunk V2, an evolved version of the MiniJunk framework documented in 2025, was also deployed alongside MiniFast. The group's historical toolchain includes Minibike (SlugResin), MiniBrowse credential stealer, and MiniJunk — all part of a consistent naming convention suggesting centralized internal development.
+
+---
+
+## Key Technical Indicators:
+- **Campaign period:** February–April 2026 — three distinct waves tied to Operation Epic Fury
+- **Wave 1 (Feb):** career-themed phishing — ZIP archives hosted on OnlyOffice and similar legitimate platforms
+- **Wave 2 (Mar):** trojanized Zoom installer — fake meeting invitation lure — AppDomain hijacking to deploy MiniFast
+- **Wave 3 (Apr):** SEO poisoning — fake Oracle SQL Developer download page — first observed use of this technique by actor
+- **New backdoor:** MiniFast (aka MiniUpdate) — AI-assisted development assessed by Check Point
+- **AI indicators in MiniFast:** excessive error handling, verbose function names, debug-style strings, modular structure despite simplicity
+- **Updated tool:** MiniJunk V2 — evolved version of 2025 MiniJunk framework
+- **Historical toolchain:** Minibike/SlugResin, MiniBrowse, MiniJunk — consistent internal naming convention
+- **Prior technique replaced:** DLL side-loading → AppDomain hijacking
+- **Attribution:** IRGC-affiliated — high confidence — Check Point, Unit 42, Mandiant (historical)
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1566.002 — Phishing: Spear-phishing Link: career-themed and meeting invitation phishing emails delivering malicious archives and trojanized installers
+  - T1608.006 — Stage Capabilities: SEO Poisoning: counterfeit Oracle SQL Developer download page pushed into search results via SEO poisoning — first observed use by this actor
+- **TA0002 — Execution**
+  - T1204.002 — User Execution: Malicious File: victims execute trojanized Zoom installer or download page payload — triggering AppDomain hijacking chain
+- **TA0003 — Persistence**
+  - T1546 — Event Triggered Execution: AppDomain hijacking used to persist MiniFast execution within legitimate application domains — replacing previous DLL side-loading technique
+- **TA0005 — Defense Evasion**
+  - T1574.014 — Hijack Execution Flow: AppDomain Hijacking: malicious code injected into .NET application domains to execute MiniFast while appearing as legitimate software activity
+  - T1036.005 — Masquerading: Match Legitimate Name or Location: trojanized Zoom installer and fake SQL Developer download page masquerade as legitimate software
+- **TA0042 — Resource Development**
+  - T1587.001 — Develop Capabilities: Malware: MiniFast developed with AI assistance — accelerating tooling development under wartime operational pressure
+
+---
+
+## Strategic Context
+
+Three technique shifts in three months — SEO poisoning, AppDomain hijacking, AI-assisted malware — is a fast pace of evolution for any APT, let alone one operating under active wartime conditions. The timing is not coincidental. Operation Epic Fury created immediate intelligence collection pressure on IRGC-affiliated groups, and Nimbus Manticore responded by rapidly expanding its capability set rather than slowing down.
+
+The move to SEO poisoning is the most significant tactical shift. Phishing requires a target to open an email. SEO poisoning intercepts anyone actively searching for legitimate software — a much broader and more passive attack surface. Combined with AI-assisted malware development compressing the time between concept and deployment, this group is operating at a pace that suggests either significant resource injection or deliberate wartime acceleration from IRGC leadership.
+
+Europe's presence in the targeting scope alongside the US and Middle East reflects the group's interest in NATO-adjacent defense and aviation infrastructure during an active conflict involving a US-led coalition.
