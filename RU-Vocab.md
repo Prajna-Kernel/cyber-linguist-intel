@@ -204,7 +204,8 @@
 | **распределённая система** | [ras-pre-de-LYON-na-ya sis-TYE-ma] | distributed system | **распределённую систему** |
 | **очередь синхронизации** | [O-che-redʹ sin-khra-ni-ZA-tsi-i] | synchronization queue | **очередь синхронизации** |
 | **уровень доступа** | [OO-ra-venʹ DO-stu-pa] | access level | **уровень доступа** |
-
+| **узел маршрутизации** | [OO-zel mar-shroo-tee-ZA-tsi-i] | routing node | **узел маршрутизации** |
+| **таблица кэша** | [ta-BLEE-tsa KESHa] | cache table | **таблицу кэша** |
 
 
 ---
@@ -376,7 +377,8 @@
 | **параллельно** | [pa-ra-LYELʹ-na] | in parallel |
 | **относительно** | [at-na-SI-telʹ-na] | relatively |
 | **намеренно** | [na-MYE-ren-na] | intentionally |
-
+| **автоматически** | [av-ta-ma-TEE-ches-ki] | automatically |
+| **предположительно** |[pred-pa-la-ZHI-telʹ-na] | presumably |
 
 
 
@@ -509,3 +511,5 @@
 | **восстанавливаться** | [vas-sta-nav-LEE-vat-sa] | to recover / restore itself |
 | **упрощать** | [u-pra-SHCHATʹ] | to simplify |
 | **фильтровать** | [filʹ-tra-RO-vatʹ] | to filter |
+| **декодировать** | [de-ka-dee-RO-vatʹ] | to decode |
+| **стабилизировать** | [sta-bee-lee-ZI-ro-vatʹ] | to stabilize |
