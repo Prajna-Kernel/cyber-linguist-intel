@@ -691,3 +691,11 @@ If there is load, the system slows down, then there is a frame drop.
 **3️⃣1️⃣0️⃣. Система фильтрует повреждённые пакеты данных.** | The system filters corrupted data packets.
 
 **3️⃣1️⃣1️⃣. Сервер намеренно упрощает обработку запросов.** | The server intentionally simplifies request processing.
+
+**3️⃣1️⃣2️⃣. Узел маршрутизации перенаправляет сетевой трафик.** | The routing node redirects network traffic.
+
+**3️⃣1️⃣3️⃣. Система обновляет таблицу кэша автоматически.** | The system updates the cache table automatically.
+
+**3️⃣1️⃣4️⃣. Сервер декодирует входящие пакеты данных.** | The server decodes incoming data packets.
+
+**3️⃣1️⃣5️⃣. Система стабилизирует соединение после сбоя.** | The system stabilizes the connection after a failure.
