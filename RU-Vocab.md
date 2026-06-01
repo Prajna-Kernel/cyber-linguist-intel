@@ -206,6 +206,10 @@
 | **уровень доступа** | [OO-ra-venʹ DO-stu-pa] | access level | **уровень доступа** |
 | **узел маршрутизации** | [OO-zel mar-shroo-tee-ZA-tsi-i] | routing node | **узел маршрутизации** |
 | **таблица кэша** | [ta-BLEE-tsa KESHa] | cache table | **таблицу кэша** |
+| **журнал ошибок** | [zhoor-NAL a-SHI-bak] | error log | **журнал ошибок** |
+| **вычислительный узел** | [vy-chis-lee-TELʹ-nyy OO-zel] | compute node | **вычислительный узел** |
+
+
 
 
 ---
@@ -379,7 +383,8 @@
 | **намеренно** | [na-MYE-ren-na] | intentionally |
 | **автоматически** | [av-ta-ma-TEE-ches-ki] | automatically |
 | **предположительно** |[pred-pa-la-ZHI-telʹ-na] | presumably |
-
+| **первоначально** | [per-va-na-CHALʹ-na] | initially | 
+| **фактически** |[fak-TEE-ches-ki] | actually / in fact |
 
 
 ---
@@ -513,3 +518,5 @@
 | **фильтровать** | [filʹ-tra-RO-vatʹ] | to filter |
 | **декодировать** | [de-ka-dee-RO-vatʹ] | to decode |
 | **стабилизировать** | [sta-bee-lee-ZI-ro-vatʹ] | to stabilize |
+| **агрегировать** | [ag-re-gee-RO-vatʹ] | to aggregate
+| **дублировать** | [doo-blee-RO-vatʹ] | to duplicate
