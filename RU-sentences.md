@@ -699,3 +699,11 @@ If there is load, the system slows down, then there is a frame drop.
 **3️⃣1️⃣4️⃣. Сервер декодирует входящие пакеты данных.** | The server decodes incoming data packets.
 
 **3️⃣1️⃣5️⃣. Система стабилизирует соединение после сбоя.** | The system stabilizes the connection after a failure.
+
+**3️⃣1️⃣6️⃣. Система сохраняет журнал ошибок после сбоя.** | The system saves the error log after a failure.
+
+**3️⃣1️⃣7️⃣. Вычислительный узел обрабатывает данные независимо.** | The compute node processes data independently.
+
+**3️⃣1️⃣8️⃣. Сервер агрегирует информацию из нескольких источников.** | The server aggregates information from several sources.
+
+**3️⃣1️⃣9️⃣. Система дублирует резервные данные первоначально.** | The system initially duplicates backup data.
