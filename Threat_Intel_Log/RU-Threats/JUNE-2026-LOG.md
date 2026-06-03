@@ -81,3 +81,82 @@ The USB propagation through LNK replacement is particularly relevant in a warzon
 ## Russian Language Context
 
 Gamaredon действует под руководством ФСБ (FSB) — Федеральной службы безопасности (Federal'noy sluzhby bezopasnosti) — and specifically targets украинские государственные структуры (ukrainskiye gosudarstvennyye struktury) — Ukrainian state structures. The use of съёмные носители (s"yomnyye nositeli) — removable media — for propagation reflects persistent GRU and FSB interest in penetrating изолированные сети (izolirovannyye seti) — air-gapped networks — in Ukrainian military environments.
+
+---
+
+# Incident #002 — June 4, 2026
+
+**Target:** Ukrainian military, government, civilian, and business organizations; secondary targeting of Ukraine-related entities globally
+
+**Sector:** Government / Military / Civil Society / Business
+
+**Threat Actor:** GREYVIBE — previously undocumented Russian-speaking threat group, Kremlin-aligned
+
+**Origin:** Russia — assessed Russian-speaking operators in Moscow time zone (UTC+3) — moderate confidence state alignment, low-to-moderate confidence cybercriminal membership involvement
+
+**Source:** The Hacker News — May 29, 2026 | WithSecure (Mohammad Kazem Hassan Nejad)
+
+**Attack Type:** Multi-Vector — Spear-Phishing / Fake CAPTCHA / Spoofed Ukrainian Sites → Custom Malware Suite — AI-Assisted Development and Operations
+
+**Labels:** GREYVIBE | FallSpy | LegionRelay | PrincessClub | DroneLink | DAYLIGHT | TEASOUP | PhantomMail | ZAPiXDESK | WireGuard | AI-Assisted | Ukraine | ClickFix | KongTuke | TrickBot | UAC-0098 | XMRig | Kremlin-aligned
+
+---
+
+## Analysis
+
+WithSecure published research on May 28, 2026 documenting GREYVIBE, a previously undocumented Russian-speaking threat group that has been persistently targeting Ukraine since at least August 2025. The group is assessed with moderate confidence to be Kremlin-aligned based on targeting, operator time zone, Russian-language code comments and admin panels, and intelligence collection focus consistent with the ongoing war. Ties to TrickBot gang infrastructure and UAC-0098 complicate clean state attribution — WithSecure assesses with low-to-moderate confidence that current or former cybercriminal members are involved.
+
+The group runs multiple parallel infection chains. PhantomMail uses spear-phishing emails. Separate chains use fake CAPTCHA pages and fraudulent Ukrainian adult club websites as lure infrastructure. A distinct cluster named DroneLink used websites impersonating Ukrainian charitable foundations supporting FPV drone and UAV initiatives — targeting personnel likely involved in drone operations. March–April 2026 activity linked DroneLink to PrincessClub via shared C2 infrastructure, shared post-compromise tooling including WireGuard and ZAPiXDESK, and DAYLIGHT-obfuscated LegionRelay scripts hosted on the charity sites. GREYVIBE also ran a cluster impersonating "СПО НЕБО" (SPO NEBO), a Russian-language reference to airspace monitoring software.
+
+What distinguishes GREYVIBE is systematic AI use across the entire operation. WithSecure identified clear markers of ChatGPT, Google Gemini, and Ideogram AI usage across lure creation, malware development, infrastructure setup, and command generation. Custom obfuscators DAYLIGHT and TEASOUP — both assessed as LLM-assisted — replaced earlier tools LOOKVALPS and LOOKVALJS from October 2025 and March 2026 respectively. The group uploads development and test samples to VirusTotal and uses internet slang in artifact naming conventions like "letsrollboyos" and "cuteuwu" — consistent with a younger, less disciplined operator profile. A small number of LegionRelay-infected machines were also used to deploy the XMRig cryptominer, a financially motivated side operation.
+
+---
+
+## Key Technical Indicators:
+- **Active since:** August 2025 — ongoing as of May 2026
+- **Infection vectors:** PhantomMail spear-phishing, fake CAPTCHA pages, fraudulent Ukrainian adult club sites, fake Ukrainian drone charity websites
+- **Custom malware:** FallSpy, LegionRelay, PrincessClub, DroneLink cluster
+- **Custom obfuscators:** DAYLIGHT (active Oct 2025), TEASOUP (active Mar 2026) — replaced LOOKVALPS and LOOKVALJS — LLM-assisted development assessed
+- **Post-compromise tools:** WireGuard, ZAPiXDESK, DWAgent
+- **AI tools confirmed:** ChatGPT, Google Gemini, Ideogram AI — used across lure creation, development, and C2 setup
+- **Cybercrime overlaps:** TrickBot gang ISO builders, UAC-0098 — PhantomRelay variants in Microsoft Teams voice phishing (Jul 2025–Feb 2026) and KongTuke ClickFix chain (Feb–Mar 2026)
+- **Side operation:** XMRig miner deployed to small number of LegionRelay-infected machines
+- **Operator indicators:** Russian-language code comments, Russian admin panels, UTC+3 Moscow time zone, Russian↔Ukrainian translation artifacts
+- **OPSEC failures:** VirusTotal test uploads, internet slang artifact naming, exposed development infrastructure
+- **Attribution:** WithSecure — moderate confidence Kremlin-aligned, low-to-moderate confidence cybercriminal membership
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1566.001 — Phishing: Spear-phishing Attachment: PhantomMail chain delivers malware via spear-phishing emails
+  - T1608.005 — Stage Capabilities: Link Target: fake CAPTCHA pages and fraudulent Ukrainian websites used as lure infrastructure to deliver malware to victims
+- **TA0002 — Execution**
+  - T1204.001 — User Execution: Malicious Link: victims interact with fake CAPTCHA pages, spoofed charity sites, and adult sites triggering payload delivery
+- **TA0003 — Persistence**
+  - T1219 — Remote Access Software: WireGuard VPN and ZAPiXDESK deployed post-compromise for persistent remote access and operator connectivity
+- **TA0005 — Defense Evasion**
+  - T1027.013 — Obfuscated Files or Information: Encrypted/Encoded File: DAYLIGHT and TEASOUP custom obfuscators applied to both initial-stage and post-compromise payloads — LLM-assisted development assessed
+  - T1036.005 — Masquerading: Match Legitimate Name or Location: DroneLink cluster impersonates Ukrainian charitable foundations supporting FPV drone initiatives
+- **TA0011 — Command and Control**
+  - T1102 — Web Service: LegionRelay scripts hosted on fake charity domains — DAYLIGHT-obfuscated — used for C2 communication via legitimate-looking web infrastructure
+- **TA0040 — Impact**
+  - T1496 — Resource Hijacking: XMRig cryptominer deployed to a subset of LegionRelay-infected machines as a financially motivated side operation
+- **TA0042 — Resource Development**
+  - T1587.001 — Develop Capabilities: Malware: ChatGPT, Gemini, and Ideogram AI used across malware development, obfuscator creation, lure generation, and C2 setup — systematic AI integration across the full kill chain
+
+---
+
+## Strategic Context
+
+GREYVIBE is the clearest example yet of what AI assistance looks like for a mid-tier threat group. This is not a sophisticated APT — WithSecure explicitly noted OPSEC failures, test samples on VirusTotal, and immature operational habits. But the AI integration is real and systematic. DAYLIGHT and TEASOUP are custom obfuscators assessed as LLM-assisted, lures are AI-generated, and the group is using AI to resolve infrastructure and C2 setup problems it couldn't otherwise solve independently.
+
+The DroneLink cluster is the most tactically interesting element. Fake Ukrainian drone charity websites specifically targeting personnel involved in FPV drone operations reflects precise intelligence about what kinds of social engineering work against Ukraine's frontline drone ecosystem. That targeting precision — combined with WireGuard and ZAPiXDESK for quiet persistent access — suggests the objective is long-term intelligence collection on Ukrainian drone capabilities and operators.
+
+The cybercriminal overlap with TrickBot and UAC-0098 fits the broader pattern of Russian intelligence services absorbing or tasking criminal infrastructure for state objectives. Clean attribution may never be possible here, which might be intentional.
+
+---
+
+## Russian Language Context
+
+GREYVIBE operates in московском часовом поясе (moskovskom chasovom poyase) — Moscow time zone — with Russian-language комментарии в коде (kommentarii v kode) — code comments — and административные панели (administrativnyye paneli) — admin panels. The DroneLink cluster specifically targets украинских операторов дронов (ukrainskikh operatorov dronov) — Ukrainian drone operators — through поддельные благотворительные сайты (poddel'nyye blagotvoritel'nyye sayty) — fake charity websites.
