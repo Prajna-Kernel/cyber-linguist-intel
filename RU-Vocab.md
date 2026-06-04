@@ -208,7 +208,8 @@
 | **таблица кэша** | [ta-BLEE-tsa KESHa] | cache table | **таблицу кэша** |
 | **журнал ошибок** | [zhoor-NAL a-SHI-bak] | error log | **журнал ошибок** |
 | **вычислительный узел** | [vy-chis-lee-TELʹ-nyy OO-zel] | compute node | **вычислительный узел** |
-
+| **сетевой адаптер** | [se-te-VOY a-DAP-ter] | network adapter | **сетевой адаптер** |
+| **контрольная точка** | [kan-TROLʹ-na-ya TOCH-ka] | checkpoint | **контрольную точку** |
 
 
 
@@ -385,7 +386,8 @@
 | **предположительно** |[pred-pa-la-ZHI-telʹ-na] | presumably |
 | **первоначально** | [per-va-na-CHALʹ-na] | initially | 
 | **фактически** |[fak-TEE-ches-ki] | actually / in fact |
-
+| **вплоть до** | [fplotʹ do] | up to / as far as |
+| **вероятно** | [ve-ra-YAT-na] | probably |
 
 ---
 
@@ -520,3 +522,5 @@
 | **стабилизировать** | [sta-bee-lee-ZI-ro-vatʹ] | to stabilize |
 | **агрегировать** | [ag-re-gee-RO-vatʹ] | to aggregate
 | **дублировать** | [doo-blee-RO-vatʹ] | to duplicate
+| **масштабировать** | [massh-ta-bee-RO-vatʹ] | to scale |
+| **отсекать** | [at-se-KATʹ] | to cut off / isolate |
