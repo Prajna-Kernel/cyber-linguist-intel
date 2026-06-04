@@ -707,3 +707,11 @@ If there is load, the system slows down, then there is a frame drop.
 **3️⃣1️⃣8️⃣. Сервер агрегирует информацию из нескольких источников.** | The server aggregates information from several sources.
 
 **3️⃣1️⃣9️⃣. Система дублирует резервные данные первоначально.** | The system initially duplicates backup data.
+
+**3️⃣2️⃣0️⃣. Сетевой адаптер подключается к локальной сети.** | The network adapter connects to the local network.
+
+**3️⃣2️⃣1️⃣. Система создаёт контрольную точку перед обновлением.** | The system creates a checkpoint before the update.
+
+**3️⃣2️⃣2️⃣. Сервер масштабирует ресурсы при высокой нагрузке.** | The server scales resources under high load.
+
+**3️⃣2️⃣3️⃣. Система отсекает повреждённые данные во время обработки.** | The system cuts off corrupted data during processing.
