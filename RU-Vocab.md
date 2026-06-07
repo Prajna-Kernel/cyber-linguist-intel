@@ -210,7 +210,8 @@
 | **вычислительный узел** | [vy-chis-lee-TELʹ-nyy OO-zel] | compute node | **вычислительный узел** |
 | **сетевой адаптер** | [se-te-VOY a-DAP-ter] | network adapter | **сетевой адаптер** |
 | **контрольная точка** | [kan-TROLʹ-na-ya TOCH-ka] | checkpoint | **контрольную точку** |
-
+| **очередь сообщений** | [O-che-redʹ sa-ab-SHCHYE-niy] | message queue | **очередь сообщений** |
+| **вычислительный ресурс** | [vy-chis-lee-TELʹ-nyy re-SOORS] | computing resource | **вычислительный ресурс** |
 
 
 ---
@@ -388,6 +389,12 @@
 | **фактически** |[fak-TEE-ches-ki] | actually / in fact |
 | **вплоть до** | [fplotʹ do] | up to / as far as |
 | **вероятно** | [ve-ra-YAT-na] | probably |
+| **преимущественно** | [pre-i-moo-SHCHES-tven-na] | predominantly |
+| **соответственно** | [sa-at-VYET-stven-na] | accordingly / respectively |
+
+
+
+
 
 ---
 
@@ -524,3 +531,6 @@
 | **дублировать** | [doo-blee-RO-vatʹ] | to duplicate
 | **масштабировать** | [massh-ta-bee-RO-vatʹ] | to scale |
 | **отсекать** | [at-se-KATʹ] | to cut off / isolate |
+| **резервировать** | [re-zer-vee-RO-vatʹ] | to reserve
+| **анализироваться** | [a-na-lee-ZI-ra-vat-sa] | to be analyzed
+
