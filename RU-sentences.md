@@ -715,3 +715,11 @@ If there is load, the system slows down, then there is a frame drop.
 **3️⃣2️⃣2️⃣. Сервер масштабирует ресурсы при высокой нагрузке.** | The server scales resources under high load.
 
 **3️⃣2️⃣3️⃣. Система отсекает повреждённые данные во время обработки.** | The system cuts off corrupted data during processing.
+
+**3️⃣2️⃣4️⃣. Система использует очередь сообщений для передачи данных.** | The system uses a message queue for data transmission.
+
+**3️⃣2️⃣5️⃣. Вычислительный ресурс резервируется перед запуском процесса.** | A computing resource is reserved before the process starts.
+
+**3️⃣2️⃣6️⃣. Все данные анализируются автоматически после обработки.** | All data is analyzed automatically after processing.
+
+**3️⃣2️⃣7️⃣. Сервер использует ресурсы исключительно для важных задач.** | The server uses resources exclusively for important tasks.
