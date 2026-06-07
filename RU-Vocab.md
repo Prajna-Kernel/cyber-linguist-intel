@@ -390,13 +390,12 @@
 | **вплоть до** | [fplotʹ do] | up to / as far as |
 | **вероятно** | [ve-ra-YAT-na] | probably |
 | **преимущественно** | [pre-i-moo-SHCHES-tven-na] | predominantly |
-| **соответственно** | [sa-at-VYET-stven-na] | accordingly / respectively |
+| **исключительно** | [is-klyu-chee-TELʹ-na] | exclusively |
 
 
 
 
 
----
 
 ## Verbs 
 | Russian | Phonetic | English |
