@@ -142,3 +142,156 @@ VS Code tunneling as a C2 channel is the most operationally significant detail h
 The consistent targeting of South Korean defense, government, and healthcare across multiple parallel campaigns in a single two-month period reflects sustained tasking from RGB rather than opportunistic activity. GPKI certificate extraction via HappyDoor is specifically targeted at South Korea's Government Public Key Infrastructure — credentials that open doors into government network services beyond just the compromised endpoint.
 
 ---
+
+Incident #003 — June 9, 2026
+
+**Target:** Unnamed organization — compromised via its Managed Services Provider (MSP); Egnyte Storage Sync appliance, Synology NAS, pfSense firewall
+
+**Sector:** Managed Services / Enterprise / Network Infrastructure
+
+**Threat Actor:** VerdantBamboo (aka Clay Typhoon, UNC5221, Warp Panda) — China-nexus cyber espionage
+
+**Origin:** China — state-sponsored espionage, PRC-linked
+
+**Source:** The Hacker News — June 8, 2026 | Volexity (Damien Cash, Paul Rascagneres, Steven Adair, Tom Lancaster)
+
+**Attack Type:** MSP Supply Chain Compromise → Linux Appliance Backdoor → M365 Access via Proxy**
+
+**Labels:** VerdantBamboo | Clay Typhoon | UNC5221 | BRICKSTORM | PLENET | GRIMBOLT | AGENTPSD | BSD | pfSense | Egnyte | Synology NAS | MSP Compromise | M365 | Conditional Access Bypass | Linux | EDR Evasion | China-nexus
+
+---
+
+## Analysis
+
+Volexity published research on June 4, 2026 documenting a VerdantBamboo intrusion discovered during an incident response engagement in September 2025. The threat actor had compromised the victim through its MSP — specifically infecting the MSP's pfSense firewall with a BSD variant of BRICKSTORM, a backdoor previously only observed on Linux and Windows systems. The initial compromise of the victim's own Egnyte Storage Sync appliance occurred at least 18 months before discovery, with access maintained via IP addresses assigned through the victim's web SSL VPN.
+
+VerdantBamboo used BRICKSTORM's proxying capabilities on the compromised Storage Sync system alongside stolen credentials to access the victim's Microsoft 365 environment — specifically to blend into legitimate network traffic and bypass Conditional Access policies. After initial remediation, the actor staged a return: using stolen administrative credentials to connect to the firewall, configure web SSL VPN access, and deploy additional malware to a Synology NAS appliance over SSH. The two payloads deployed to the NAS were PLENET (aka GRIMBOLT), a cross-platform .NET Core backdoor compiled with native AOT supporting interactive shell, remote command execution, file manipulation, and C2 switching; and AGENTPSD, a Python-based reverse shell acting as a fallback if the primary implant fails.
+
+Volexity characterized VerdantBamboo as highly sophisticated, with strong knowledge of proprietary appliances allowing customized persistence mechanisms per device. The actor uses a limited number of domains and IPs per victim, and names implants uniquely per deployment — a level of operational discipline that significantly complicates cross-victim correlation. PLENET was separately reported by Google in February 2026 in connection with UNC6201 exploiting a CVSS 10.0 Dell RecoverPoint zero-day — confirming shared tooling across China-nexus clusters.
+
+---
+
+## Key Technical Indicators:
+- **Initial access:** MSP compromise — BSD BRICKSTORM deployed to MSP's pfSense firewall
+- **Victim entry point:** Egnyte Storage Sync local privilege escalation flaw — patched in version 13.13 (March 2026)
+- **Access method:** SSL VPN IP addresses from victim organization's own address space
+- **M365 access:** BRICKSTORM proxy + stolen credentials — bypasses Conditional Access policies
+- **Post-remediation return:** stolen admin credentials used to reconfigure firewall SSL VPN and deploy to NAS via SSH
+- **PLENET (aka GRIMBOLT):** .NET Core cross-platform backdoor — AOT compiled — interactive shell, RCE, file ops, C2 switching
+- **AGENTPSD:** Python reverse shell — fallback implant
+- **BRICKSTORM variant:** BSD-compiled — first observed on BSD/pfSense — previously Linux/Windows only
+- **Operational discipline:** per-victim unique implant naming and persistence mechanisms — limited C2 infrastructure reuse
+- **Actor overlaps:** UNC6201 (PLENET/Dell CVE-2026-22769), UNC5221, Clay Typhoon, Warp Panda
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1195.003 — Supply Chain Compromise: Compromise Hardware Supply Chain: victim compromised through MSP — BSD BRICKSTORM deployed to MSP pfSense firewall before lateral movement to victim environment
+  - T1190 — Exploit Public-Facing Application: local privilege escalation flaw in Egnyte Storage Sync appliance exploited to deploy BRICKSTORM
+- **TA0003 — Persistence**
+  - T1505 — Server Software Component: customized per-device persistence mechanisms deployed on Storage Sync appliance, pfSense firewall, and Synology NAS — EDR-blind appliances specifically chosen
+- **TA0005 — Defense Evasion**
+  - T1078 — Valid Accounts: stolen administrative credentials used post-remediation to reconnect to firewall and reconfigure VPN access
+  - T1090.002 — Proxy: External Proxy: BRICKSTORM proxying capabilities used to route M365 access through compromised appliance — traffic appears as legitimate organizational activity
+- **TA0008 — Lateral Movement**
+  - T1021.004 — Remote Services: SSH: PLENET and AGENTPSD deployed to Synology NAS over SSH following firewall access
+- **TA0011 — Command and Control**
+  - T1071.001 — Application Layer Protocol: Web Protocols: PLENET supports C2 server switching — multiple protocol options for resilient operator connectivity
+  - T1095 — Non-Application Layer Protocol: AGENTPSD Python reverse shell operates as fallback C2 channel if primary implant stops functioning
+
+---
+
+## Strategic Context
+
+The MSP entry point is the most significant operational detail here. VerdantBamboo didn't target the victim directly — it compromised the MSP first and used that trusted relationship as the bridge. MSPs have privileged access to client environments by design, making them high-value targets that effectively multiply the blast radius of a single compromise.
+
+The 18-month undetected dwell time on the Storage Sync appliance reflects the deliberate choice to target devices that cannot run EDR software. Volexity explicitly noted this as a design principle of VerdantBamboo's operations. Firewalls, NAS appliances, and storage sync systems are invisible to most endpoint security stacks. The actor exploits that blind spot and stays quiet for as long as needed.
+
+The post-remediation return using stolen admin credentials is a reminder that credential rotation is not optional after an incident. VerdantBamboo adapted immediately after the initial fix and re-entered through a different path.
+
+---
+
+Cross-Reference: MSP compromise vector and European infrastructure targeting relevant to DE-Threats monitoring — unnamed victim assessed as Western enterprise, pfSense deployment common across European SMB and enterprise MSP environments.
+
+---
+
+# Incident #004 — June 9, 2026
+
+**Target:** Red Hat developers and CI/CD pipelines using @redhat-cloud-services npm packages; downstream cloud environments (GCP, Azure, AWS, Kubernetes, Vault)
+
+**Sector:** Developer Tools / Open Source / Cloud Infrastructure / CI/CD
+
+**Threat Actor:% Miasma campaign — linked to Mini Shai-Hulud/TeamPCP (aka Replicating Marauder, TGR-CRI-1135, UNC6780) tooling — open-sourced attack tools, attribution complicated
+
+**Origin:** Unknown — Russian-locale evasion pattern consistent with prior Shai-Hulud waves — possible Russian-ecosystem origin, unconfirmed
+
+**Source:** The Hacker News — June 1, 2026 | Socket | Aikido Security | JFrog | Wiz | ReversingLabs | OX Security | CISA
+
+**Attack Type:** npm Supply Chain Compromise → Credential-Stealing Worm → CI/CD Poisoning → Cloud Identity Theft
+
+**Labels:** Miasma | Mini Shai-Hulud | TeamPCP | Red Hat | npm | Supply Chain | Credential Theft | CI/CD | GitHub Actions | Worm | Russian Locale Evasion | Sigstore Abuse | Claude Code | VS Code | GCP | Azure | Kubernetes
+
+---
+
+## Analysis
+
+On June 1, 2026, researchers across Socket, Aikido Security, JFrog, Wiz, ReversingLabs, OX Security, and others disclosed Miasma — a new Mini Shai-Hulud supply chain campaign that compromised multiple @redhat-cloud-services npm packages with a credential-stealing, self-propagating worm. Evidence suggests a Red Hat employee's GitHub account was patient zero — compromised credentials and session cookies appearing in infostealer logs on April 13 and May 15, 2026 according to Whiteintel. The attacker used this access to push malicious orphan commits to two RedHatInsights repositories, bypassing code review. First Miasma commit containing "The Spreading Blight" string appeared May 29, 2026.
+
+The malicious packages contain an obfuscated preinstall hook that harvests GitHub Actions secrets, npm tokens, cloud credentials (GCP, Azure, AWS), Kubernetes and Vault material, SSH keys, and Git credentials. Collected data is encrypted and exfiltrated to a spoofed Anthropic API endpoint (`api.anthropic[.]com:443/v1/api`) with GitHub as fallback — stolen tokens are committed back to GitHub repositories with a message threatening system destruction if the token is invalidated. For npm propagation, the malware exchanges OIDC tokens, repackages tarballs, and signs artifacts through Sigstore — making malicious packages appear legitimately signed. Persistence is established by injecting a SessionStart hook into Claude Code settings (`~/.claude/settings.json`) and a `tasks.json` with `"runOn": "folderOpen"` for VS Code projects — ensuring re-execution on every IDE session.
+
+Wiz noted a significant evolution in this variant: new collectors for GCP and Azure cloud identities targeting all identities the infected machine has access to, not just secrets. Each infection generates a uniquely encrypted payload, making detection and version tracking significantly harder than prior waves. The malware checks for CrowdStrike, SentinelOne, Carbon Black, and StepSecurity Harden-Runner before executing, and avoids execution on Russian-locale systems — a pattern consistent across all Mini Shai-Hulud waves.
+
+---
+
+## Key Technical Indicators:
+- **Affected packages:** @redhat-cloud-services/vulnerabilities-client, tsc-transform-imports, topological-inventory-client, sources-client, rule-components, remediations-client, rbac-client
+- **Patient zero:** Red Hat employee GitHub account — credentials in infostealer logs April 13 and May 15, 2026
+- **Initial delivery:** malicious orphan commits to RedHatInsights repositories — code review bypassed
+- **Harvest targets:** GitHub Actions secrets, npm tokens, GCP/Azure/AWS credentials, Kubernetes/Vault material, SSH keys, Git credentials
+- **Exfiltration:** encrypted payload to spoofed `api.anthropic[.]com:443/v1/api` — GitHub fallback
+- **Commit threat:** `IfYouInvalidateThisTokenItWillNukeTheComputerOfTheOwner:<token>`
+- **npm propagation:** OIDC token exchange, tarball repackaging (package-updated.tgz), Sigstore signing — appears as legitimate signed artifact
+- **CI/CD escalation:** container bind-mounting host `/etc/sudoers.d` — grants CI runner passwordless sudo
+- **Persistence:** Claude Code `~/.claude/settings.json` SessionStart hook + VS Code `tasks.json` `"runOn": "folderOpen"`
+- **EDR evasion:** checks for CrowdStrike, SentinelOne, Carbon Black, StepSecurity Harden-Runner before executing
+- **Russian locale:** skips execution on Russian-locale systems — consistent across all Shai-Hulud waves
+- *Per-infection unique encrypted payload — version tracking significantly harder than prior waves*
+- **First Miasma commit:** May 29, 2026
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1195.002 — Supply Chain Compromise: Compromise Software Supply Chain: Red Hat employee GitHub account compromised — malicious commits injected into @redhat-cloud-services npm packages bypassing code review
+- **TA0002 — Execution**
+  - T1059.004 — Command and Scripting Interpreter: Unix Shell: obfuscated preinstall hook executes credential harvesting logic at npm install time on developer machines
+- **TA0003 — Persistence**
+  - T1546 — Event Triggered Execution: SessionStart hook injected into Claude Code settings and VS Code tasks.json — malware re-executes on every IDE session open
+- **TA0004 — Privilege Escalation**
+  - T1611 — Escape to Host: CI/CD container launched with host `/etc/sudoers.d` bind-mount — grants passwordless sudo to CI runner
+- **TA0005 — Defense Evasion**
+  - T1497.001 — Virtualization/Sandbox Evasion: System Checks: EDR detection check for CrowdStrike, SentinelOne, Carbon Black, and StepSecurity before executing malicious payload
+  - T1027 — Obfuscated Files or Information: per-infection unique encrypted payload — each instance distinct, complicating signature-based detection
+  - T1553.002 — Subvert Trust Controls: Code Signing: malicious npm packages signed via Sigstore — appear as legitimately signed artifacts
+- **TA0006 — Credential Access**
+  - T1552.001 — Unsecured Credentials: Credentials in Files: GitHub Actions secrets, cloud credentials, SSH keys, Git credentials harvested from developer environments
+  - T1528 — Steal Application Access Token: npm OIDC tokens exchanged and GitHub tokens extracted — used for downstream supply chain poisoning
+- **TA0010 — Exfiltration**
+  - T1567.001 — Exfiltration Over Web Service: Exfiltration to Code Repository: stolen credentials committed to attacker-controlled GitHub repositories labeled "Miasma: The Spreading Blight"
+
+---
+
+## Strategic Context
+
+Miasma is the most technically evolved Mini Shai-Hulud wave to date. The shift from credential harvesting to full cloud identity collection — every GCP and Azure identity accessible from the infected machine — means this is no longer just about stealing secrets. It's about gaining persistent access to cloud environments that extend far beyond the developer machine itself.
+
+The Russian locale evasion is the most analytically interesting detail for this repo. Every single Shai-Hulud wave skips Russian-locale systems. Six months of consistent activity, multiple campaigns, same evasion pattern. TeamPCP's tooling has been open-sourced, which makes attribution difficult, but the locale skip is a behavioral signature that persists regardless of who runs the tools. That's either a deliberate protection of a specific user base or a deeply embedded development default.
+
+The Sigstore signing abuse is also worth tracking. Sigstore is a trusted artifact signing framework designed to improve supply chain integrity — using it to sign malicious packages is a direct attack on the trust model that defenders rely on to verify packages are legitimate.
+
+---
+
+## Russian Language Context
+
+Последовательное избегание систем с русской локалью (posledovatelnoye izbeganie sistem s russkoy lokalyu) — consistent evasion of Russian-locale systems — across all Shai-Hulud waves remains the strongest behavioral indicator of российское происхождение (rossiyskoye proiskhozhdeniye) — Russian origin — despite unconfirmed attribution after шесть месяцев активности (shest mesyatsev aktivnosti) — six months of activity.
