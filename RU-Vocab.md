@@ -396,7 +396,7 @@
 | **преимущественно** | [pre-i-moo-SHCHES-tven-na] | predominantly |
 | **исключительно** | [is-klyu-chee-TELʹ-na] | exclusively |
 | **дополнительно к** | [da-pal-NI-telʹ-na k] | in addition to |
-| **преимущественно** | [pre-i-moo-SHCHES-tven-na] | predominantly |
+| **самостоятельно** | [sa-ma-sta-YA-telʹ-na]  | independently / on one's own |
 
 
 
@@ -537,5 +537,5 @@
 | **отсекать** | [at-se-KATʹ] | to cut off / isolate |
 | **резервировать** | [re-zer-vee-RO-vatʹ] | to reserve
 | **анализироваться** | [a-na-lee-ZI-ra-vat-sa] | to be analyzed
-| **проверяться** | [pra-ve-RYAT-sa] | to be verified / checked |
+| **маркировать** | [mar-kee-RO-vatʹ] | to mark / label |
 | **объединяться** | [ab-ye-di-NYAT-sa] | to merge / combine |
