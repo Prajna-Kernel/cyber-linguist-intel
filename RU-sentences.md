@@ -723,3 +723,11 @@ If there is load, the system slows down, then there is a frame drop.
 **3️⃣2️⃣6️⃣. Все данные анализируются автоматически после обработки.** | All data is analyzed automatically after processing.
 
 **3️⃣2️⃣7️⃣. Сервер использует ресурсы исключительно для важных задач.** | The server uses resources exclusively for important tasks.
+
+**3️⃣2️⃣8️⃣. Система сохраняет журнал доступа после проверки.** | The system saves the access log after verification.
+
+**3️⃣2️⃣9️⃣. Пользователь открывает рабочую область перед обработкой данных.** | The user opens the workspace before processing data.
+
+**3️⃣3️⃣0️⃣. Система маркирует повреждённые файлы автоматически.** | The system marks corrupted files automatically.
+
+**3️⃣3️⃣1️⃣. Два кластера объединяются в одну систему.** | Two clusters merge into one system.
