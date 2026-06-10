@@ -212,6 +212,10 @@
 | **контрольная точка** | [kan-TROLʹ-na-ya TOCH-ka] | checkpoint | **контрольную точку** |
 | **очередь сообщений** | [O-che-redʹ sa-ab-SHCHYE-niy] | message queue | **очередь сообщений** |
 | **вычислительный ресурс** | [vy-chis-lee-TELʹ-nyy re-SOORS] | computing resource | **вычислительный ресурс** |
+| **журнал доступа** | [zhoor-NAL DO-stu-pa] | access log | **журнал доступа** |
+| **рабочая область** | [ra-BO-cha-ya OB-lastʹ] | workspace | **рабочую область** |
+
+
 
 
 ---
@@ -391,7 +395,8 @@
 | **вероятно** | [ve-ra-YAT-na] | probably |
 | **преимущественно** | [pre-i-moo-SHCHES-tven-na] | predominantly |
 | **исключительно** | [is-klyu-chee-TELʹ-na] | exclusively |
-
+| **дополнительно к** | [da-pal-NI-telʹ-na k] | in addition to |
+| **преимущественно** | [pre-i-moo-SHCHES-tven-na] | predominantly |
 
 
 
@@ -532,4 +537,5 @@
 | **отсекать** | [at-se-KATʹ] | to cut off / isolate |
 | **резервировать** | [re-zer-vee-RO-vatʹ] | to reserve
 | **анализироваться** | [a-na-lee-ZI-ra-vat-sa] | to be analyzed
-
+| **проверяться** | [pra-ve-RYAT-sa] | to be verified / checked |
+| **объединяться** | [ab-ye-di-NYAT-sa] | to merge / combine |
