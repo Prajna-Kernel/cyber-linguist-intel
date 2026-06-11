@@ -454,3 +454,126 @@ The seven-month undetected dwell between November 2023 and January 2025 suggests
 The Go-based toolkit is deliberate. Go binaries are harder to reverse-engineer than .NET, and the language choice signals a group with development resources and long-term infrastructure planning.
 
 ---
+
+# Incident #007 — June 11, 2026
+
+**Target:** Universities across the United States — education sector organizations using Oracle PeopleSoft Enterprise for administrative operations
+
+**Sector:** Education / Higher Education / Administration
+
+**Threat Actor:** ShinyHunters (aka UNC6240 per Mandiant) — extortion crew, unattributed origin
+
+**Source:** The Hacker News — June 11, 2026 | Google Mandiant (Charles Carmakal) | Oracle Security Alert CVE-2026-35273
+
+**Attack Type:** Zero-Day RCE Exploitation → Data Theft → Extortion
+
+**Labels:** ShinyHunters | UNC6240 | Oracle PeopleSoft | CVE-2026-35273 | CVSS 10.0 | Zero-Day | RCE | Unauthenticated | Universities | Education | Data Breach | Extortion | PSEMHUB | Environment Management
+
+---
+
+## Analysis
+
+ShinyHunters exploited an unpatched zero-day in Oracle PeopleSoft (CVE-2026-35273, CVSS 9.8) between May 27 and June 9, 2026, targeting universities for data theft and extortion. Google Mandiant attributes the activity to UNC6240. The vulnerability is a remote code execution flaw in the PeopleSoft Enterprise PeopleTools Environment Management component, requiring no authentication or user interaction — just network access over HTTP to the PSEMHUB endpoint. Sixty-eight percent of the 100+ organizations Mandiant notified were higher education institutions, predominantly in the United States.
+
+The University of Nottingham is a confirmed victim with approximately 455,000 unique email addresses exposed, including current students and alumni with names, addresses, phone numbers, passport numbers, and disability and ethnicity information. ShinyHunters says victim outreach has only just started and most of their claims remain unpublished — suggesting many more organizations remain undisclosed. Attackers used a custom MeshCentral agent disguised as Microsoft Azure binaries, deployed lateral-movement scripts over SSH using hardcoded credential lists, and exfiltrated data compressed with zstd to the ShinyHunters leak site. Mandiant found staging infrastructure exposed on public IP addresses running Python's SimpleHTTP server, revealing .bash_history, custom agents, and lateral-movement scripts with clear attribution to the threat actor.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-35273 — Oracle PeopleSoft Enterprise PeopleTools — CVSS 9.8 — remote code execution
+- **Vulnerable component:** PSEMHUB (PeopleSoft Environment Management Hub)
+- **Attack vector:** HTTP POST requests to /PSEMHUB/hub and /PSIGW/HttpListeningConnector — no authentication required
+- **Exploitation timeline:** May 27–June 9, 2026 — zero-day status entire duration
+- **Oracle advisory:** June 10, 2026 — patch status unclear per support login requirements
+- **Affected versions:** PeopleTools 8.61 and 8.62 — earlier unsupported versions likely vulnerable
+- **Confirmed victims:** 100+ organizations notified by Mandiant, 68% higher education; University of Nottingham disclosed with 455,000 records
+- **Attacker toolkit:** custom MeshCentral agents (Azure binary masquerading), lateral-movement script (victim_fanout.sh), SSH credential spraying, zstd data compression
+- **C2 infrastructure:** azurenetfiles.net (spoofed Azure NetApp Files), public SimpleHTTP servers exposing staging files
+- **Initial access vector:** unknown — likely web-facing PSEMHUB endpoints without proper access controls
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: CVE-2026-35273 exploited via HTTP requests to PSEMHUB endpoints — unauthenticated remote code execution
+- **TA0002 — Execution**
+  - T1190 — Exploitation leading to code execution on PeopleSoft servers
+- **TA0003 — Persistence**
+  - T1136.001 — Create Account: Local Account: rogue administrative accounts created via web shell post-exploitation
+  - T1547 — Boot or Logon Autostart Execution: MeshCentral agent persistence mechanisms installed
+- **TA0008 — Lateral Movement**
+  - T1021.004 — Remote Services: SSH: lateral-movement script (victim_fanout.sh) performs SSH credential spraying against internal hosts from /etc/hosts
+- **TA0009 — Collection**
+  - T1005 — Data from Local System: student records, alumni data, personal identifiers collected from university administrative systems
+- **TA0010 — Exfiltration**
+  - T1020 — Automated Exfiltration: zstd compression and automated exfiltration to attacker-controlled servers
+- **TA0040 — Impact**
+  - T1486 — Data Encrypted for Impact: data encrypted and withheld for ransom (extortion objective)
+
+---
+
+## Strategic Context
+
+ShinyHunters' typical modus operandi is vishing, stolen tokens, and weak access controls against SaaS and cloud platforms. A server-side zero-day in on-premises ERP software is a significant escalation for this group. The fact that they gained 13 days of exploitation time before Oracle's advisory suggests either a late discovery by Oracle or that the vulnerability sat patched longer than expected. Universities store vast amounts of sensitive data — student records, employee information, research data — making them high-value targets for both data theft and extortion. The open question is whether this was a one-off borrowed zero-day or the start of ShinyHunters moving into ERP exploitation as a new capability.
+
+---
+
+# Incident #008 — June 11, 2026
+
+**Target:** Enterprise ServiceNow customer instances — primarily Australia platform release and older releases with certain configuration changes
+
+**Sector:** Enterprise / IT Service Management / SaaS
+
+**Threat Actor:** Unknown — initially assessed as malicious threat actors, later reassessed as likely security researchers or bug bounty participants
+
+**Source:** The Hacker News — June 10, 2026 | BleepingComputer | ServiceNow Security Advisory (customer portal)
+
+**Attack Type:** API Unauthenticated Access Exploitation → Data Querying → Credential/Token Exposure
+
+**Labels:** ServiceNow | API Security | Unauthenticated Access | /api/now/related_list_edit/create | Misconfiguration | Bug Bounty | Security Researcher Activity | Data Access | June 2026 | Enterprise
+
+---
+
+## Analysis
+
+ServiceNow disclosed a security incident on June 10, 2026 (after the fact) involving attackers exploiting an unauthenticated API endpoint to query customer instance data. The company detected anomalous activity in early June and applied a global security patch on June 5, 2026 to the /api/now/related_list_edit/create endpoint, which was misconfigured with `requires_authentication=false`. The flaw allowed unauthenticated HTTP requests to access sensitive data within customer instances, primarily affecting the Australia platform release and older releases where customers had made certain configuration changes. However, on June 10, ServiceNow updated its disclosure to state that the observed activity was likely tied to security researchers or customer-led research associated with bug bounty submissions rather than malicious threat actors.
+
+ServiceNow received a confidential bug bounty submission describing the issue on April 22, 2026, but did not deploy the patch until June 5 — more than one month later — after anomalous activity began on June 3–4. The company confirmed evidence of successful queries against instance tables for a "subset of customers." Affected instances commonly store sensitive enterprise data including IT support tickets, employee records, internal documentation, asset inventories, security incident reports, configuration details, and notably credentials and API tokens shared during troubleshooting. The exploit activity was associated with IP address 51.159.98.241 and Guest user account logins. No malware or advanced exploitation tools were identified, and no link to known threat actor infrastructure has been established. The exact scope of exposed data remains undisclosed.
+
+---
+
+## Key Technical Indicators:
+- **Vulnerable endpoint:** /api/now/related_list_edit/create — misconfigured with requires_authentication=false
+- **Misconfiguration:** unauthenticated HTTP requests allowed to query instance data
+- **Affected versions:** Australia platform release, older releases with specific configuration changes
+- **Anomalous activity detected:** June 3–4, 2026
+- **Security patch deployed:** June 5, 2026 (globally)
+- **Bug bounty submission:** April 22, 2026 (similar issue reported — 44-day gap to patch)
+- **Associated IP address:** 51.159.98.241
+- **Associated account:** Guest user account
+- **Reported querying activity:** successful queries of instance tables against subset of customers
+- **CVE:** none assigned at time of disclosure
+- **Data stored in affected instances:** IT tickets, employee records, documentation, asset lists, security reports, credentials, API tokens, configuration details
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: unauthenticated API endpoint exploited via HTTP requests — no credentials required
+- **TA0005 — Defense Evasion**
+  - T1078 — Valid Accounts: Guest user account exploited for unauthenticated access
+- **TA0007 — Discovery**
+  - T1526 — Enumerate Cloud Resources: instance tables queried via unauthenticated endpoint — reconnaissance of available data
+- **TA0009 — Collection**
+  - T1005 — Data from Local System: sensitive enterprise data queried from customer instances (support tickets, employee records, credentials)
+- **TA0010 — Exfiltration**
+  - T1030 — Data Transfer Size Limits: queries of instance tables implies data movement (scope unconfirmed)
+
+---
+
+## Strategic Context
+
+The timeline raises operational security questions. ServiceNow received a bug bounty report on April 22, but did not patch until June 5 — more than a month later. Anomalous activity was detected on June 3–4, suggesting attackers discovered and exploited the flaw before the patch was even deployed. The June 10 reassessment that the activity was likely security researchers rather than malicious threat actors is notable but undercuts the severity claim. The fact that ServiceNow did not immediately assign a CVE identifier and buried the advisory behind its customer support portal suggests they initially approached it as a containment issue rather than a critical incident. The lack of detected malware or sophisticated tooling is consistent with either security researchers testing the flaw or opportunistic exploitation by less-skilled actors.
+
+---
+
