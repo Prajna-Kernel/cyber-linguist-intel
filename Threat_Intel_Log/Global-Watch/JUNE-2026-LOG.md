@@ -577,3 +577,142 @@ The timeline raises operational security questions. ServiceNow received a bug bo
 
 ---
 
+# Incident #009 — June 16, 2026
+
+**Target:** Unnamed large organization — critical infrastructure sector, air-gapped internal network
+
+**Sector:** Critical Infrastructure / Industrial
+
+**Threat Actor:** Velvet Ant — China-nexus cyber espionage group
+
+**Origin:** China — state-sponsored espionage, well-resourced, active since at least 2016
+
+**Source:** The Hacker News — June 12, 2026 | Sygnia (Operation Highland)
+
+**Attack Type:** Multi-Stage Network Traversal → PAM/OpenSSH Backdoor → Decade-Long Credential Harvesting
+
+**Labels:** Velvet Ant | Operation Highland | PAM Backdoor | OpenSSH | pam_unix.so | Air-Gapped | GS-Netcat | SOCKS5 | Credential Theft | Linux | Critical Infrastructure | China-nexus | 10-Year Dwell
+
+---
+
+## Analysis
+
+Sygnia published findings from Operation Highland on June 12, 2026, documenting a China-nexus group they track as Velvet Ant maintaining undetected access to a critical infrastructure organization's air-gapped internal network for nearly a decade, with earliest forensic traces back to 2016. The defining characteristic of this operation is not the initial intrusion — it's where the attacker chose to hide. Instead of deploying malware that a scanner might catch, Velvet Ant backdoored the Linux login system itself.
+
+The attack unfolded in three stages. First, the group compromised internet-facing servers as initial footholds. Second, they traversed the IT network toward the air-gapped critical infrastructure segment, using a modified GS-Netcat tool configured as a SOCKS5 proxy daemon masquerading as `smbd -D` to bridge the gap without requiring a direct external connection. Third, once inside the isolated network, they targeted the PAM layer — replacing legitimate `pam_unix.so` modules with backdoored versions that accepted hardcoded passwords and silently harvested user credentials as people logged in normally. Nine distinct PAM module variants were identified, each compiled in a separate build environment. OpenSSH binaries were altered in parallel to log every command typed, with a hidden flag to disable that logging during live operations.
+
+Sygnia described remediation as unusually high-risk. Replacing backdoored PAM modules and SSH binaries on an air-gapped network risks immediate administrator lockout and production outages — there are no live package pulls or dependency resolution available. The firm used laboratory testing, per-host binary profiling, serialized deployment, and explicit rollback plans. This is not the first time Sygnia has documented Velvet Ant — the same group was found inside F5 BIG-IP appliances in 2024 and exploiting Cisco NX-OS CVE-2024-20399 the same year. The pattern is consistent: when detected, the group pivots to less-monitored infrastructure and rebuilds persistence from a new position.
+
+---
+
+## Key Technical Indicators:
+- **Campaign name:** Operation Highland (Sygnia)
+- **Active since:** 2016 — undetected for nearly a decade
+- **Stage 1:** compromise of internet-facing servers — specific vulnerability not disclosed
+- **Stage 2:** network traversal via modified GS-Netcat — SOCKS5 proxy daemon disguised as smbd -D
+- **Stage 3:** PAM backdoor — pam_unix.so replaced across multiple hosts — 9 distinct variants, separate build environments
+- **PAM backdoor variants:** hardcoded password acceptance + silent credential harvesting during legitimate logins
+- **OpenSSH modification:** credential logging + command capture — hidden disable flag for live operational OPSEC
+- **SELinux:** disabled via modified scp binary to prevent interference
+- **Prior Velvet Ant activity:** F5 BIG-IP persistence (2024), Cisco NX-OS CVE-2024-20399 exploitation (2024)
+- **Remediation risk:** high — air-gapped environment prevents live package pulls, PAM modification risks lockout
+- **Attribution:** Sygnia — high confidence China-nexus
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: initial foothold via compromise of internet-facing servers — specific product and vulnerability not disclosed
+- **TA0003 — Persistence**
+  - T1556.003 — Modify Authentication Process: Pluggable Authentication Modules: pam_unix.so replaced with backdoored versions accepting hardcoded passwords — attacker controls authentication stack
+- **TA0005 — Defense Evasion**
+  - T1036.005 — Masquerading: Match Legitimate Name or Location: GS-Netcat SOCKS5 proxy daemon disguised as smbd -D process — blends with legitimate Samba service
+  - T1562.001 — Impair Defenses: Disable or Modify Tools: SELinux disabled via modified scp binary to remove enforcement layer
+  - T1070 — Indicator Removal: OpenSSH credential logging disabled via hidden flag during live operations — active forensic footprint management
+- **TA0006 — Credential Access**
+  - T1556.003 — Modify Authentication Process: backdoored PAM modules silently harvest real credentials as legitimate users authenticate
+  - T1552.004 — Unsecured Credentials: Private Keys: OpenSSH modifications log SSH keys and credentials passed through modified binaries
+- **TA0008 — Lateral Movement**
+  - T1090.001 — Proxy: Internal Proxy: modified GS-Netcat bridges air-gapped segment via SOCKS5 — no direct external connection to critical infrastructure network required
+- **TA0011 — Command and Control**
+  - T1572 — Protocol Tunneling: SOCKS5 proxy tunnel routes C2 traffic through IT network into air-gapped segment via chained internal hosts
+
+---
+
+## Strategic Context
+
+The choice to hide inside the authentication layer is the most significant operational detail here. PAM and OpenSSH are trusted components — they're what the system uses to decide who is allowed in. Backdooring them means the attacker is invisible to every security tool that depends on those same components for access. Normal cleanup procedures also fail: you can't just remove a backdoored PAM module on an air-gapped production system without risking a complete lockout.
+
+Nine separately compiled PAM variants is the clearest indicator of a well-resourced, long-term operation. This is not a group that deployed one backdoor and hoped for the best. Each variant was built in a separate environment, suggesting deliberate compartmentalization to prevent one discovery from unraveling the entire access chain. The decade-long dwell is the result of that design.
+
+The pattern across F5 BIG-IP, Cisco NX-OS, and now PAM/OpenSSH shows a consistent operational philosophy: find the infrastructure defenders watch least and anchor persistence there. Load balancers, switches, and login software are trusted by default and rarely checked — exactly the property Velvet Ant exploits repeatedly.
+
+---
+
+# Incident #010 — June 16, 2026
+
+**Target:** Compromised consumer devices across 163 countries — routers, smartphones, smart home devices, IoT — used as residential proxy nodes; downstream targets include organizations subjected to DDoS, phishing, credential stuffing, and fraud operations routed through the botnet
+
+**Sector:** Consumer / IoT / Criminal Infrastructure
+
+**Threat Actor:** Asocks — Russia-linked commercial residential proxy service operating criminal infrastructure
+
+**Origin:** Russia-linked — commercial criminal operation, not state-sponsored
+
+**Source:** The Hacker News — May 29, 2026 | Dutch National Police (Politie) | Dutch NCSC
+
+**Attack Type:** Botnet Infrastructure Takedown — Residential Proxy Network Disruption
+
+**Labels:** Asocks | Botnet | Residential Proxy | IoT | PROXYLIB | Netherlands | Dutch Politie | NCSC | Takedown | 17 Million Devices | Stark Industries | SocksEscort | Russia-linked | Consumer Hardware
+
+---
+
+## Analysis
+
+On May 28–29, 2026, Dutch National Police and the NCSC dismantled Asocks, a Russia-linked commercial residential proxy service built on a botnet of at least 17 million compromised consumer devices across 163 countries. Police seized 200 command servers from a Netherlands-based hosting provider, which subsequently took the remaining infrastructure offline. The tip came from an independent security researcher who reported unusual proxy-network activity to the NCSC, triggering a months-long investigation that mapped the full botnet infrastructure before the raid. This was the second major Dutch criminal infrastructure operation in eight days, following the May 22 seizure targeting bulletproof hosting provider Stark Industries.
+
+Asocks operated as a commercial service — criminals rented access to the botnet's pool of compromised home devices to disguise malicious traffic as ordinary household internet activity. Subscriptions ranged from $5 to $15 per month for residential, mobile, and corporate proxy access. Known criminal use cases included DDoS attacks, phishing campaigns, spam runs, credential stuffing, brute-force attacks, click fraud, SMS pumping, and malware distribution — all routed through IP addresses that appear legitimate to IP-reputation security tools. The initial enrollment vector for many devices was PROXYLIB, a campaign identified by HUMAN's Satori Threat Intelligence team in 2024 that embedded a malicious Go-based library in Android apps distributed through Google Play to silently enroll devices into the Asocks network.
+
+The takedown has a significant limitation: the Asocks website remained accessible after the seizure, the malware on all 17 million devices remains installed, and every infected device is available for re-enrollment the moment a new operator reaches out. No suspects were named. The infrastructure was disrupted — the underlying criminal operation was not.
+
+---
+
+## Key Technical Indicators:
+- **Takedown date:** May 28–29, 2026 — Dutch National Police and NCSC
+- **Infrastructure seized:** 200 command servers — Netherlands-based hosting provider
+- **Botnet scale:** 17 million+ compromised devices across 163 countries
+- **Device types:** consumer routers, smartphones, tablets, smart home devices, IoT
+- **Service model:** commercial residential proxy — subscriptions $5–$15/month
+- **Enrollment vector:** PROXYLIB campaign (2024) — malicious Go library in Android apps on Google Play
+- **Attribution:** Asocks — Russia-linked, identified by Dutch NL Times; not confirmed in official police statements
+- **Limitation:** Asocks website stayed online post-seizure — 17 million devices remain infected and re-enrollable
+- *No suspects named in official announcement*
+- **Related operations:** SocksEscort takedown (March 2026, 369,000 devices), Stark Industries seizure (May 22, 2026)
+- **UK NCSC warning:** April 2026 — China-linked threat actors increasingly routing operations through residential proxies
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0042 — Resource Development**
+  - T1583.008 — Acquire Infrastructure: Botnet: Asocks operated 17 million compromised consumer devices as rentable criminal proxy infrastructure
+  - T1584.005 — Compromise Infrastructure: Botnet: consumer devices compromised via PROXYLIB Android campaign and enrolled without owner knowledge
+- **TA0005 — Defense Evasion**
+  - T1090.002 — Proxy: External Proxy: criminal traffic routed through compromised consumer devices — traffic appears as legitimate residential broadband to IP-reputation tools
+- **TA0011 — Command and Control**
+  - T1090.004 — Proxy: Domain Fronting: residential proxy routing defeats geographic and IP-reputation blocking by making attacker traffic appear to originate from ordinary consumer broadband addresses
+
+---
+
+## Strategic Context
+
+The Asocks takedown matters less for what it stopped and more for what it exposed. 17 million devices were operating as criminal infrastructure without their owners knowing. The botnet's value wasn't volume — it was believability. Traffic from a suburban router in the Netherlands or a phone in South Korea looks nothing like traffic from a VPS in a known datacenter. Every IP-reputation tool, every geofencing rule, every fraud detection system that relies on traffic origin as a trust signal is blind to this.
+
+The Russia-linked origin of Asocks places this in the broader context of Russian cybercriminal infrastructure that operates commercially and independently of state tasking but serves as the supply layer for both criminal and state-sponsored operations. The UK NCSC's April 2026 warning that China-linked actors are routing operations through exactly this kind of residential proxy network confirms that state actors are consumers of commercially operated criminal infrastructure.
+
+The Stark Industries seizure eight days earlier and this takedown in the same two-week window signals a more coordinated Dutch law enforcement posture against criminal hosting and proxy infrastructure specifically.
+
+---
+
+## Russian Language Context
+
+Asocks функционировал как коммерческий сервис (funktsioniroval kak kommercheskiy servis) — operated as a commercial service — предоставляя криминальную прокси-инфраструктуру (predostavlyaya kriminal'nuyu proksi-infrastrukturu) — providing criminal proxy infrastructure — через скомпрометированные бытовые устройства (cherez skompromitirovannyye bytovyye ustroystva) — through compromised consumer devices. Российское происхождение оператора (rossiyskoye proiskhozhdeniye operatora) — Russian-linked operator origin — вписывается в устойчивую модель (vpisyvayetsya v ustoychivuyu model') — fits a consistent pattern — коммерциализации киберпреступной инфраструктуры (kommertsializatsii kiberprestupnoy infrastruktury) — commercialization of cybercriminal infrastructure.
