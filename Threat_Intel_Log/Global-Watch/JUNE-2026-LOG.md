@@ -716,3 +716,127 @@ The Stark Industries seizure eight days earlier and this takedown in the same tw
 ## Russian Language Context
 
 Asocks функционировал как коммерческий сервис (funktsioniroval kak kommercheskiy servis) — operated as a commercial service — предоставляя криминальную прокси-инфраструктуру (predostavlyaya kriminal'nuyu proksi-infrastrukturu) — providing criminal proxy infrastructure — через скомпрометированные бытовые устройства (cherez skompromitirovannyye bytovyye ustroystva) — through compromised consumer devices. Российское происхождение оператора (rossiyskoye proiskhozhdeniye operatora) — Russian-linked operator origin — вписывается в устойчивую модель (vpisyvayetsya v ustoychivuyu model') — fits a consistent pattern — коммерциализации киберпреступной инфраструктуры (kommertsializatsii kiberprestupnoy infrastruktury) — commercialization of cybercriminal infrastructure.
+
+---
+
+# Incident #011 — June 17, 2026
+
+**Target:** Organizations globally using Palo Alto Networks PAN-OS with GlobalProtect portal or gateway configured
+
+**Sector:** Enterprise / Network Security / VPN Infrastructure
+
+**Threat Actor:** Unknown — consistent threat actor identified across exploitation waves via spoofed MAC address
+
+**Source:** The Hacker News — May 29, 2026 | Palo Alto Networks Security Advisory | Rapid7 | eSentire | Unit 42
+
+**Attack Type:** Authentication Bypass via Forged Cookies — Unauthenticated VPN Access
+
+**Labels:** Palo Alto | PAN-OS | CVE-2026-0257 | GlobalProtect | Authentication Bypass | CVSS 7.8 | CISA KEV | Active Exploitation | VPN | Privilege Escalation | Cookie Forgery | Initial Access
+
+---
+
+## Analysis
+
+Palo Alto Networks disclosed CVE-2026-0257 on May 13, 2026, an authentication bypass in GlobalProtect portal and gateway components affecting firewalls with authentication override cookies enabled and specific certificate configurations. The flaw stems from the gpsvc binary performing no signature verification after decrypting authentication override cookies — allowing any attacker who can retrieve the public key from the exposed HTTPS certificate to forge valid authentication cookies and bypass authentication entirely.
+
+Active exploitation began on May 17, 2026 (four days after disclosure), with Rapid7 MDR observing two exploitation waves on May 17 and May 21 from the same threat actor based on consistent spoofed MAC addresses. The initial wave used suspicious cookie authentication attempts; subsequent waves employed forged cookies targeting admin accounts. Rapid7 found that attackers successfully bypassed authentication, but only 2 of 10 impacted MDR customers achieved full VPN session establishment — the other 8 had authentication probes accepted without completing a VPN connection. No post-access behavior or lateral movement has been confirmed as of June. Palo Alto added CVE-2026-0257 to CISA's Known Exploited Vulnerabilities (KEV) catalog on June 1 with a required federal remediation deadline. A public proof-of-concept script is now available.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-0257 — authentication bypass in GlobalProtect
+- **CVSS:** 7.8 (medium per Microsoft, critical per Rapid7)
+- **Advisory date:** May 13, 2026
+- **First exploitation observed:** May 17, 2026 — 4 days post-disclosure
+- **Exploitation waves:** May 17 and May 21, 2026 — same threat actor (consistent MAC spoofing)
+- **Affected systems:** GlobalProtect portal/gateway with authentication override cookies enabled + specific certificate configuration
+- **Attack vector:** forged authentication override cookies — no signature verification
+- **Successful VPN sessions:** 2 of 10 MDR customer environments
+- **Attack technique:** cookie authentication to local admin account via spoofed MAC addresses
+- **CISA KEV addition:** June 1, 2026 — federal agencies required to remediate by June 1
+- **Public PoC:** available
+- **Detection:** cookies lacking proper signature validation; authentication probes to admin accounts from low-cost hosting providers
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: CVE-2026-0257 exploited via forged authentication override cookies — unauthenticated access to internet-facing GlobalProtect portal/gateway
+- **TA0004 — Privilege Escalation**
+  - T1556.003 — Modify Authentication Process: Pluggable Authentication Modules: forged cookies grant access as authenticated administrator without credentials
+- **TA0005 — Defense Evasion**
+  - T1550 — Use Alternate Authentication Material: forged authentication cookies act as valid credentials — bypasses authentication controls
+- **TA0011 — Command and Control**
+  - T1071.001 — Application Layer Protocol: Web Protocols: VPN session establishment via authenticated GlobalProtect gateway
+
+---
+
+## Strategic Context
+
+An authentication bypass on an internet-facing enterprise VPN appliance is a critical initial-access vector. The fact that exploitation began four days after disclosure and that both Rapid7 and eSentire confirmed active exploitation across multiple customers means defenders had almost no grace period. 
+
+The public proof-of-concept script further accelerated attack activity. Two exploitation waves with consistent MAC spoofing suggests either a single organized threat actor with sustained tasking or multiple actors using the same toolkit — either way, the threat is ongoing and likely to accelerate as unpatched devices remain exposed.
+
+---
+
+# Incident #012 — June 17, 2026
+
+**Target:** Microsoft 365 Copilot Enterprise Search users across organizations globally
+
+**Sector:** Enterprise / Cloud Services / Enterprise Software / Office Productivity
+
+**Threat Actor:** None — vulnerability research, no in-the-wild exploitation observed
+
+**Source:** The Hacker News — June 15, 2026 | Varonis Threat Labs | Microsoft Security Response Center (MSRC)
+
+**Attack Type:** Multi-Flaw Vulnerability Chain — Parameter-to-Prompt Injection → One-Click Silent Data Exfiltration
+
+**Labels:** SearchLeak | CVE-2026-42824 | Microsoft 365 Copilot | Enterprise Search | Parameter-to-Prompt Injection | SSRF | CSP Bypass | HTML Race Condition | Information Disclosure | Data Exfiltration | Trusted Link | AI Security
+
+---
+
+## Analysis
+
+Varonis Threat Labs disclosed SearchLeak on June 15, 2026, a critical vulnerability chain in Microsoft 365 Copilot Enterprise Search that enables one-click silent exfiltration of emails, meeting details, calendar entries, SharePoint documents, and OneDrive files. The attack chains three individually insufficient flaws: a parameter-to-prompt (P2P) injection via the URL 'q' parameter that feeds Copilot attacker instructions, an HTML rendering race condition that fires an attacker-controlled image tag before output sanitization completes, and a Bing server-side request forgery (SSRF) that routes stolen data through Bing's image retrieval endpoint, bypassing the page's Content Security Policy (CSP) entirely because the request originates from Microsoft infrastructure.
+
+The attacker crafts a malicious Microsoft link using a real microsoft.com domain and sends it through email or Slack. When the victim clicks, no password entry, no OAuth consent, no second-factor prompt appears — just Copilot's thinking animation while Copilot searches the user's mailbox, extracts email titles or content, and embeds them in hidden image URLs routed through Bing's infrastructure. Microsoft patched the vulnerability on its backend in early June 2026, requiring no customer action since Copilot Enterprise is a managed service. Varonis disclosed only a proof-of-concept with no evidence of in-the-wild exploitation. This is the third such one-click exploit in a year, following Reprompt (January 2026) and EchoLeak (CVE-2025-32711).
+
+---
+
+## Key Technical Indicators:
+- **Vulnerability chain:** SearchLeak (CVE-2026-42824)
+- **Flaws:** Parameter-to-Prompt Injection + HTML race condition + SSRF/CSP bypass
+- **Entry point:** 'q' URL parameter in Microsoft 365 Copilot Enterprise Search URL
+- **Affected component:** Microsoft 365 Copilot Enterprise Search (managed service)
+- **Data accessible:** emails, MFA codes, meeting details, calendar entries, SharePoint documents, OneDrive files
+- **Exfiltration method:** hidden image URL embedded in HTML, routed through Bing infrastructure
+- **Backend mitigation:** patched early June 2026 — no customer patching required
+- **Attack pattern:** one-click, no credentials required, silent exfiltration
+- **Related vulnerabilities:** Reprompt (Jan 2026), EchoLeak (CVE-2025-32711)
+- **Exploitation status:** proof-of-concept only, no in-the-wild exploitation observed
+- **Detection:** Copilot Search URLs carrying encoded payloads in 'q' parameter; unusual Bing image requests from Copilot sessions
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1566.002 — Phishing: Spear-phishing Link: malicious Copilot link sent via email or Slack — uses real microsoft.com domain to evade URL filtering
+- **TA0004 — Privilege Escalation**
+  - T1548 — Abuse Elevation Control Mechanism: victim's existing Copilot Enterprise access abused to access all data the user can reach
+- **TA0005 — Defense Evasion**
+  - T1036.005 — Masquerading: Match Legitimate Name or Location: crafted link uses real microsoft.com domain — URL filtering and anti-phishing tools unlikely to flag it
+  - T1222 — HTML injection race condition bypasses output sanitization during rendering
+- **TA0006 — Credential Access**
+  - T1556.003 — Modify Authentication Process: parameter injection redirects Copilot's AI instructions to extract and exfiltrate user data
+- **TA0009 — Collection**
+  - T1005 — Data from Local System: Copilot queries user's mailbox, calendar, SharePoint, and OneDrive to gather data
+- **TA0010 — Exfiltration**
+  - T1567.002 — Exfiltration Over Web Service: Exfiltration to Cloud Storage: stolen data routed through Bing image endpoint, bypassing CSP via Microsoft infrastructure origin
+
+---
+
+## Strategic Context
+
+SearchLeak represents a pattern emerging in AI security: classic web vulnerabilities (SSRF, race conditions) that were previously contained or blocked can become exploitable again when chained with AI-specific flaws like parameter-to-prompt injection. The three bugs are individually manageable — organizations have defenses for SSRF and race conditions. But combined with P2P injection that weaponizes the AI engine itself, they become a silent data-exfiltration chain that requires no user interaction beyond a single click.
+
+The fact that the link uses a real microsoft.com domain is operationally significant. Traditional URL filtering, anti-phishing, and email security tools all rely on domain reputation as a first signal. A real Microsoft domain bypasses those controls entirely. The real risk here is not technical sophistication — it's the combination of trust (real domain) and invisibility (Copilot's thinking animation masks the exfiltration).
