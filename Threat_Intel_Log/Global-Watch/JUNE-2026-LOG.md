@@ -840,3 +840,140 @@ The attacker crafts a malicious Microsoft link using a real microsoft.com domain
 SearchLeak represents a pattern emerging in AI security: classic web vulnerabilities (SSRF, race conditions) that were previously contained or blocked can become exploitable again when chained with AI-specific flaws like parameter-to-prompt injection. The three bugs are individually manageable — organizations have defenses for SSRF and race conditions. But combined with P2P injection that weaponizes the AI engine itself, they become a silent data-exfiltration chain that requires no user interaction beyond a single click.
 
 The fact that the link uses a real microsoft.com domain is operationally significant. Traditional URL filtering, anti-phishing, and email security tools all rely on domain reputation as a first signal. A real Microsoft domain bypasses those controls entirely. The real risk here is not technical sophistication — it's the combination of trust (real domain) and invisibility (Copilot's thinking animation masks the exfiltration).
+
+---
+
+# Incident #013 — June 23, 2026
+
+**Target:** WordPress websites running ShapedPlugin Pro versions with access to the vendor's Easy Digital Downloads (EDD) update channel; free versions on WordPress.org unaffected
+
+**Sector:** E-commerce / Web Development / WordPress Ecosystem / WooCommerce
+
+**Threat Actor:** Unknown — supply chain attack vector, no actor attribution
+
+**Source:** The Hacker News — June 22, 2026 | Wordfence (Defiant)
+
+**Attack Type:** Supply Chain Compromise — Build/Distribution Pipeline Backdoor Injection
+
+**Labels:** ShapedPlugin | WordPress | Supply Chain | EDD | Backdoor | CVE-2026-49777 | CVE-2026-10735 | CVSS 10.0 | Product Slider Pro | Credential Theft | Web Shell | wp-config.php | WooCommerce Orders
+
+---
+
+## Analysis
+
+ShapedPlugin's WordPress Pro plugin suite was compromised in a supply chain attack when unknown threat actors gained access to the vendor's build and distribution pipeline, injecting backdoor code into Pro plugin updates distributed via the official Easy Digital Downloads platform. The compromise affected three plugins: Product Slider Pro for WooCommerce (versions before 3.5.4), Real Testimonials Pro (version 3.2.5), and Smart Post Show Pro (versions before 4.0.2). The attack only impacted Pro versions distributed through account.shapedplugin[.]com; free versions on WordPress.org remain unaffected.
+
+The compromised plugin builds contain a loader triggered on every admin page that fetches a payload from a remote server, installs it, and activates it as a fake plugin invisible to the WordPress admin interface. The malware captures credentials in plaintext and 2FA codes, establishes persistence via custom REST endpoints, deploys web shells with command execution, and uses a PHP file named install-persistent.php to extract wp-config.php (including database credentials and authentication keys), administrator accounts, mail plugin credentials from WP Mail SMTP/Post SMTP/Easy WP SMTP, and WooCommerce order data from the last three months before deleting itself.
+
+Wordfence identified evidence suggesting a compromise of the build pipeline rather than direct package poisoning. Upon notification, ShapedPlugin confirmed the incident and is conducting security reviews of distribution and release processes. Site owners who installed malicious versions are advised to reset all passwords, revoke 2FA secrets, review administrator accounts, and rotate mail plugin credentials.
+
+---
+
+## Key Technical Indicators:
+- **Affected plugins:** Product Slider Pro for WooCommerce, Real Testimonials Pro, Smart Post Show Pro
+- **Vulnerable versions:** Product Slider Pro <3.5.4, Real Testimonials Pro 3.2.5, Smart Post Show Pro <4.0.2
+- **Distribution vector:** Easy Digital Downloads (account.shapedplugin[.]com) — Pro versions only
+- **Loader trigger:** activated on every admin page load
+- **Payload delivery:** fetched from remote server (194.76.217.28:2871)
+- **Fake plugin visibility:** hidden from WordPress admin plugin list
+- **Capabilities:** credential capture (plaintext), 2FA code capture, arbitrary file writes (REST endpoint), web shell deployment
+- **Data extraction:** wp-config.php full contents, administrator accounts, mail plugin credentials, WooCommerce orders (3-month window)
+- **Self-deletion:** install-persistent.php deletes after data extraction
+- **CVE-2026-49777:** Product Slider Pro (CVSS 10.0)
+- **CVE-2026-10735:** Overall incident (CVSS not specified)
+- **Attack vector:** compromised build/distribution pipeline — not direct source code injection
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1195.002 — Supply Chain Compromise: Compromise Software Supply Chain: compromised vendor build and distribution pipeline injected backdoor into legitimate plugin updates
+- **TA0002 — Execution**
+  - T1203 — Exploitation for Client Execution: malicious loader executes on every admin page access
+- **TA0003 — Persistence**
+  - T1583.003 — Acquire Infrastructure: Web Services: remote server (194.76.217.28:2871) used for persistent payload delivery
+  - T1505.003 — Server Software Component: Web Shell: web shell deployed via install-persistent.php
+- **TA0005 — Defense Evasion**
+  - T1036.005 — Masquerading: Match Legitimate Name or Location: malware disguised as legitimate plugin invisible to admin interface
+  - T1027 — Obfuscated Files or Information: loader obfuscation hides malicious nature from detection
+- **TA0006 — Credential Access**
+  - T1552.001 — Unsecured Credentials: Credentials in Files: plaintext credential capture, 2FA code harvesting, wp-config.php extraction
+  - T1056.004 — Input Capture: Keystroke Logging: credentials captured during normal WordPress operations
+- **TA0009 — Collection**
+  - T1005 — Data from Local System: wp-config.php, administrator accounts, mail plugin credentials, WooCommerce order data exfiltrated
+- **TA0011 — Command and Control**
+  - T1105 — Ingress Tool Transfer: malware downloads payloads from remote server (194.76.217.28:2871)
+
+---
+
+## Strategic Context
+
+The attack vector targets site owners who purchased legitimate licenses and installed updates directly from the vendor's official channel — the most trusted path in WordPress. This is the most dangerous type of supply chain attack because it exploits trust at the point of direct vendor contact, not through intermediaries. The fact that it was a pipeline compromise rather than source code poisoning suggests the attacker had sophisticated access to ShapedPlugin's build infrastructure, not just their code repository.
+
+The targeting of WooCommerce order data over a three-month window indicates the attacker had specific economic intelligence goals — order information, payment methods, and customer details are high-value targets for downstream fraud and credential theft operations.
+
+---
+
+# Incident #014 — June 23, 2026
+
+**Target:** WordPress websites running Gravity SMTP plugin (100,000+ installations); secondary impact: configurations using third-party email service integrations (Amazon SES, Google, Mailjet, Resend, Zoho)
+
+**Sector:** E-commerce / Web Services / WordPress Ecosystem / Email Infrastructure
+
+**Threat Actor:** Unknown — mass opportunistic exploitation, credential harvesting campaign
+
+**Source:** The Hacker News — June 22, 2026 | Wordfence (Defiant) | CrowdSec | SecurityWeek
+
+**Attack Type:** Unauthenticated Information Disclosure — API Key/Credential Harvesting
+
+**Labels:** Gravity SMTP | CVE-2026-4020 | WordPress Plugin | Information Disclosure | REST API | Unauthenticated Access | API Keys | OAuth Tokens | CVSS 5.3 | Background Noise | Reconnaissance
+
+---
+
+## Analysis
+
+Wordfence and CrowdSec documented mass exploitation of CVE-2026-4020, an unauthenticated information disclosure vulnerability in the Gravity SMTP WordPress plugin affecting all versions through 2.1.4. The flaw stems from a REST API endpoint (/wp-json/gravitysmtp/v1/tests/mock-data) with a permission_callback that unconditionally returns true, allowing unauthenticated visitors to request a system report in JSON format containing 365 KB of sensitive configuration data.
+
+Active exploitation began in late May 2026 and reached background noise status by early June — meaning it was integrated into automated, large-scale scanning routines rather than targeted campaigns. Wordfence blocked 17+ million exploitation attempts as of June 22, with a peak of over 4 million requests in a single day around June 6. CrowdSec observed 412 distinct attacking IPs between May 27 and June 1, with geographic distribution consistent with distributed cloud infrastructure. The exposed data includes API keys, secrets, and OAuth tokens for email service integrations (Amazon SES, Google, Mailjet, Resend, Zoho), WordPress version, all active plugins with versions, PHP version, server details, database configuration, table names, and authentication keys from wp-config.php.
+
+The vulnerability was patched in version 2.1.5 released March 17, 2026. Site owners running vulnerable versions with configured third-party email integrations must assume API credentials are compromised and should rotate them immediately. The flaw poses less direct risk than it does reconnaissance value — exposed system reports help attackers tailor follow-on attacks, identify additional vulnerable plugins, and prioritize targets with already-compromised credentials.
+
+---
+
+## Key Technical Indicators:
+- **Vulnerability:** CVE-2026-4020 — Gravity SMTP information disclosure
+- **CVSS:** 5.3 (medium)
+- **Vulnerable versions:** all through 2.1.4
+- **Patched version:** 2.1.5 (released March 17, 2026)
+- **Installations affected:** 100,000+ WordPress sites
+- **Exploitation start:** late May 2026 (first observed May 27 per CrowdSec)
+- **Exploitation peak:** June 6, 2026 (~4 million requests in 24 hours)
+- **Blocked attempts:** 17+ million (Wordfence) as of June 22
+- **Attacking IPs:** 412 distinct IPs (May 27–June 1)
+- **Geographic distribution:** France, Netherlands, United States (consistent with hosting/cloud infrastructure)
+- **Exposed endpoints:** /wp-json/gravitysmtp/v1/tests/mock-data with ?page=gravitysmtp-settings parameter
+- **Data return size:** ~365 KB JSON system report
+- **Credential types exposed:** API keys, secrets, OAuth tokens for Amazon SES, Google, Mailjet, Resend, Zoho integrations
+- **Exploitation classification:** background noise (automated mass scanning, not targeted)
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: unauthenticated REST API endpoint exploited via simple HTTP GET requests
+- **TA0007 — Discovery**
+  - T1526 — Enumerate Cloud Resources: exposed system report used for reconnaissance of software stack, active plugins, and infrastructure configuration
+- **TA0006 — Credential Access**
+  - T1552.001 — Unsecured Credentials: Credentials in Files: API keys, OAuth tokens, and email service credentials exposed via REST API
+  - T1526 — Reconnaissance: system information and plugin enumeration aids in crafting targeted social engineering or follow-on attacks
+- **TA0042 — Resource Development**
+  - T1592 — Gather Victim Information: exposed system and plugin data used to tailor attacks and identify additional vectors
+
+---
+
+## Strategic Context
+
+CVE-2026-4020 is a textbook reconnaissance vulnerability — not RCE, not a worm, but exactly the kind of disclosure that enables targeted attacks downstream. The 17+ million exploitation attempts show this vulnerability reached industrial scale within days of awareness. The shift from targeted probing to background noise indicates the attack was absorbed into automated scanning toolkits — a clear signal that any site still running vulnerable versions should assume reconnaissance has occurred.
+
+The exposure of email service credentials is operationally significant. Stolen Amazon SES, Google, Mailjet, Resend, and Zoho tokens can be abused for spam campaigns, account takeovers on downstream services, or used as currency in credential marketplaces. The fact that site owners can't simply rotate passwords (API keys require vendor-side rotation) means compromise is persistent and thorough.
+
