@@ -977,3 +977,79 @@ CVE-2026-4020 is a textbook reconnaissance vulnerability — not RCE, not a worm
 
 The exposure of email service credentials is operationally significant. Stolen Amazon SES, Google, Mailjet, Resend, and Zoho tokens can be abused for spam campaigns, account takeovers on downstream services, or used as currency in credential marketplaces. The fact that site owners can't simply rotate passwords (API keys require vendor-side rotation) means compromise is persistent and thorough.
 
+---
+
+# Incident #015 — June 30, 2026
+
+**Target:** Organizations globally using PTC Windchill PDMLink and FlexPLM product lifecycle management (PLM) platforms — manufacturing, engineering, aerospace, defense, automotive, heavy machinery, retail, footwear, apparel sectors
+
+**Sector:** Manufacturing / Engineering / Aerospace / Defense / Supply Chain / PLM Infrastructure
+
+**Threat Actor:** Unknown — attributed to CL-STA-1062 by Palo Alto Networks Unit 42, targeting state-owned enterprises in energy and government sectors primarily
+
+**Source:** The Hacker News — June 25, 2026 | CISA | PTC Advisory CS473270
+
+**Attack Type:** Unauthenticated Remote Code Execution — Unsafe Deserialization — JSP Web Shell Deployment
+
+**Labels:** PTC Windchill | FlexPLM | CVE-2026-12569 | CVSS 9.3 | Deserialization RCE | CISA KEV | JSP Web Shell | Unauthenticated | CL-STA-1062 | Active Exploitation | Patch June 17 | Remediation Deadline June 28
+
+---
+
+## Analysis
+
+CISA added CVE-2026-12569 to its Known Exploited Vulnerabilities catalog on June 25, 2026, after PTC confirmed heightened threat activity exploiting a critical remote code execution flaw in Windchill PDMLink and FlexPLM. The vulnerability stems from unsafe deserialization of untrusted data, allowing unauthenticated remote attackers to execute arbitrary code by sending specially crafted requests to internet-facing Windchill or FlexPLM endpoints. Patches were released on June 17; exploitation began immediately and reached active status within days.
+
+Palo Alto Networks Unit 42 attributed exploitation to CL-STA-1062, an actor with overlaps to UAT-7237, which Cisco Talos documented in August 2025 targeting web infrastructure in Taiwan. Unit 42 observed CL-STA-1062 campaigns since March 2022 targeting strategic sectors in East Asia, with a particular focus on energy and government state-owned enterprises. The group uses a hybrid toolkit combining open-source tools (SoftEther VPN, Mimikatz) with custom backdoors. Attackers are exploiting CVE-2026-12569 to deploy persistent JSP web shells under `/Windchill/login/[0-9a-f]{16}.jsp`, enabling remote command execution and data exfiltration from supply chain and manufacturing environments.
+
+Windchill is critical infrastructure across automotive, aerospace, defense, and manufacturing — storing CAD designs, bills of materials, engineering data, and product workflows. Compromise at this layer provides attackers with intellectual property theft and supply chain poisoning capabilities. German authorities (BSI) alerted organizations in advance of mass exploitation, but the short window between patch availability and active attacks compressed response timelines significantly.
+
+---
+
+## Key Technical Indicators:
+- **CVE:** CVE-2026-12569 — PTC Windchill PDMLink and FlexPLM
+- **CVSS:** 9.3 (critical) per PTC; some early reporting cited 10.0
+- **Vulnerability class:** improper input validation, unsafe deserialization
+- **Attack vector:** unauthenticated, network-based, no credentials required
+- **Exploitation start:** ~June 17–18, 2026 (within 24 hours of patch release)
+- **Status:** confirmed active exploitation by June 25, 2026 — CISA KEV catalog
+- **Federal remediation deadline:** June 28, 2026
+- **Affected versions:** all versions up to 11.0; multiple versions of 11.1, 11.2, 12.0, 12.1, 12.3, 13.0 branches
+- **Patched versions:** 13.1.1, 13.0.2, 12.1.2, 12.0.2, 11.2.1, 11.1 M020, 11.0 M030
+- **Deployment vector:** JSP web shells under /Windchill/login/ with 16-character hex names
+- **Exploitation artifacts:** persistent JSP web shells enabling RCE and data exfiltration
+- **Threat actor:** CL-STA-1062 (Palo Alto Unit 42 attribution) — overlaps with UAT-7237
+- **Geographic focus:** East Asia targeting (primary), secondary global industrial targeting
+- **Indicators:** web shell pattern /Windchill/login/[0-9a-f]{16}.jsp published by PTC
+- **Detection:** filesystem scans for matching JSP files in /Windchill/login/ directory
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1190 — Exploit Public-Facing Application: unauthenticated deserialization vulnerability exploited via crafted HTTP requests to internet-facing Windchill/FlexPLM endpoints
+- **TA0002 — Execution**
+  - T1059.004 — Command and Scripting Interpreter: Unix Shell: JSP web shells execute arbitrary commands on compromised Windchill servers
+- **TA0003 — Persistence**
+  - T1505.003 — Server Software Component: Web Shell: persistent JSP web shells deployed under /Windchill/login/ directory
+- **TA0005 — Defense Evasion**
+  - T1036.006 — Masquerading: Space After Filename: web shells named with 16-character hex values to appear innocuous
+- **TA0006 — Credential Access**
+  - T1040 — Network Sniffing: compromised Windchill servers positioned for credential harvesting and intellectual property theft
+- **TA0009 — Collection**
+  - T1005 — Data from Local System: access to CAD designs, engineering data, product workflows, bills of materials stored in Windchill
+- **TA0010 — Exfiltration**
+  - T1041 — Exfiltration Over C2 Channel: collected intellectual property and engineering data exfiltrated via JSP web shell C2
+
+---
+
+## Strategic Context
+
+This is the first time a PTC product vulnerability has appeared on CISA's KEV catalog, signaling the criticality of Windchill's role in industrial and defense supply chains. The compression between patch release (June 17) and mass exploitation (within days) reflects attacker efficiency — either pre-developed exploits waiting for patch release or automated attack tooling deployed rapidly. The attribution to CL-STA-1062 with East Asia targeting focus suggests intelligence collection priorities around manufacturing and supply chain data in strategic industries.
+
+Windchill's architectural position as the central repository for engineering data, CAD files, and product workflows makes it a high-value target for espionage operations. Compromise at this layer doesn't just grant access to one organization — it provides visibility into entire supply chains, competitor designs, and production methodologies. The JSP web shell persistence mechanism is industrial-grade and designed for long-term access and data theft rather than rapid lateral movement.
+
+---
+
+## Russian Language Context
+
+CVE-2026-12569 затрагивает критическую инфраструктуру проектирования и производства (critical design and manufacturing infrastructure). Распределение системы управления жизненным циклом продуктов (product lifecycle management systems) по аэрокосмическому и оборонному секторам делает эту уязвимость особенно значимой для компрометации цепочки поставок.
