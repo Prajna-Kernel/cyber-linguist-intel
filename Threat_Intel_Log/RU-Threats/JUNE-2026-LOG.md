@@ -160,3 +160,89 @@ The cybercriminal overlap with TrickBot and UAC-0098 fits the broader pattern of
 ## Russian Language Context
 
 GREYVIBE operates in московском часовом поясе (moskovskom chasovom poyase) — Moscow time zone — with Russian-language комментарии в коде (kommentarii v kode) — code comments — and административные панели (administrativnyye paneli) — admin panels. The DroneLink cluster specifically targets украинских операторов дронов (ukrainskikh operatorov dronov) — Ukrainian drone operators — through поддельные благотворительные сайты (poddel'nyye blagotvoritel'nyye sayty) — fake charity websites.
+
+---
+
+# Incident #003 — June 30, 2026
+
+**Target:** Government and military organizations in Ukraine; secondary targeting of entities with interests in Italian foreign policy (Italy, Netherlands, Poland, Germany)
+
+**Sector:** Government / Defense / Military / Diplomaticzz
+
+**Threat Actor:** Turla (aka Secret Blizzard, Venomous Bear, SUMMIT, UAC-0194) — FSB-linked Russian state-sponsored espionage
+
+**Origin:** Russia — Federal Security Service (FSB) Centre 16 — state-sponsored cyber espionage
+
+**Source:** The Hacker News — June 23, 2026 | Google Threat Intelligence Group (GTIG) | Google Cloud Blog
+
+**Attack Type:** Multi-Component .NET Backdoor — WebSocket C2 — Spear-Phishing Deployment
+
+**Labels:** Turla | STOCKSTAY | Secret Blizzard | FSB | .NET | WebSocket | Kazuar | Ukraine | Italy | Environmental Keying | Academic/Diplomatic Lures | WinRAR CVE-2025-8088 | RSA Encryption
+
+---
+
+## Analysis
+
+Google Threat Intelligence Group published research on June 23, 2026 documenting STOCKSTAY, a previously undocumented .NET backdoor attributed to Turla and deployed against Ukrainian government and military organizations since at least December 2022. The malware shares significant code and functional overlaps with Kazuar, Turla's staple implant since 2017, and is continually developed. Early variants targeted entities in Italy, Netherlands, Poland, and Germany with interests in Italian foreign policy.
+
+STOCKSTAY is a multi-component backdoor using the Windows Forms framework with WebSocket-based C2 via the open-source websocket-sharp library. Three core components orchestrate operations: STOCKMARKET handles configuration and command routing, STOCKBROKER tunnels network traffic, and STOCKTRADER executes espionage tasks including file collection, remote execution, registry manipulation, screen capture, and directory enumeration. The malware generates unique 4096-bit RSA keypairs and transmits public keys to upstream C2, ensuring end-to-end encryption even when traffic routes through third-party hosting.
+
+Initial access leverages academic and diplomatic-themed spear-phishing (military drone reports, university communications, diplomatic platforms) with malicious RAR archives exploiting CVE-2025-8088 to drop STOCKSTAY into Windows Startup folders. **Two deployment patterns emerged:** initial deployments with extractable default passwords for unknown targets, and stage-later deployments with environmental keying restricting execution to specific hostnames/domains within target networks. GTIG assesses with low confidence that STOCKSTAY deployment alongside Kazuar reflects testing of new capabilities or transition from older tools ahead of anticipated access remediation.
+
+---
+
+## Key Technical Indicators:
+- **Development start:** December 2022 — active ongoing as of June 2026
+- **Deployment patterns:** both initial access and post-exploitation stages
+- **Core components:** STOCKMARKET (orchestrator), STOCKBROKER (proxy), STOCKTRADER (backdoor)
+- **C2 protocol:** secure WebSocket via websocket-sharp library
+- **Encryption:** 4096-bit RSA keypair per infection, Base64-encoded messages
+- **Configuration:** masqueraded initially as stock market viewer; variants disguised as PDF reader, calculator
+- **Initial access vectors:** spear-phishing with WinRAR CVE-2025-8088 exploitation (malicious RAR archives), MSI installers, HTML Application (HTA) scripts
+- **C2 hosting:** GitHub repositories, Render, glitch.me infrastructure
+- **Environmental keying:** stage-later deployments restrict execution to specific target hostnames/domains
+- **Confirmation:** GTIG identified public Python Tornado WebSocket server controller in accessible GitHub repository (ChikenFresh/google-ai-labs-it)
+- **Code overlaps:** significant functional similarities with Kazuar backdoor architecture
+- **Target scope:** Ukrainian government/military primary, secondary European entities
+- **Attribution:** GTIG — confirmed Turla/FSB
+
+---
+
+## MITRE ATT&CK Tactics and Techniques:
+- **TA0001 — Initial Access**
+  - T1566.001 — Phishing: Spear-phishing Attachment: academic/diplomatic-themed malicious RAR archives delivered via email
+  - T1190 — Exploit Public-Facing Application: CVE-2025-8088 WinRAR path traversal exploited to drop STOCKSTAY into Startup folders
+- **TA0002 — Execution**
+  - T1204.002 — User Execution: Malicious File: victim opens malicious RAR archive initiating infection
+- **TA0003 — Persistence**
+  - T1547.001 — Boot or Logon Autostart Execution: STOCKSTAY dropped to Windows Startup folder via WinRAR exploit
+  - T1547.014 — Boot or Logon Autostart Execution: Registry Run Keys: registry-based autorun entries established by STOCKMARKET
+- **TA0005 — Defense Evasion**
+  - T1036.005 — Masquerading: Match Legitimate Name or Location: STOCKSTAY disguised as stock viewer, PDF reader, calculator
+  - T1140 — Deobfuscate/Decode Files or Information: Base64 encoding and RSA decryption of C2 messages
+  - T1556.003 — Modify Authentication Process: environmental keying restricts execution to specific target domains
+- **TA0009 — Collection**
+  - T1005 — Data from Local System: STOCKTRADER collects files, screenshots, registry data, directory enumeration
+  - T1113 — Screen Capture: STOCKTRADER captures screenshots per operator tasking
+- **TA0011 — Command and Control**
+  - T1071.001 — Application Layer Protocol: Web Protocols: secure WebSocket connection to C2 infrastructure
+  - T1090.001 — Proxy: Internal Proxy: STOCKBROKER provides network tunneling and multi-hop C2 routing similar to Kazuar
+- **TA0010 — Exfiltration**
+  - T1041 — Exfiltration Over C2 Channel: collected data exfiltrated via encrypted WebSocket C2
+
+---
+
+## Strategic Context
+
+STOCKSTAY represents Turla's methodical investment in tooling diversity. Rather than relying solely on Kazuar, the group developed a parallel backdoor sharing architecture but with modern improvements: WebSocket-based C2 using third-party hosting platforms that are harder to takedown, asymmetric encryption, and environmental keying that ties execution to specific targets. The decision to deploy both tools simultaneously in Ukrainian networks suggests either operator experimentation or deliberate redundancy — if Kazuar access is burned, STOCKSTAY provides a fallback persistence mechanism already in place.
+
+The targeting pattern is classically Turla: government and military organizations in Ukraine combined with secondary targeting of European diplomatic and policy entities. The group's multi-year development cycle (since December 2022) and continuous refinement reflects a sophisticated, resourced actor with patience and operational discipline. The use of third-party hosting like GitHub and Render for C2 infrastructure is deliberate tradecraft designed to complicate law enforcement takedown.
+
+---
+
+## Russian Language Context
+
+Turla действует под руководством ФСБ (FSB) Центра 16 (Centre 16) и специализируется на целевой разведке украинских государственных и военных организаций (Ukrainian government and military organizations). Использование переменных окружения (environmental keying) и маскировки под легитимные приложения отражает стремление группы к длительной скрытой операции внутри целевых сетей.
+
+---
+
